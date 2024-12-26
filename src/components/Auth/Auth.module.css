@@ -1,0 +1,40 @@
+.wrapper {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+}
+
+.link {
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 24px;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #3498db;
+}
+
+.separator {
+  margin: 0;
+  font-weight: 600;
+  font-size: 24px;
+  color: black;
+}
+
+@media (max-width: 938px) {
+  .link,
+  .separator {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 534px) {
+  .wrapper {
+    display: none;
+  }
+}

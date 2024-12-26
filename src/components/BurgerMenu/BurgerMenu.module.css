@@ -1,0 +1,23 @@
+.burger-menu {
+  margin-left: auto;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  background-color: #3498db;
+  border-radius: 50%;
+  padding: 5px;
+  transition: opacity 0.3s ease;
+}
+
+.burger-menu:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 534px) {
+  .burger-menu {
+    display: flex;
+  }
+}
