@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom';
 import styles from './Navigation.module.css';
-import { useRef } from 'react';
+import { useRef, MouseEvent } from 'react';
 
 export const Navigation = () => {
-  const navRef = useRef(null);
+  const navRef = useRef<null | HTMLDivElement>(null);
 
-  const handleSetActiveLink = (e) => {
-    const linksArr = navRef.current.children;
-    [...linksArr].forEach((link) => link.classList.remove(styles.active));
-    e.target.classList.add(styles.active);
+  const handleSetActiveLink = (e: MouseEvent<HTMLAnchorElement>): void => {
+    const target = e.target as HTMLAnchorElement;
+    if (navRef.current) {
+      const linksArr = Array.from(navRef.current.querySelectorAll('a'));
+      linksArr.forEach((link) => link.classList.remove(styles.active));
+      target.classList.add(styles.active);
+    }
   };
 
   return (
