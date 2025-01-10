@@ -1,0 +1,67 @@
+.logo {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  text-decoration: none;
+  color: #2c3e50;
+  border: 1px solid gainsboro;
+  padding: 5px;
+  background-color: gainsboro;
+  border-radius: 12px;
+  min-width: fit-content;
+}
+
+.logo:hover {
+  color: #3498db;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.logo img:hover {
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.logo-name {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Arial', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #2c3e50;
+  display: block;
+  transition: text-shadow 0.3s ease;
+}
+
+.logo-name:hover {
+  text-shadow: 0 2px 4px rgba(52, 152, 219, 0.7);
+}
+
+@media (max-width: 768px) {
+  .logo {
+    flex-direction: column;
+    gap: 3px;
+    padding: 8px;
+  }
+
+  .logo img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .logo-name {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo img {
+    width: 25px;
+    height: 25px;
+  }
+}
