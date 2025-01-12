@@ -1,0 +1,88 @@
+.user-profile-card {
+  width: 100%;
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  transition: transform 0.3s ease;
+}
+
+.user-profile-card:hover {
+  transform: translateY(-15px);
+}
+
+.user-profile-avatar img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid #ddd;
+  object-fit: cover;
+  margin-bottom: 30px;
+}
+
+.user-profile__title {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.user-profile__details {
+  font-size: 20px;
+  color: #555;
+  text-align: left;
+}
+
+.user-profile__details p {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.user-profile__details span {
+  font-weight: bold;
+  color: #000;
+  margin-right: 8px;
+}
+
+.icon {
+  margin-right: 12px;
+  color: #3498db;
+  font-size: 22px;
+}
+
+.user-profile-card:hover .icon {
+  color: #2980b9;
+}
+
+.change {
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.change:hover {
+  background: linear-gradient(90deg, #2980b9, #3498db);
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 14px rgba(0, 0, 0, 0.2);
+}
+
+.change:active {
+  transform: translateY(1px);
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(90deg, #2c81cb, #1c639b);
+}
+
+.change:focus {
+  outline: none;
+  box-shadow: 0px 0px 12px rgba(52, 152, 219, 0.8);
+}

@@ -12,8 +12,29 @@
   margin-bottom: 50px;
 }
 
+.user-profile-link {
+  margin-left: auto;
+}
+
+.burger-menu {
+  display: none;
+  margin-left: auto;
+}
+
 @media (max-width: 768px) {
   .header-wrapper {
     gap: 20px;
+  }
+}
+
+@media (max-width: 534px) {
+  .header-wrapper {
+    padding: 5px 15px;
+  }
+  .burger-menu {
+    display: flex;
+  }
+  .user-profile-link {
+    display: none;
   }
 }
