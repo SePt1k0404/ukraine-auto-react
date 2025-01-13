@@ -7,6 +7,11 @@
   transition: background-color 0.3s ease;
 }
 
+.user-profile-container:hover,
+.user-profile-container:focus {
+  background-color: #3498db;
+}
+
 .profile-background {
   background-color: #3498db;
 }

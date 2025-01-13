@@ -19,6 +19,10 @@ export const Auth = () => {
     setShowRegisterModal(false);
   };
 
+  const handleCloseLoginModal = (): void => {
+    setShowLoginModal(false);
+  };
+
   return (
     <div className={styles.wrapper}>
       <button
@@ -36,7 +40,11 @@ export const Auth = () => {
       >
         Register
       </button>
-      {showLoginModal && createPortal(<Login />, document.body)}
+      {showLoginModal &&
+        createPortal(
+          <Login closeModal={handleCloseLoginModal} />,
+          document.body,
+        )}
       {showRegisterModal &&
         createPortal(
           <Register closeModal={handleCloseRegisterModal} />,

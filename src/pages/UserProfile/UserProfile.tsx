@@ -1,12 +1,20 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDDispatch, RootState } from '../../app/store';
 import styles from './UserProfile.module.css';
 import { FaEnvelope, FaPhone, FaCity, FaUser } from 'react-icons/fa';
+import { useEffect } from 'react';
+import { getUserProfileInfo } from '../../features/userProfile/userProfileSlice';
 
 export const UserProfile = () => {
   const { name, email, phoneNumber, city } = useSelector(
     (state: RootState) => state.userProfileReducer,
   );
+  const dispatch = useDispatch<AppDDispatch>();
+  useEffect(() => {
+    if (!name || !email || !phoneNumber || !city) {
+      dispatch(getUserProfileInfo());
+    }
+  }, [name, email, phoneNumber, city]);
 
   return (
     <div className={styles['user-profile-card']}>

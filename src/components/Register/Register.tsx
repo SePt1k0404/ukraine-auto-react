@@ -4,23 +4,27 @@ import { registerSchema } from './Register.schema';
 import { IRegistration } from './Register.interface';
 import { useState } from 'react';
 import clsx from 'clsx';
-
-type Props = {
-  closeModal: () => void;
-};
+import { Props } from '../Auth/Auth.type';
+import { useDispatch } from 'react-redux';
+import { registration } from '../../features/userAuth/userAuthSlice';
+import { AppDDispatch } from '../../app/store';
 
 export const Register = ({ closeModal }: Props) => {
   const [isClosing, setIsClosing] = useState(false);
+
+  const dispatch = useDispatch<AppDDispatch>();
 
   const formik = useFormik<IRegistration>({
     initialValues: {
       name: '',
       email: '',
       password: '',
+      phoneNumber: '',
+      city: '',
     },
     validationSchema: registerSchema,
     onSubmit: (values, { resetForm }) => {
-      alert(JSON.stringify(values, null, 2));
+      dispatch(registration(values));
       resetForm();
       startClosing();
     },
@@ -104,6 +108,40 @@ export const Register = ({ closeModal }: Props) => {
         />
         {formik.touched.password && formik.errors.password ? (
           <div className={styles.errorText}>{formik.errors.password}</div>
+        ) : null}
+
+        <label htmlFor='phoneNumber' className={styles.formLabel}>
+          Phone Number:
+        </label>
+        <input
+          type='tel'
+          id='phoneNumber'
+          name='phoneNumber'
+          className={styles.formInput}
+          autoComplete='off'
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.phoneNumber}
+        />
+        {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
+          <div className={styles.errorText}>{formik.errors.phoneNumber}</div>
+        ) : null}
+
+        <label htmlFor='city' className={styles.formLabel}>
+          City:
+        </label>
+        <input
+          type='text'
+          id='city'
+          name='city'
+          className={styles.formInput}
+          autoComplete='off'
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.city}
+        />
+        {formik.touched.city && formik.errors.city ? (
+          <div className={styles.errorText}>{formik.errors.city}</div>
         ) : null}
 
         <button type='submit' className={styles.formButton}>

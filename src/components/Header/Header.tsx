@@ -10,8 +10,8 @@ import { UserProfile } from '../UserProfileIcon/UserProfileIcon';
 import { Link } from 'react-router-dom';
 
 export const Header = () => {
-  const userEmail = useSelector(
-    (state: RootState) => state.userProfileReducer.email,
+  const userToken = useSelector(
+    (state: RootState) => state.userAuthReducer.jwt,
   );
 
   return (
@@ -19,7 +19,7 @@ export const Header = () => {
       <div className={styles['header-wrapper']}>
         <Logo />
         <Navigation />
-        {userEmail !== '' ? (
+        {userToken != null ? (
           <Link className={styles['user-profile-link']} to='/profile'>
             <UserProfile />
           </Link>
