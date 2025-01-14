@@ -1,19 +1,22 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   createUserWithEmailAndPassword,
-  getAuth,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import {
   IUserAuth,
   IUserAuthLogin,
   IUserAuthRegister,
+  IUserPersistentAuth,
 } from './userAuth.interface';
-import { app, db } from '../../firebase/config.ts';
+import { auth, db } from '../../firebase/config.ts';
 import { doc, setDoc } from 'firebase/firestore';
+import { loadJwt } from '../../app/storege.ts';
+
+export const JWT_PERSISTENT = 'userData';
 
 const initialState: IUserAuth = {
-  jwt: null,
+  jwt: loadJwt<IUserPersistentAuth>(JWT_PERSISTENT)?.jwt ?? null,
   isLoading: false,
   error: null,
   uid: null,
@@ -22,7 +25,6 @@ const initialState: IUserAuth = {
 export const login = createAsyncThunk(
   'userAuth/login',
   async (params: IUserAuthLogin, { rejectWithValue }) => {
-    const auth = getAuth(app);
     try {
       const data = await signInWithEmailAndPassword(
         auth,
@@ -43,7 +45,6 @@ export const login = createAsyncThunk(
 export const registration = createAsyncThunk(
   'userAuth/registration',
   async (params: IUserAuthRegister, { rejectWithValue }) => {
-    const auth = getAuth(app);
     try {
       const data = await createUserWithEmailAndPassword(
         auth,
@@ -75,7 +76,14 @@ export const registration = createAsyncThunk(
 const userAuthSlice = createSlice({
   name: 'userAuth',
   initialState,
-  reducers: {},
+  reducers: {
+    addJwt: (state, action: PayloadAction<string>) => {
+      state.jwt = action.payload;
+    },
+    clearJwt: (state) => {
+      state.jwt = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
@@ -88,7 +96,6 @@ const userAuthSlice = createSlice({
           state,
           action: PayloadAction<{ token: string; uid: string } | undefined>,
         ) => {
-          console.log('Fetching user profile started');
           if (action.payload !== undefined) {
             state.jwt = action.payload.token;
             state.uid = action.payload.uid;

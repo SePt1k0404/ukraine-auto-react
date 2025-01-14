@@ -1,23 +1,41 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDDispatch, RootState } from '../../app/store';
 import styles from './UserProfile.module.css';
-import { FaEnvelope, FaPhone, FaCity, FaUser } from 'react-icons/fa';
+import {
+  FaEnvelope,
+  FaPhone,
+  FaCity,
+  FaUser,
+  FaSignOutAlt,
+} from 'react-icons/fa';
 import { useEffect } from 'react';
 import { getUserProfileInfo } from '../../features/userProfile/userProfileSlice';
+import { userAuthAction } from '../../features/userAuth/userAuthSlice';
 
 export const UserProfile = () => {
   const { name, email, phoneNumber, city } = useSelector(
     (state: RootState) => state.userProfileReducer,
   );
   const dispatch = useDispatch<AppDDispatch>();
+
   useEffect(() => {
     if (!name || !email || !phoneNumber || !city) {
       dispatch(getUserProfileInfo());
     }
-  }, [name, email, phoneNumber, city]);
+  }, [dispatch]);
+
+  const handleLogout = () => {
+    dispatch(userAuthAction.clearJwt());
+    localStorage.removeItem('userData');
+    window.location.href = '/';
+  };
 
   return (
     <div className={styles['user-profile-card']}>
+      <button className={styles['logout-button']} onClick={handleLogout}>
+        <FaSignOutAlt />
+        Logout
+      </button>
       <div className={styles['user-profile-avatar']}>
         <img src='/public/default-avatar.jpg' alt={`${name}'s avatar`} />
       </div>

@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUserProfile } from './userProfile.interface';
 import { db } from '../../firebase/config';
 import { doc, getDoc } from 'firebase/firestore';
-import { RootState } from '../../app/store';
+import { getUid } from '../getUid';
+import { userAuthAction } from '../userAuth/userAuthSlice';
 
 const initialState: IUserProfile = {
   name: '',
@@ -16,13 +17,13 @@ const initialState: IUserProfile = {
 
 export const getUserProfileInfo = createAsyncThunk(
   'userProfile/getUserInfo',
-  async (_, { getState, rejectWithValue }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     try {
-      const state = getState() as RootState;
-      const uid = state.userAuthReducer.uid;
-
+      const uid = await getUid();
       if (!uid) {
-        throw new Error('JWT is missing');
+        dispatch(userAuthAction.clearJwt());
+        localStorage.removeItem('userData');
+        throw new Error('Uid is missing');
       }
       const userDocRef = doc(db, 'users', uid);
       const userDocData = await getDoc(userDocRef);

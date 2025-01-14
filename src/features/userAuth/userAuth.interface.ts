@@ -17,3 +17,7 @@ export interface IUserAuth {
   error: string | null;
   uid: string | null;
 }
+
+export interface IUserPersistentAuth {
+  jwt: string | null;
+}
