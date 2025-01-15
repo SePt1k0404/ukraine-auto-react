@@ -120,3 +120,13 @@
 .delete:hover {
   background: linear-gradient(90deg, #ff2e2e, #e64141);
 }
+
+@media (max-width: 534px) {
+  .icon {
+    display: none;
+  }
+  .user-profile__details p {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
