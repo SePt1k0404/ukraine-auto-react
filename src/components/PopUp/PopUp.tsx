@@ -11,7 +11,7 @@ const PopUpAuth = () => {
   const {
     isLoading: isLoadingProfile,
     error: errorProfile,
-    name,
+    isSuccess,
   } = useSelector((state: RootState) => state.userProfileReducer);
   React.useEffect(() => {
     if (isLoading) {
@@ -31,10 +31,10 @@ const PopUpAuth = () => {
     if (errorProfile) {
       toast.error(`Error: ${errorProfile}`, { autoClose: 2000 });
     }
-    if (name) {
-      toast.success('Get user info successful!', { autoClose: 1500 });
+    if (isSuccess) {
+      toast.success('Operation is successful!', { autoClose: 1500 });
     }
-  }, [isLoadingProfile, errorProfile, name]);
+  }, [isLoadingProfile, errorProfile, isSuccess]);
 
   return <ToastContainer />;
 };

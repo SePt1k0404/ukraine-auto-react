@@ -5,6 +5,7 @@ export interface IUserProfile {
   email: string;
   isLoading?: boolean;
   error?: string | null;
+  isSuccess?: boolean;
 }
 
 export interface IChangeUserProfile {

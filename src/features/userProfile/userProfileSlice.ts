@@ -24,6 +24,7 @@ const initialState: IUserProfile = {
   city: '',
   email: '',
   isLoading: false,
+  isSuccess: false,
   error: null,
 };
 
@@ -179,6 +180,7 @@ export const changeUserPassword = createAsyncThunk<
 const pendingFunction = (state: IUserProfile): void => {
   state.isLoading = true;
   state.error = null;
+  state.isSuccess = false;
 };
 
 const rejectedFunction = (
@@ -187,6 +189,7 @@ const rejectedFunction = (
 ): void => {
   state.error = action.payload || 'Unknown error';
   state.isLoading = false;
+  state.isSuccess = false;
 };
 
 const userProfileSlice = createSlice({
@@ -205,6 +208,7 @@ const userProfileSlice = createSlice({
           state.city = action.payload.city;
           state.isLoading = false;
           state.error = null;
+          state.isSuccess = true;
         },
       )
       .addCase(getUserProfileInfo.rejected, (state, action) =>
@@ -219,6 +223,7 @@ const userProfileSlice = createSlice({
           state.city = action.payload.city;
           state.isLoading = false;
           state.error = null;
+          state.isSuccess = true;
         },
       )
       .addCase(changeUserInfo.rejected, (state, action) =>
@@ -231,6 +236,7 @@ const userProfileSlice = createSlice({
           state.email = action.payload.newEmail;
           state.isLoading = false;
           state.error = null;
+          state.isSuccess = true;
         },
       )
       .addCase(changeUserEmail.rejected, (state, action) =>
@@ -240,6 +246,7 @@ const userProfileSlice = createSlice({
       .addCase(changeUserPassword.fulfilled, (state) => {
         state.isLoading = false;
         state.error = null;
+        state.isSuccess = true;
       })
       .addCase(changeUserPassword.rejected, (state, action) =>
         rejectedFunction(state, action),
