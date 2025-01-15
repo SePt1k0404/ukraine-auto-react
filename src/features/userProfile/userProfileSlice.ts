@@ -124,6 +124,11 @@ export const changeUserEmail = createAsyncThunk<
       );
       await reauthenticateWithCredential(auth.currentUser, credential);
       await updateEmail(auth.currentUser, params.newEmail);
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 500);
+      localStorage.removeItem('userData');
+      dispatch(userAuthAction.clearJwt());
       return params;
     } catch (error) {
       if (error instanceof Error) {
@@ -156,6 +161,11 @@ export const changeUserPassword = createAsyncThunk<
       );
       await reauthenticateWithCredential(auth.currentUser, credential);
       await updatePassword(auth.currentUser, params.newPassword);
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 500);
+      dispatch(userAuthAction.clearJwt());
+      localStorage.removeItem('userData');
       return params;
     } catch (error) {
       if (error instanceof Error) {

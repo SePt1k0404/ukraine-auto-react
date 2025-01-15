@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 export const validateToken = (): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     const auth = getAuth();
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         try {

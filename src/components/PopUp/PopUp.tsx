@@ -32,7 +32,7 @@ const PopUpAuth = () => {
       toast.error(`Error: ${errorProfile}`, { autoClose: 2000 });
     }
     if (name) {
-      toast.success('Get user info successful!', { autoClose: 500 });
+      toast.success('Get user info successful!', { autoClose: 1500 });
     }
   }, [isLoadingProfile, errorProfile, name]);
 
