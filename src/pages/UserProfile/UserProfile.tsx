@@ -8,14 +8,27 @@ import {
   FaUser,
   FaSignOutAlt,
 } from 'react-icons/fa';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getUserProfileInfo } from '../../features/userProfile/userProfileSlice';
 import { userAuthAction } from '../../features/userAuth/userAuthSlice';
+import { createPortal } from 'react-dom';
+import { ChangeInfoForm } from '../../components/ChangeInfoForm/ChangeInfoForm';
+import clsx from 'clsx';
+import { ChangeEmailForm } from '../../components/ChangeEmailForm/ChangeEmailForm';
+import { ChangePasswordForm } from '../../components/ChangePasswordForm/ChangePasswordForm';
 
 export const UserProfile = () => {
-  const { name, email, phoneNumber, city } = useSelector(
+  const { name, phoneNumber, email, city } = useSelector(
     (state: RootState) => state.userProfileReducer,
   );
+
+  const [showChangeInfoModal, setShowChangeInfoModal] =
+    useState<boolean>(false);
+  const [showChangeEmailModal, setShowChangeEmailModal] =
+    useState<boolean>(false);
+  const [showChangePasswordModal, setShowChangePasswordModal] =
+    useState<boolean>(false);
+
   const dispatch = useDispatch<AppDDispatch>();
 
   useEffect(() => {
@@ -28,6 +41,18 @@ export const UserProfile = () => {
     dispatch(userAuthAction.clearJwt());
     localStorage.removeItem('userData');
     window.location.href = '/';
+  };
+
+  const toggleChangeInfoModal = (): void => {
+    setShowChangeInfoModal((state) => !state);
+  };
+
+  const toggleChangeEmailModal = (): void => {
+    setShowChangeEmailModal((state) => !state);
+  };
+
+  const toggleChangePasswordModal = (): void => {
+    setShowChangePasswordModal((state) => !state);
   };
 
   return (
@@ -58,7 +83,35 @@ export const UserProfile = () => {
           <span>City:</span> {city}
         </p>
       </div>
-      <button className={styles.change}>Change info</button>
+      <div className={styles['user-profile-buttons-wrapper']}>
+        <button onClick={toggleChangeInfoModal} className={styles.change}>
+          Change info
+        </button>
+        <button onClick={toggleChangeEmailModal} className={styles.change}>
+          Change email
+        </button>
+        <button onClick={toggleChangePasswordModal} className={styles.change}>
+          Change password
+        </button>
+        <button className={clsx(styles.change, styles.delete)}>
+          Delete account
+        </button>
+      </div>
+      {showChangeInfoModal &&
+        createPortal(
+          <ChangeInfoForm onCloseModal={toggleChangeInfoModal} />,
+          document.body,
+        )}
+      {showChangeEmailModal &&
+        createPortal(
+          <ChangeEmailForm closeModal={toggleChangeEmailModal} />,
+          document.body,
+        )}
+      {showChangePasswordModal &&
+        createPortal(
+          <ChangePasswordForm closeModal={toggleChangePasswordModal} />,
+          document.body,
+        )}
     </div>
   );
 };

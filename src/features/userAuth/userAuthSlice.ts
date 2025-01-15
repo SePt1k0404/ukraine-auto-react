@@ -22,27 +22,32 @@ const initialState: IUserAuth = {
   uid: null,
 };
 
-export const login = createAsyncThunk(
-  'userAuth/login',
-  async (params: IUserAuthLogin, { rejectWithValue }) => {
-    try {
-      const data = await signInWithEmailAndPassword(
-        auth,
-        params.email,
-        params.password,
-      );
-      const token = await data.user.getIdToken();
-      return { token, uid: data.user.uid };
-    } catch (error) {
-      if (error instanceof Error) {
-        return rejectWithValue(error.message);
-      }
-      return rejectWithValue('Unknown error occurred');
+export const login = createAsyncThunk<
+  { token: string; uid: string },
+  IUserAuthLogin,
+  { rejectValue: string }
+>('userAuth/login', async (params: IUserAuthLogin, { rejectWithValue }) => {
+  try {
+    const data = await signInWithEmailAndPassword(
+      auth,
+      params.email,
+      params.password,
+    );
+    const token = await data.user.getIdToken();
+    return { token, uid: data.user.uid };
+  } catch (error) {
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
     }
-  },
-);
+    return rejectWithValue('Unknown error occurred');
+  }
+});
 
-export const registration = createAsyncThunk(
+export const registration = createAsyncThunk<
+  { token: string; uid: string },
+  IUserAuthRegister,
+  { rejectValue: string }
+>(
   'userAuth/registration',
   async (params: IUserAuthRegister, { rejectWithValue }) => {
     try {
@@ -55,8 +60,6 @@ export const registration = createAsyncThunk(
       const userDocRef = doc(db, 'users', data.user.uid);
       await setDoc(userDocRef, {
         name: params.name,
-        email: params.email,
-        password: params.password,
         phoneNumber: params.phoneNumber,
         city: params.city,
         uid: data.user.uid,
@@ -73,6 +76,19 @@ export const registration = createAsyncThunk(
   },
 );
 
+const pendingFunction = (state: IUserAuth): void => {
+  state.isLoading = true;
+  state.error = null;
+};
+
+const rejectedFunction = (
+  state: IUserAuth,
+  action: PayloadAction<string | null | undefined>,
+): void => {
+  state.error = action.payload || 'Unknown error';
+  state.isLoading = false;
+};
+
 const userAuthSlice = createSlice({
   name: 'userAuth',
   initialState,
@@ -86,10 +102,7 @@ const userAuthSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
+      .addCase(login.pending, (state) => pendingFunction(state))
       .addCase(
         login.fulfilled,
         (
@@ -103,16 +116,10 @@ const userAuthSlice = createSlice({
           }
         },
       )
-      .addCase(login.rejected, (state, action) => {
-        state.error = action.payload
-          ? (action.payload as string)
-          : 'Unknown error';
-        state.isLoading = false;
-      })
-      .addCase(registration.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
+      .addCase(login.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      )
+      .addCase(registration.pending, (state) => pendingFunction(state))
       .addCase(
         registration.fulfilled,
         (
@@ -126,12 +133,9 @@ const userAuthSlice = createSlice({
           }
         },
       )
-      .addCase(registration.rejected, (state, action) => {
-        state.error = action.payload
-          ? (action.payload as string)
-          : 'Unknown error';
-        state.isLoading = false;
-      });
+      .addCase(registration.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      );
   },
 });
 

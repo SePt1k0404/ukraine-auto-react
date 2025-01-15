@@ -105,3 +105,18 @@
 .logout-button:hover {
   color: #ff2e2e;
 }
+
+.user-profile-buttons-wrapper {
+  margin-top: 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.delete {
+  background: linear-gradient(90deg, #e64141, #ff2e2e);
+}
+
+.delete:hover {
+  background: linear-gradient(90deg, #ff2e2e, #e64141);
+}

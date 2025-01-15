@@ -18,7 +18,7 @@ const PopUpAuth = () => {
       toast.info('Loading...', { autoClose: 500 });
     }
     if (error) {
-      toast.error(`Error: ${error}`, { autoClose: 500 });
+      toast.error(`Error: ${error}`, { autoClose: 2000 });
     }
     if (jwt) {
       toast.success('Login successful!', { autoClose: 500 });
@@ -29,7 +29,7 @@ const PopUpAuth = () => {
       toast.info('Loading...', { autoClose: 500 });
     }
     if (errorProfile) {
-      toast.error(`Error: ${errorProfile}`, { autoClose: 500 });
+      toast.error(`Error: ${errorProfile}`, { autoClose: 2000 });
     }
     if (name) {
       toast.success('Get user info successful!', { autoClose: 500 });

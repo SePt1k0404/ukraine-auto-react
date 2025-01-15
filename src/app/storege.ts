@@ -7,9 +7,9 @@ export const loadJwt = <T>(key: string): T | undefined => {
     return JSON.parse(jsonJwt);
   } catch (error) {
     if (error instanceof Error) {
-      console.log(error);
       return undefined;
     }
+    return undefined;
   }
 };
 
