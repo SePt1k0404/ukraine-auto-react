@@ -7,18 +7,24 @@ import {
   FaCity,
   FaUser,
   FaSignOutAlt,
+  FaCamera,
 } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
-import { getUserProfileInfo } from '../../features/userProfile/userProfileSlice';
+import {
+  getUserProfileInfo,
+  setUserProfileAvatar,
+} from '../../features/userProfile/userProfileSlice';
 import { userAuthAction } from '../../features/userAuth/userAuthSlice';
 import { createPortal } from 'react-dom';
 import { ChangeInfoForm } from '../../components/ChangeInfoForm/ChangeInfoForm';
 import clsx from 'clsx';
 import { ChangeEmailForm } from '../../components/ChangeEmailForm/ChangeEmailForm';
 import { ChangePasswordForm } from '../../components/ChangePasswordForm/ChangePasswordForm';
+import { CropperModal } from '../../components/CropperModal/CropperModal';
+import { getUid } from '../../features/getUid';
 
 export const UserProfile = () => {
-  const { name, phoneNumber, email, city } = useSelector(
+  const { name, phoneNumber, email, city, avatar } = useSelector(
     (state: RootState) => state.userProfileReducer,
   );
 
@@ -28,6 +34,8 @@ export const UserProfile = () => {
     useState<boolean>(false);
   const [showChangePasswordModal, setShowChangePasswordModal] =
     useState<boolean>(false);
+  const [showCroppedModal, setShowCroppedModal] = useState<boolean>(false);
+  const [file, setFile] = useState<File | null>(null);
 
   const dispatch = useDispatch<AppDDispatch>();
 
@@ -55,6 +63,50 @@ export const UserProfile = () => {
     setShowChangePasswordModal((state) => !state);
   };
 
+  const toggleCroppedModal = (): void => {
+    setShowCroppedModal((state) => !state);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setFile(file);
+      setShowCroppedModal(true);
+      e.target.value = '';
+    }
+  };
+
+  const handleUploadAvatar = async (file: File) => {
+    const uid = await getUid();
+    if (uid) {
+      const cloudName = 'dkftturzq';
+      const uploadPreset = 'ukraine-auto';
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', uploadPreset);
+      try {
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/${cloudName}/upload`,
+          {
+            method: 'POST',
+            body: formData,
+          },
+        );
+        if (response.ok) {
+          const data = await response.json();
+          const imageUrl = data.secure_url;
+          dispatch(setUserProfileAvatar(imageUrl));
+        } else {
+          console.error('Upload failed:', await response.text());
+          alert('Image upload failed.');
+        }
+      } catch (error) {
+        console.error('Error during upload:', error);
+        alert('An error occurred while uploading the image.');
+      }
+    }
+  };
+
   return (
     <div className={styles['user-profile-card']}>
       <button className={styles['logout-button']} onClick={handleLogout}>
@@ -62,7 +114,20 @@ export const UserProfile = () => {
         Logout
       </button>
       <div className={styles['user-profile-avatar']}>
-        <img src='/public/default-avatar.jpg' alt={`${name}'s avatar`} />
+        <img
+          src={avatar === null ? '/public/default-avatar.jpg' : avatar}
+          alt={`${name}'s avatar`}
+        />
+        <label className={styles['upload-avatar']}>
+          Upload avatar
+          <FaCamera />
+          <input
+            type='file'
+            accept='image/*'
+            onChange={handleFileChange}
+            className={styles['file-input']}
+          />
+        </label>
       </div>
       <h1 className={styles['user-profile__title']}>Profile Info</h1>
       <div className={styles['user-profile__details']}>
@@ -110,6 +175,15 @@ export const UserProfile = () => {
       {showChangePasswordModal &&
         createPortal(
           <ChangePasswordForm closeModal={toggleChangePasswordModal} />,
+          document.body,
+        )}
+      {showCroppedModal &&
+        createPortal(
+          <CropperModal
+            closeModal={toggleCroppedModal}
+            avatar={file}
+            uploadAvatar={handleUploadAvatar}
+          />,
           document.body,
         )}
     </div>

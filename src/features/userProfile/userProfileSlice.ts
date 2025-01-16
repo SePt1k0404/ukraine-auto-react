@@ -23,6 +23,7 @@ const initialState: IUserProfile = {
   phoneNumber: '',
   city: '',
   email: '',
+  avatar: null,
   isLoading: false,
   isSuccess: false,
   error: null,
@@ -41,6 +42,32 @@ const getUserId = async (dispatch: AppDDispatch): Promise<string> => {
     throw new Error('Failed to retrieve user ID');
   }
 };
+
+export const setUserProfileAvatar = createAsyncThunk<
+  string,
+  string,
+  {
+    rejectValue: string;
+    dispatch: AppDDispatch;
+  }
+>(
+  'userProfile/setUserAvatar',
+  async (avatar: string, { rejectWithValue, dispatch }) => {
+    try {
+      const uid = await getUserId(dispatch);
+      const userDocRef = doc(db, 'users', uid);
+      await updateDoc(userDocRef, {
+        avatar,
+      });
+      return avatar;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue('Unknown error occurred');
+    }
+  },
+);
 
 export const getUserProfileInfo = createAsyncThunk<
   IUserProfile,
@@ -65,6 +92,7 @@ export const getUserProfileInfo = createAsyncThunk<
       email: getAuth().currentUser?.email || '',
       phoneNumber: data?.phoneNumber || '',
       city: data?.city || '',
+      avatar: data?.avatar || null,
     };
     return userProfile;
   } catch (error) {
@@ -195,7 +223,11 @@ const rejectedFunction = (
 const userProfileSlice = createSlice({
   name: 'userProfile',
   initialState,
-  reducers: {},
+  reducers: {
+    setAvatarPath: (state, action: PayloadAction<string>) => {
+      state.avatar = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUserProfileInfo.pending, (state) => pendingFunction(state))
@@ -206,6 +238,7 @@ const userProfileSlice = createSlice({
           state.email = action.payload.email;
           state.phoneNumber = action.payload.phoneNumber;
           state.city = action.payload.city;
+          state.avatar = action.payload.avatar;
           state.isLoading = false;
           state.error = null;
           state.isSuccess = true;
@@ -227,6 +260,19 @@ const userProfileSlice = createSlice({
         },
       )
       .addCase(changeUserInfo.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      )
+      .addCase(setUserProfileAvatar.pending, (state) => pendingFunction(state))
+      .addCase(
+        setUserProfileAvatar.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.avatar = action.payload;
+          state.isLoading = false;
+          state.error = null;
+          state.isSuccess = true;
+        },
+      )
+      .addCase(setUserProfileAvatar.rejected, (state, action) =>
         rejectedFunction(state, action),
       )
       .addCase(changeUserEmail.pending, (state) => pendingFunction(state))

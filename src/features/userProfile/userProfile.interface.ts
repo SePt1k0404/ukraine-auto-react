@@ -3,6 +3,7 @@ export interface IUserProfile {
   phoneNumber: string;
   city: string;
   email: string;
+  avatar: string | null;
   isLoading?: boolean;
   error?: string | null;
   isSuccess?: boolean;
