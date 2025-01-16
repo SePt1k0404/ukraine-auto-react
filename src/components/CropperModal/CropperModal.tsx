@@ -58,11 +58,11 @@ export const CropperModal = ({
           />
         </div>
         <div className={styles['buttons-wrapper']}>
-          <button className={styles['cropped-img']} onClick={getCropData}>
-            Upload Avatar
-          </button>
           <button className={styles['close-modal']} onClick={closeModal}>
             Close Cropper
+          </button>
+          <button className={styles['cropped-img']} onClick={getCropData}>
+            Upload Avatar
           </button>
         </div>
       </div>
