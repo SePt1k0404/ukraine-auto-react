@@ -1,34 +1,26 @@
-import { MouseEvent, useState } from 'react';
+import { useState } from 'react';
 import styles from './Auth.module.css';
 import { createPortal } from 'react-dom';
 import { Login } from '../Login/Login';
 import { Register } from '../Register/Register';
+import {
+  handleCloseLoginModal,
+  handleCloseRegisterModal,
+  handleShowModal,
+} from '../../helpers/authHelpers/showModal';
 
 export const Auth = () => {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const [showRegisterModal, setShowRegisterModal] = useState<boolean>(false);
-
-  const handleShowModal = (e: MouseEvent<HTMLButtonElement>): void => {
-    const target = e.target as HTMLButtonElement;
-    target.dataset.name == 'login'
-      ? setShowLoginModal(true)
-      : setShowRegisterModal(true);
-  };
-
-  const handleCloseRegisterModal = (): void => {
-    setShowRegisterModal(false);
-  };
-
-  const handleCloseLoginModal = (): void => {
-    setShowLoginModal(false);
-  };
 
   return (
     <div className={styles.wrapper}>
       <button
         className={styles.link}
         data-name='login'
-        onClick={handleShowModal}
+        onClick={(e) =>
+          handleShowModal(e, setShowLoginModal, setShowRegisterModal)
+        }
       >
         Login
       </button>
@@ -36,18 +28,22 @@ export const Auth = () => {
       <button
         className={styles.link}
         data-name='register'
-        onClick={handleShowModal}
+        onClick={(e) =>
+          handleShowModal(e, setShowLoginModal, setShowRegisterModal)
+        }
       >
         Register
       </button>
       {showLoginModal &&
         createPortal(
-          <Login closeModal={handleCloseLoginModal} />,
+          <Login closeModal={() => handleCloseLoginModal(setShowLoginModal)} />,
           document.body,
         )}
       {showRegisterModal &&
         createPortal(
-          <Register closeModal={handleCloseRegisterModal} />,
+          <Register
+            closeModal={() => handleCloseRegisterModal(setShowRegisterModal)}
+          />,
           document.body,
         )}
     </div>

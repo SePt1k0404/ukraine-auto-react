@@ -1,24 +1,28 @@
 import { Link, useLocation } from 'react-router-dom';
 import styles from './Navigation.module.css';
+import { getActiveClass } from '../../helpers/navigationHelpers/getActiveClass';
 
 export const Navigation = () => {
   const location = useLocation();
 
-  const getActiveClass = (path: string) =>
-    location.pathname === path ? styles.active : '';
-
   return (
     <nav className={styles.navigation}>
-      <Link to='/' className={getActiveClass('/')}>
+      <Link to='/' className={styles[getActiveClass(location, '/')]}>
         Home
       </Link>
-      <Link to='/about' className={getActiveClass('/about')}>
+      <Link to='/about' className={styles[getActiveClass(location, '/about')]}>
         About
       </Link>
-      <Link to='/services' className={getActiveClass('/services')}>
+      <Link
+        to='/services'
+        className={styles[getActiveClass(location, '/services')]}
+      >
         Services
       </Link>
-      <Link to='/contact' className={getActiveClass('/contact')}>
+      <Link
+        to='/contact'
+        className={styles[getActiveClass(location, '/contact')]}
+      >
         Contact
       </Link>
     </nav>

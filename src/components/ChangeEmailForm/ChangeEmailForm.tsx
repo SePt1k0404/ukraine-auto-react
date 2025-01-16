@@ -5,10 +5,10 @@ import { changeEmailFormSchema } from './ChangeEmailForm.schema';
 import styles from '../Register/Register.module.css';
 import { Props } from '../Auth/Auth.type';
 import clsx from 'clsx';
-import { changeUserEmail } from '../../features/userProfile/userProfileSlice';
 import { IChangeEmailInitialValues } from './ChangeEmailForm.interface';
 import { useModal } from '../../app/hooks';
 import { FormField } from '../FormField/FormField';
+import { changeUserEmail } from '../../features/userProfile/userProfileSliceFunctions/changeUserEmail';
 
 export const ChangeEmailForm = ({ closeModal }: Props) => {
   const { isClosing, startClosing, handleBackdropClick, handleFormClick } =

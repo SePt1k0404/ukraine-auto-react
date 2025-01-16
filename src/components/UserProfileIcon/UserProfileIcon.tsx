@@ -2,8 +2,8 @@ import { useLocation } from 'react-router-dom';
 import styles from './UserProfileIcon.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDDispatch, RootState } from '../../app/store';
-import { getUserProfileInfo } from '../../features/userProfile/userProfileSlice';
 import { useEffect } from 'react';
+import { getUserProfileInfo } from '../../features/userProfile/userProfileSliceFunctions/getUserProfileInfo';
 
 export const UserProfile = () => {
   const { avatar } = useSelector(

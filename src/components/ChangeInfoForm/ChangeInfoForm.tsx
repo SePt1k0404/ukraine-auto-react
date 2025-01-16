@@ -8,9 +8,9 @@ import { AppDDispatch, RootState } from '../../app/store';
 import { useFormik } from 'formik';
 import { changeInfoSchema } from './ChangeInfoForm.schema';
 import clsx from 'clsx';
-import { changeUserInfo } from '../../features/userProfile/userProfileSlice';
 import { useModal } from '../../app/hooks';
 import { FormField } from '../FormField/FormField';
+import { changeUserInfo } from '../../features/userProfile/userProfileSliceFunctions/changeUserInfo';
 
 export const ChangeInfoForm = ({ onCloseModal }: IChangeInfoModalProps) => {
   const { isClosing, startClosing, handleBackdropClick, handleFormClick } =

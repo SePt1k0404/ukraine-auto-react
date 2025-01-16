@@ -8,9 +8,9 @@ import { AppDDispatch } from '../../app/store';
 import { changePasswordSchema } from './ChangePasswordForm.schema';
 import styles from '../Register/Register.module.css';
 import clsx from 'clsx';
-import { changeUserPassword } from '../../features/userProfile/userProfileSlice';
 import { useModal } from '../../app/hooks';
 import { FormField } from '../FormField/FormField';
+import { changeUserPassword } from '../../features/userProfile/userProfileSliceFunctions/changeUserPassword';
 
 export const ChangePasswordForm = ({ closeModal }: IChangePasswordProps) => {
   const { isClosing, startClosing, handleBackdropClick, handleFormClick } =

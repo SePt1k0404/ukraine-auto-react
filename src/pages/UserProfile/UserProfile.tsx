@@ -10,10 +10,6 @@ import {
   FaCamera,
 } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
-import {
-  getUserProfileInfo,
-  setUserProfileAvatar,
-} from '../../features/userProfile/userProfileSlice';
 import { userAuthAction } from '../../features/userAuth/userAuthSlice';
 import { createPortal } from 'react-dom';
 import { ChangeInfoForm } from '../../components/ChangeInfoForm/ChangeInfoForm';
@@ -22,6 +18,8 @@ import { ChangeEmailForm } from '../../components/ChangeEmailForm/ChangeEmailFor
 import { ChangePasswordForm } from '../../components/ChangePasswordForm/ChangePasswordForm';
 import { CropperModal } from '../../components/CropperModal/CropperModal';
 import { getUid } from '../../features/getUid';
+import { setUserProfileAvatar } from '../../features/userProfile/userProfileSliceFunctions/setUserProfileAvatar';
+import { getUserProfileInfo } from '../../features/userProfile/userProfileSliceFunctions/getUserProfileInfo';
 
 export const UserProfile = () => {
   const { name, phoneNumber, email, city, avatar } = useSelector(

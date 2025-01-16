@@ -2,15 +2,17 @@ import { useFormik } from 'formik';
 import { ILogin } from './Login.interface';
 import styles from '../Register/Register.module.css';
 import clsx from 'clsx';
-import { useState } from 'react';
 import { Props } from '../Auth/Auth.type';
 import { loginSchema } from './Login.schema';
 import { useDispatch } from 'react-redux';
 import { AppDDispatch } from '../../app/store';
 import { login } from '../../features/userAuth/userAuthSlice';
+import { useModal } from '../../app/hooks';
+import { FormField } from '../FormField/FormField';
 
 export const Login = ({ closeModal }: Props) => {
-  const [isClosing, setIsClosing] = useState(false);
+  const { isClosing, startClosing, handleBackdropClick, handleFormClick } =
+    useModal(closeModal);
   const dispatch = useDispatch<AppDDispatch>();
   const formik = useFormik<ILogin>({
     initialValues: {
@@ -24,19 +26,6 @@ export const Login = ({ closeModal }: Props) => {
       startClosing();
     },
   });
-
-  const startClosing = () => {
-    setIsClosing(true);
-    setTimeout(closeModal, 500);
-  };
-
-  const handleBackdropClick = () => {
-    startClosing();
-  };
-
-  const handleFormClick = (e: React.MouseEvent<HTMLFormElement>) => {
-    e.stopPropagation();
-  };
   return (
     <div
       className={clsx(styles.backdrop, {
@@ -52,42 +41,28 @@ export const Login = ({ closeModal }: Props) => {
         onClick={handleFormClick}
       >
         <h2 className={styles.formTitle}>Login</h2>
-        <label htmlFor='email' className={styles.formLabel}>
-          Email:
-        </label>
-        <input
-          type='email'
+        <FormField
           id='email'
-          name='email'
-          className={styles.formInput}
-          autoComplete='off'
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          label='Email:'
+          type='email'
           value={formik.values.email}
-        />
-        {formik.touched.email && formik.errors.email ? (
-          <div className={styles.errorText}>{formik.errors.email}</div>
-        ) : null}
-
-        <label htmlFor='password' className={styles.formLabel}>
-          Password:
-        </label>
-        <input
-          type='password'
-          id='password'
-          name='password'
-          className={styles.formInput}
-          autoComplete='off'
+          error={formik.errors.email}
+          touched={formik.touched.email}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.password}
         />
-        {formik.touched.password && formik.errors.password ? (
-          <div className={styles.errorText}>{formik.errors.password}</div>
-        ) : null}
-
+        <FormField
+          id='password'
+          label='Password:'
+          type='password'
+          value={formik.values.password}
+          error={formik.errors.password}
+          touched={formik.touched.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
         <button type='submit' className={styles.formButton}>
-          Submit
+          Login
         </button>
       </form>
     </div>
