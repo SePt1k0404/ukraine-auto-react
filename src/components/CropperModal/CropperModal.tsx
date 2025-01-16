@@ -9,7 +9,7 @@ export const CropperModal = ({
   avatar,
   uploadAvatar,
 }: ICropperModalProps) => {
-  const [image, _] = useState(avatar);
+  const [image, _] = useState<File | null>(avatar);
   const cropperRef = createRef<ReactCropperElement>();
 
   const getCropData = () => {

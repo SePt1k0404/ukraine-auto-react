@@ -35,7 +35,7 @@ export const UserProfile = () => {
   const [showChangePasswordModal, setShowChangePasswordModal] =
     useState<boolean>(false);
   const [showCroppedModal, setShowCroppedModal] = useState<boolean>(false);
-  const [file, setFile] = useState<File | null>(null);
+  const [userAvatar, setUserAvatar] = useState<File | null>(null);
 
   const dispatch = useDispatch<AppDDispatch>();
 
@@ -70,7 +70,7 @@ export const UserProfile = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setFile(file);
+      setUserAvatar(file);
       setShowCroppedModal(true);
       e.target.value = '';
     }
@@ -97,12 +97,10 @@ export const UserProfile = () => {
           const imageUrl = data.secure_url;
           dispatch(setUserProfileAvatar(imageUrl));
         } else {
-          console.error('Upload failed:', await response.text());
-          alert('Image upload failed.');
+          throw new Error('Image upload failed.');
         }
       } catch (error) {
-        console.error('Error during upload:', error);
-        alert('An error occurred while uploading the image.');
+        throw new Error('An error occurred while uploading the image.');
       }
     }
   };
@@ -181,7 +179,7 @@ export const UserProfile = () => {
         createPortal(
           <CropperModal
             closeModal={toggleCroppedModal}
-            avatar={file}
+            avatar={userAvatar}
             uploadAvatar={handleUploadAvatar}
           />,
           document.body,
