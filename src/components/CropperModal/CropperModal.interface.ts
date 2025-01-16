@@ -1,5 +1,7 @@
+import { AppDDispatch } from '../../app/store';
+
 export interface ICropperModalProps {
   closeModal: () => void;
   avatar: File | null;
-  uploadAvatar: (avatar: File) => void;
+  dispatch: AppDDispatch;
 }

@@ -10,16 +10,21 @@ import {
   FaCamera,
 } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
-import { userAuthAction } from '../../features/userAuth/userAuthSlice';
 import { createPortal } from 'react-dom';
 import { ChangeInfoForm } from '../../components/ChangeInfoForm/ChangeInfoForm';
 import clsx from 'clsx';
 import { ChangeEmailForm } from '../../components/ChangeEmailForm/ChangeEmailForm';
 import { ChangePasswordForm } from '../../components/ChangePasswordForm/ChangePasswordForm';
 import { CropperModal } from '../../components/CropperModal/CropperModal';
-import { getUid } from '../../features/getUid';
-import { setUserProfileAvatar } from '../../features/userProfile/userProfileSliceFunctions/setUserProfileAvatar';
 import { getUserProfileInfo } from '../../features/userProfile/userProfileSliceFunctions/getUserProfileInfo';
+import {
+  toggleChangeEmailModal,
+  toggleChangeInfoModal,
+  toggleChangePasswordModal,
+  toggleCroppedModal,
+} from '../../helpers/userProfileHelpers/userProfileToggleModal';
+import { handleLogout } from '../../helpers/userProfileHelpers/userProfileLogout';
+import { handleFileChange } from '../../helpers/userProfileHelpers/userProfileAvatarChanger';
 
 export const UserProfile = () => {
   const { name, phoneNumber, email, city, avatar } = useSelector(
@@ -43,69 +48,12 @@ export const UserProfile = () => {
     }
   }, [dispatch]);
 
-  const handleLogout = () => {
-    dispatch(userAuthAction.clearJwt());
-    localStorage.removeItem('userData');
-    window.location.href = '/';
-  };
-
-  const toggleChangeInfoModal = (): void => {
-    setShowChangeInfoModal((state) => !state);
-  };
-
-  const toggleChangeEmailModal = (): void => {
-    setShowChangeEmailModal((state) => !state);
-  };
-
-  const toggleChangePasswordModal = (): void => {
-    setShowChangePasswordModal((state) => !state);
-  };
-
-  const toggleCroppedModal = (): void => {
-    setShowCroppedModal((state) => !state);
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setUserAvatar(file);
-      setShowCroppedModal(true);
-      e.target.value = '';
-    }
-  };
-
-  const handleUploadAvatar = async (file: File) => {
-    const uid = await getUid();
-    if (uid) {
-      const cloudName = 'dkftturzq';
-      const uploadPreset = 'ukraine-auto';
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', uploadPreset);
-      try {
-        const response = await fetch(
-          `https://api.cloudinary.com/v1_1/${cloudName}/upload`,
-          {
-            method: 'POST',
-            body: formData,
-          },
-        );
-        if (response.ok) {
-          const data = await response.json();
-          const imageUrl = data.secure_url;
-          dispatch(setUserProfileAvatar(imageUrl));
-        } else {
-          throw new Error('Image upload failed.');
-        }
-      } catch (error) {
-        throw new Error('An error occurred while uploading the image.');
-      }
-    }
-  };
-
   return (
     <div className={styles['user-profile-card']}>
-      <button className={styles['logout-button']} onClick={handleLogout}>
+      <button
+        className={styles['logout-button']}
+        onClick={() => handleLogout(dispatch)}
+      >
         <FaSignOutAlt />
         Logout
       </button>
@@ -120,7 +68,9 @@ export const UserProfile = () => {
           <input
             type='file'
             accept='image/*'
-            onChange={handleFileChange}
+            onChange={(e) =>
+              handleFileChange(e, setUserAvatar, setShowCroppedModal)
+            }
             className={styles['file-input']}
           />
         </label>
@@ -145,13 +95,22 @@ export const UserProfile = () => {
         </p>
       </div>
       <div className={styles['user-profile-buttons-wrapper']}>
-        <button onClick={toggleChangeInfoModal} className={styles.change}>
+        <button
+          onClick={() => toggleChangeInfoModal(setShowChangeInfoModal)}
+          className={styles.change}
+        >
           Change info
         </button>
-        <button onClick={toggleChangeEmailModal} className={styles.change}>
+        <button
+          onClick={() => toggleChangeEmailModal(setShowChangeEmailModal)}
+          className={styles.change}
+        >
           Change email
         </button>
-        <button onClick={toggleChangePasswordModal} className={styles.change}>
+        <button
+          onClick={() => toggleChangePasswordModal(setShowChangePasswordModal)}
+          className={styles.change}
+        >
           Change password
         </button>
         <button className={clsx(styles.change, styles.delete)}>
@@ -160,25 +119,33 @@ export const UserProfile = () => {
       </div>
       {showChangeInfoModal &&
         createPortal(
-          <ChangeInfoForm onCloseModal={toggleChangeInfoModal} />,
+          <ChangeInfoForm
+            onCloseModal={() => toggleChangeInfoModal(setShowChangeInfoModal)}
+          />,
           document.body,
         )}
       {showChangeEmailModal &&
         createPortal(
-          <ChangeEmailForm closeModal={toggleChangeEmailModal} />,
+          <ChangeEmailForm
+            closeModal={() => toggleChangeEmailModal(setShowChangeEmailModal)}
+          />,
           document.body,
         )}
       {showChangePasswordModal &&
         createPortal(
-          <ChangePasswordForm closeModal={toggleChangePasswordModal} />,
+          <ChangePasswordForm
+            closeModal={() =>
+              toggleChangePasswordModal(setShowChangePasswordModal)
+            }
+          />,
           document.body,
         )}
       {showCroppedModal &&
         createPortal(
           <CropperModal
-            closeModal={toggleCroppedModal}
+            closeModal={() => toggleCroppedModal(setShowCroppedModal)}
             avatar={userAvatar}
-            uploadAvatar={handleUploadAvatar}
+            dispatch={dispatch}
           />,
           document.body,
         )}

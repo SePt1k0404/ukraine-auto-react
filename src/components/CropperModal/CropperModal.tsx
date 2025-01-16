@@ -3,11 +3,12 @@ import { ICropperModalProps } from './CropperModal.interface';
 import styles from './CropperModal.module.css';
 import Cropper, { ReactCropperElement } from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
+import { handleUploadAvatar } from '../../helpers/userProfileHelpers/userProfileAvatarUploader';
 
 export const CropperModal = ({
   closeModal,
   avatar,
-  uploadAvatar,
+  dispatch,
 }: ICropperModalProps) => {
   const [image, _] = useState<File | null>(avatar);
   const cropperRef = createRef<ReactCropperElement>();
@@ -20,7 +21,7 @@ export const CropperModal = ({
           const file = new File([blob], 'cropped-avatar.png', {
             type: blob.type,
           });
-          uploadAvatar(file);
+          handleUploadAvatar(file, dispatch);
           setTimeout(() => {
             closeModal();
           }, 500);
