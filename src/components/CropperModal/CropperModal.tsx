@@ -36,7 +36,10 @@ export const CropperModal = ({
   return (
     <div className={styles['backdrop']}>
       <div className={styles['wrapper']}>
-        <div className='cropper-container' onClick={handleCropperClick}>
+        <div
+          className={styles['cropper-container']}
+          onClick={handleCropperClick}
+        >
           <Cropper
             ref={cropperRef}
             style={{ height: 400, width: '100%' }}
