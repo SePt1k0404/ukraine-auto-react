@@ -40,3 +40,8 @@ export interface IChangeUserPassword {
   oldPassword: string;
   newPassword: string;
 }
+
+export interface IDeleteUserProfile {
+  email: string;
+  password: string;
+}

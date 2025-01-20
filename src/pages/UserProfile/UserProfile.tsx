@@ -22,9 +22,11 @@ import {
   toggleChangeInfoModal,
   toggleChangePasswordModal,
   toggleCroppedModal,
+  toggleDeleteModal,
 } from '../../helpers/userProfileHelpers/userProfileToggleModal';
 import { handleLogout } from '../../helpers/userProfileHelpers/userProfileLogout';
 import { handleFileChange } from '../../helpers/userProfileHelpers/userProfileAvatarChanger';
+import { DeleteUserProfileModal } from '../../components/DeleteUserProfileModal/DeleteUserProfileModal';
 
 export const UserProfile = () => {
   const { name, phoneNumber, email, city, avatar, emailPreferences } =
@@ -37,6 +39,7 @@ export const UserProfile = () => {
   const [showChangePasswordModal, setShowChangePasswordModal] =
     useState<boolean>(false);
   const [showCroppedModal, setShowCroppedModal] = useState<boolean>(false);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [userAvatar, setUserAvatar] = useState<File | null>(null);
 
   const dispatch = useDispatch<AppDDispatch>();
@@ -152,7 +155,10 @@ export const UserProfile = () => {
         >
           Change password
         </button>
-        <button className={clsx(styles.change, styles.delete)}>
+        <button
+          className={clsx(styles.change, styles.delete)}
+          onClick={() => toggleDeleteModal(setShowDeleteModal)}
+        >
           Delete account
         </button>
       </div>
@@ -176,6 +182,14 @@ export const UserProfile = () => {
             closeModal={() =>
               toggleChangePasswordModal(setShowChangePasswordModal)
             }
+          />,
+          document.body,
+        )}
+      {showDeleteModal &&
+        createPortal(
+          <DeleteUserProfileModal
+            closeModal={() => toggleDeleteModal(setShowDeleteModal)}
+            onDelete={() => {}}
           />,
           document.body,
         )}

@@ -1,0 +1,167 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+  transition: opacity 0.5s ease-out;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.registerForm {
+  background: #fff;
+  padding: 40px;
+  width: 500px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.98);
+  animation: formIn 0.5s ease-in-out forwards;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.formTitle {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #333;
+}
+
+.warning {
+  font-size: 16px;
+  color: #e74c3c;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+.formLabel {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.formInput {
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.formInput:focus {
+  border-color: #3498db;
+  outline: none;
+  background-color: #ffffff;
+}
+
+.formButton {
+  background: linear-gradient(90deg, #e64141, #ff2e2e);
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.formButton:hover {
+  background: linear-gradient(90deg, #ff2e2e, #e64141);
+}
+
+.formButton:active {
+  transform: translateY(1px);
+}
+
+.cancelButton {
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  color: white;
+
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.cancelButton:hover {
+  background: linear-gradient(90deg, #2980b9, #3498db);
+}
+
+.errorText {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.errorText::before {
+  content: '⚠️ ';
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes formIn {
+  from {
+    transform: scale(0.98);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.fadeOut {
+  opacity: 0;
+}
+
+.formOut {
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+@media (max-width: 600px) {
+  .registerForm {
+    width: 90%;
+    padding: 20px;
+  }
+  .formTitle {
+    font-size: 22px;
+  }
+  .formLabel {
+    font-size: 14px;
+  }
+  .formInput {
+    font-size: 14px;
+    padding: 10px;
+  }
+  .formButton,
+  .cancelButton {
+    font-size: 14px;
+    padding: 10px;
+  }
+}

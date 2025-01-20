@@ -18,6 +18,12 @@ export const toggleChangePasswordModal = (
   setShowChangePasswordModal((state) => !state);
 };
 
+export const toggleDeleteModal = (
+  setShowDeleteModal: Dispatch<SetStateAction<boolean>>,
+): void => {
+  setShowDeleteModal((state) => !state);
+};
+
 export const toggleCroppedModal = (
   setShowChangeInfoModal: Dispatch<SetStateAction<boolean>>,
 ): void => {

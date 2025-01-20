@@ -14,6 +14,7 @@ import {
   pendingFunction,
   rejectedFunction,
 } from './userProfileSliceFunctions/userProfileStatusFunction';
+import { deleteUserProfile } from './userProfileSliceFunctions/deleterUserProfile';
 
 const userProfileSlice = createSlice({
   name: 'userProfile',
@@ -92,6 +93,19 @@ const userProfileSlice = createSlice({
         state.isSuccess = true;
       })
       .addCase(changeUserPassword.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      )
+      .addCase(deleteUserProfile.pending, (state) => pendingFunction(state))
+      .addCase(deleteUserProfile.fulfilled, (state) => {
+        state.name = initialState.name;
+        state.phoneNumber = initialState.phoneNumber;
+        state.city = initialState.city;
+        state.emailPreferences = initialState.emailPreferences;
+        state.isLoading = false;
+        state.error = null;
+        state.isSuccess = true;
+      })
+      .addCase(deleteUserProfile.rejected, (state, action) =>
         rejectedFunction(state, action),
       );
   },
