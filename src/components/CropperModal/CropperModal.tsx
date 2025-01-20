@@ -3,7 +3,7 @@ import { ICropperModalProps } from './CropperModal.interface';
 import styles from './CropperModal.module.css';
 import Cropper, { ReactCropperElement } from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
-import { handleUploadAvatar } from '../../helpers/userProfileHelpers/userProfileAvatarUploader';
+import { getCropData } from '../../helpers/cropperHelpers/getCropData';
 
 export const CropperModal = ({
   closeModal,
@@ -12,24 +12,6 @@ export const CropperModal = ({
 }: ICropperModalProps) => {
   const [image, _] = useState<File | null>(avatar);
   const cropperRef = createRef<ReactCropperElement>();
-
-  const getCropData = () => {
-    if (cropperRef.current?.cropper) {
-      const croppedCanvas = cropperRef.current.cropper.getCroppedCanvas();
-      croppedCanvas.toBlob((blob) => {
-        if (blob) {
-          const file = new File([blob], 'cropped-avatar.png', {
-            type: blob.type,
-          });
-          handleUploadAvatar(file, dispatch);
-          setTimeout(() => {
-            closeModal();
-          }, 500);
-        }
-      });
-    }
-  };
-
   const handleCropperClick = (e: React.MouseEvent<HTMLImageElement>) => {
     e.stopPropagation();
   };
@@ -62,7 +44,10 @@ export const CropperModal = ({
           <button className={styles['close-modal']} onClick={closeModal}>
             Close Cropper
           </button>
-          <button className={styles['cropped-img']} onClick={getCropData}>
+          <button
+            className={styles['cropped-img']}
+            onClick={() => getCropData(cropperRef, dispatch, closeModal)}
+          >
             Upload Avatar
           </button>
         </div>
