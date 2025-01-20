@@ -1,31 +1,28 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './Navigation.module.css';
-import { useRef, MouseEvent } from 'react';
+import { getActiveClass } from '../../helpers/navigationHelpers/getActiveClass';
 
 export const Navigation = () => {
-  const navRef = useRef<null | HTMLDivElement>(null);
-
-  const handleSetActiveLink = (e: MouseEvent<HTMLAnchorElement>): void => {
-    const target = e.target as HTMLAnchorElement;
-    if (navRef.current) {
-      const linksArr = Array.from(navRef.current.querySelectorAll('a'));
-      linksArr.forEach((link) => link.classList.remove(styles.active));
-      target.classList.add(styles.active);
-    }
-  };
+  const location = useLocation();
 
   return (
-    <nav className={styles.navigation} ref={navRef}>
-      <Link onClick={handleSetActiveLink} to='/' className={styles.active}>
+    <nav className={styles.navigation}>
+      <Link to='/' className={styles[getActiveClass(location, '/')]}>
         Home
       </Link>
-      <Link onClick={handleSetActiveLink} to='/about'>
+      <Link to='/about' className={styles[getActiveClass(location, '/about')]}>
         About
       </Link>
-      <Link onClick={handleSetActiveLink} to='/services'>
+      <Link
+        to='/services'
+        className={styles[getActiveClass(location, '/services')]}
+      >
         Services
       </Link>
-      <Link onClick={handleSetActiveLink} to='/contact'>
+      <Link
+        to='/contact'
+        className={styles[getActiveClass(location, '/contact')]}
+      >
         Contact
       </Link>
     </nav>

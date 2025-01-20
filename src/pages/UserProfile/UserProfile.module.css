@@ -1,0 +1,249 @@
+.user-profile-card {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  transition: transform 0.3s ease;
+}
+
+.user-profile-card:hover {
+  transform: translateY(-15px);
+}
+
+.user-profile-avatar img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid #ddd;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.user-profile__title {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.user-profile__details {
+  font-size: 20px;
+  color: #555;
+  text-align: left;
+}
+
+.user-profile__details p {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.user-profile__details span {
+  font-weight: bold;
+  color: #000;
+  margin-right: 8px;
+}
+
+.icon {
+  margin-right: 12px;
+  color: #3498db;
+  font-size: 22px;
+}
+
+.user-profile-card:hover .icon {
+  color: #2980b9;
+}
+
+.change {
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.change:hover {
+  background: linear-gradient(90deg, #2980b9, #3498db);
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 14px rgba(0, 0, 0, 0.2);
+}
+
+.change:active {
+  transform: translateY(1px);
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(90deg, #2c81cb, #1c639b);
+}
+
+.change:focus {
+  outline: none;
+  box-shadow: 0px 0px 12px rgba(52, 152, 219, 0.8);
+}
+
+.logout-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  color: #ff5e5e;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.logout-button:hover {
+  color: #ff2e2e;
+}
+
+.user-profile-buttons-wrapper {
+  margin-top: 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.delete {
+  background: linear-gradient(90deg, #e64141, #ff2e2e);
+}
+
+.delete:hover {
+  background: linear-gradient(90deg, #ff2e2e, #e64141);
+}
+
+@media (max-width: 534px) {
+  .icon {
+    display: none;
+  }
+  .user-profile__details p {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.upload-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  padding: 8px 12px;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  text-align: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.upload-avatar:hover {
+  background-color: #2980b9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.file-input {
+  display: none;
+}
+
+.user-profile-avatar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-profile-avatar img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.email-preferences {
+  margin-top: 40px;
+  text-align: left;
+  font-size: 18px;
+}
+
+.email-preferences__title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.email-preferences__options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.email-preferences__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+.email-preferences__option input {
+  width: 20px;
+  height: 20px;
+  accent-color: #3498db;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  outline: none;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.privacy-settings {
+  margin-top: 40px;
+  text-align: left;
+  font-size: 18px;
+}
+
+.privacy-settings__title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.privacy-settings__options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.privacy-settings__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+.privacy-settings__option input {
+  width: 20px;
+  height: 20px;
+  accent-color: #3498db;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  outline: none;
+  transition: background-color 0.3s, border-color 0.3s;
+}
