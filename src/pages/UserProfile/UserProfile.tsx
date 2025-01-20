@@ -29,7 +29,7 @@ import { handleFileChange } from '../../helpers/userProfileHelpers/userProfileAv
 import { DeleteUserProfileModal } from '../../components/DeleteUserProfileModal/DeleteUserProfileModal';
 
 export const UserProfile = () => {
-  const { name, phoneNumber, email, city, avatar, emailPreferences } =
+  const { name, phoneNumber, email, city, avatar, emailPreferences, privacy } =
     useSelector((state: RootState) => state.userProfileReducer);
 
   const [showChangeInfoModal, setShowChangeInfoModal] =
@@ -133,6 +133,18 @@ export const UserProfile = () => {
               onChange={() => {}}
             />
             Receive Promotional Emails
+          </label>
+        </div>
+      </div>
+      <div className={styles['privacy-settings']}>
+        <h2 className={styles['privacy-settings__title']}>Privacy</h2>
+        <div className={styles['privacy-settings__options']}>
+          <label
+            className={styles['privacy-settings__option']}
+            title='To change, use "Change info button"'
+          >
+            <input type='checkbox' checked={privacy} onChange={() => {}} />
+            Private profile
           </label>
         </div>
       </div>

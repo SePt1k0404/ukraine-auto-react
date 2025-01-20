@@ -36,6 +36,7 @@ export const getUserProfileInfo = createAsyncThunk<
         promotions: false,
         notifications: false,
       },
+      privacy: data?.privacy || false,
       avatar: null,
     };
 

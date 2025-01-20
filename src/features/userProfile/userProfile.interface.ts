@@ -8,6 +8,7 @@ export interface IUserProfile {
     promotions: boolean;
     notifications: boolean;
   };
+  privacy: boolean;
   avatar: string | null;
   isLoading?: boolean;
   error?: string | null;
@@ -23,6 +24,7 @@ export interface IChangeUserProfile {
     promotions: boolean;
     notifications: boolean;
   };
+  privacy: boolean;
 }
 
 export interface IUserPersistent {

@@ -15,7 +15,7 @@ import { changeUserInfo } from '../../features/userProfile/userProfileSliceFunct
 export const ChangeInfoForm = ({ onCloseModal }: IChangeInfoModalProps) => {
   const { isClosing, startClosing, handleBackdropClick, handleFormClick } =
     useModal(onCloseModal);
-  const { name, phoneNumber, city, emailPreferences } = useSelector(
+  const { name, phoneNumber, city, emailPreferences, privacy } = useSelector(
     (state: RootState) => state.userProfileReducer,
   );
   const dispatch = useDispatch<AppDDispatch>();
@@ -30,6 +30,7 @@ export const ChangeInfoForm = ({ onCloseModal }: IChangeInfoModalProps) => {
         promotions: emailPreferences?.promotions ?? false,
         notifications: emailPreferences?.notifications ?? false,
       },
+      privacy,
     },
     validationSchema: changeInfoSchema,
     onSubmit: (values, { resetForm }) => {
@@ -114,6 +115,19 @@ export const ChangeInfoForm = ({ onCloseModal }: IChangeInfoModalProps) => {
             Receive Promotional Emails
           </label>
         </div>
+        <div className={styles['privacy-settings-section']}>
+          <h3 className={styles['privacy-settings-title']}>Privacy:</h3>
+          <label className={styles['privacy-checkbox-label']}>
+            <input
+              type='checkbox'
+              name='privacy'
+              checked={formik.values.privacy}
+              onChange={formik.handleChange}
+            />
+            Private Profile
+          </label>
+        </div>
+
         <button type='submit' className={styles['form-submit']}>
           Save Changes
         </button>

@@ -11,4 +11,5 @@ export interface IChangeInfoInitialValues {
     promotions: boolean;
     notifications: boolean;
   };
+  privacy: boolean;
 }

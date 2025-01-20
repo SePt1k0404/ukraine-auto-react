@@ -23,6 +23,7 @@ export const changeUserInfo = createAsyncThunk<
         phoneNumber: params.phoneNumber,
         city: params.city,
         emailPreferences: params.emailPreferences,
+        privacy: params.privacy,
       });
       return params;
     } catch (error) {
