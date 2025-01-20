@@ -1,0 +1,107 @@
+.car-card {
+  background: linear-gradient(145deg, #ffffff, #f1f1f1);
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.car-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.car-card__image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: filter 0.3s ease;
+}
+
+.car-card__image:hover {
+  filter: brightness(0.9);
+}
+
+.car-card__info {
+  padding: 20px;
+  width: 100%;
+}
+
+.car-card__title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #2c3e50;
+  transition: color 0.3s ease;
+}
+
+.car-card__title:hover {
+  color: #3498db;
+}
+
+.car-card__year,
+.car-card__features {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  margin: 5px 0;
+}
+
+.car-card__year::before {
+  content: '📅 ';
+}
+
+.car-card__features::before {
+  content: '🔧 ';
+}
+
+.car-card__actions {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.car-card__like-btn {
+  background: linear-gradient(145deg, #3498db, #2980b9);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.car-card__like-btn:hover {
+  background: linear-gradient(145deg, #2980b9, #1f6391);
+  transform: scale(1.05);
+}
+
+.car-card__like-btn:active {
+  transform: scale(0.95);
+}
+
+.car-card__likes {
+  font-size: 0.9rem;
+  color: #34495e;
+  font-style: italic;
+}
+
+.car-card__likes::before {
+  content: '❤️ ';
+  color: #e74c3c;
+  font-size: 1rem;
+  vertical-align: middle;
+}
+
+.car-card:hover .car-card__like-btn {
+  box-shadow: 0 6px 12px rgba(52, 152, 219, 0.4);
+}
