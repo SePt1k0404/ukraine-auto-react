@@ -31,6 +31,11 @@ export const getUserProfileInfo = createAsyncThunk<
       email: getAuth().currentUser?.email || '',
       phoneNumber: data?.phoneNumber || '',
       city: data?.city || '',
+      emailPreferences: data?.emailPreferences || {
+        newsletters: false,
+        promotions: false,
+        notifications: false,
+      },
       avatar: null,
     };
 

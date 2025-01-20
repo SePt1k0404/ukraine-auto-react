@@ -5,6 +5,11 @@ export const initialState: IUserProfile = {
   phoneNumber: '',
   city: '',
   email: '',
+  emailPreferences: {
+    newsletters: false,
+    promotions: false,
+    notifications: false,
+  },
   avatar: null,
   isLoading: false,
   isSuccess: false,

@@ -22,6 +22,7 @@ export const changeUserInfo = createAsyncThunk<
         name: params.name,
         phoneNumber: params.phoneNumber,
         city: params.city,
+        emailPreferences: params.emailPreferences,
       });
       return params;
     } catch (error) {

@@ -15,10 +15,9 @@ import { changeUserInfo } from '../../features/userProfile/userProfileSliceFunct
 export const ChangeInfoForm = ({ onCloseModal }: IChangeInfoModalProps) => {
   const { isClosing, startClosing, handleBackdropClick, handleFormClick } =
     useModal(onCloseModal);
-  const { name, phoneNumber, city } = useSelector(
+  const { name, phoneNumber, city, emailPreferences } = useSelector(
     (state: RootState) => state.userProfileReducer,
   );
-
   const dispatch = useDispatch<AppDDispatch>();
 
   const formik = useFormik<IChangeInfoInitialValues>({
@@ -26,6 +25,11 @@ export const ChangeInfoForm = ({ onCloseModal }: IChangeInfoModalProps) => {
       name,
       phoneNumber,
       city,
+      emailPreferences: {
+        newsletters: emailPreferences?.newsletters ?? false,
+        promotions: emailPreferences?.promotions ?? false,
+        notifications: emailPreferences?.notifications ?? false,
+      },
     },
     validationSchema: changeInfoSchema,
     onSubmit: (values, { resetForm }) => {
@@ -80,6 +84,36 @@ export const ChangeInfoForm = ({ onCloseModal }: IChangeInfoModalProps) => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
+        <div className={styles['notifications-section']}>
+          <h3 className={styles['section-title']}>Notification Preferences:</h3>
+          <label className={styles['checkbox-label']}>
+            <input
+              type='checkbox'
+              name='emailPreferences.newsletters'
+              checked={formik.values.emailPreferences.newsletters}
+              onChange={formik.handleChange}
+            />
+            Receive Newsletters
+          </label>
+          <label className={styles['checkbox-label']}>
+            <input
+              type='checkbox'
+              name='emailPreferences.notifications'
+              checked={formik.values.emailPreferences.notifications}
+              onChange={formik.handleChange}
+            />
+            Receive Notifications
+          </label>
+          <label className={styles['checkbox-label']}>
+            <input
+              type='checkbox'
+              name='emailPreferences.promotions'
+              checked={formik.values.emailPreferences.promotions}
+              onChange={formik.handleChange}
+            />
+            Receive Promotional Emails
+          </label>
+        </div>
         <button type='submit' className={styles['form-submit']}>
           Save Changes
         </button>

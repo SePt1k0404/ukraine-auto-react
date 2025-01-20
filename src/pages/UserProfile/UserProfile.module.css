@@ -173,3 +173,40 @@
   object-fit: cover;
   border: 2px solid #ddd;
 }
+
+.email-preferences {
+  margin-top: 40px;
+  text-align: left;
+  font-size: 18px;
+}
+
+.email-preferences__title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.email-preferences__options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.email-preferences__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+.email-preferences__option input {
+  width: 20px;
+  height: 20px;
+  accent-color: #3498db;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  outline: none;
+  transition: background-color 0.3s, border-color 0.3s;
+}

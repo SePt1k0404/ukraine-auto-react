@@ -3,6 +3,11 @@ export interface IUserProfile {
   phoneNumber: string;
   city: string;
   email: string;
+  emailPreferences: {
+    newsletters: boolean;
+    promotions: boolean;
+    notifications: boolean;
+  };
   avatar: string | null;
   isLoading?: boolean;
   error?: string | null;
@@ -13,6 +18,11 @@ export interface IChangeUserProfile {
   name: string;
   phoneNumber: string;
   city: string;
+  emailPreferences: {
+    newsletters: boolean;
+    promotions: boolean;
+    notifications: boolean;
+  };
 }
 
 export interface IUserPersistent {

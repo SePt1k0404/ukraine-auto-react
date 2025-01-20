@@ -27,9 +27,8 @@ import { handleLogout } from '../../helpers/userProfileHelpers/userProfileLogout
 import { handleFileChange } from '../../helpers/userProfileHelpers/userProfileAvatarChanger';
 
 export const UserProfile = () => {
-  const { name, phoneNumber, email, city, avatar } = useSelector(
-    (state: RootState) => state.userProfileReducer,
-  );
+  const { name, phoneNumber, email, city, avatar, emailPreferences } =
+    useSelector((state: RootState) => state.userProfileReducer);
 
   const [showChangeInfoModal, setShowChangeInfoModal] =
     useState<boolean>(false);
@@ -93,6 +92,46 @@ export const UserProfile = () => {
           <FaCity className={styles.icon} />
           <span>City:</span> {city}
         </p>
+      </div>
+      <div className={styles['email-preferences']}>
+        <h2 className={styles['email-preferences__title']}>
+          Email Preferences
+        </h2>
+        <div className={styles['email-preferences__options']}>
+          <label
+            className={styles['email-preferences__option']}
+            title='To change, use "Change info button"'
+          >
+            <input
+              type='checkbox'
+              checked={emailPreferences.newsletters}
+              onChange={() => {}}
+            />
+            Receive Newsletters
+          </label>
+          <label
+            className={styles['email-preferences__option']}
+            title='To change, use "Change info button"'
+          >
+            <input
+              type='checkbox'
+              checked={emailPreferences.notifications}
+              onChange={() => {}}
+            />
+            Receive Notifications
+          </label>
+          <label
+            className={styles['email-preferences__option']}
+            title='To change, use "Change info button"'
+          >
+            <input
+              type='checkbox'
+              checked={emailPreferences.promotions}
+              onChange={() => {}}
+            />
+            Receive Promotional Emails
+          </label>
+        </div>
       </div>
       <div className={styles['user-profile-buttons-wrapper']}>
         <button
