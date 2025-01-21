@@ -42,6 +42,10 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
+.cars-search {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

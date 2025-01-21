@@ -32,7 +32,7 @@
 }
 
 .car-card__title {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin: 10px 0;
   color: #2c3e50;
@@ -44,18 +44,19 @@
 }
 
 .car-card__year,
-.car-card__features {
-  font-size: 0.9rem;
+.car-card__features,
+.car-card__price {
+  font-size: 1rem;
   color: #7f8c8d;
   margin: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.car-card__year::before {
-  content: '📅 ';
-}
-
-.car-card__features::before {
-  content: '🔧 ';
+.car-card__price {
+  color: rgb(25, 200, 25);
+  font-weight: bold;
 }
 
 .car-card__actions {
@@ -75,6 +76,10 @@
   border-radius: 8px;
   font-size: 0.95rem;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   cursor: pointer;
   transition: transform 0.3s ease, background 0.3s ease;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
@@ -92,16 +97,25 @@
 .car-card__likes {
   font-size: 0.9rem;
   color: #34495e;
-  font-style: italic;
-}
-
-.car-card__likes::before {
-  content: '❤️ ';
-  color: #e74c3c;
-  font-size: 1rem;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .car-card:hover .car-card__like-btn {
   box-shadow: 0 6px 12px rgba(52, 152, 219, 0.4);
+}
+
+.car-card__like-icon,
+.car-card__key-icon,
+.car-card__calendar-icon,
+.car-card__price-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.car-card__likes-icon {
+  color: red;
+  width: 20px;
+  height: 20px;
 }
