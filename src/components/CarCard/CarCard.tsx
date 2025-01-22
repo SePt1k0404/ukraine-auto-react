@@ -8,7 +8,7 @@ import {
 export const CarCard = () => {
   return (
     <li
-      className='group bg-[linear-gradient(145deg,#ffffff,#f1f1f1)]
+      className='group bg-custom-gradient-light
      border-solid border-[1px] border-[#ddd] flex flex-col items-start
       overflow-hidden rounded-xl shadow-lg transition ease hover:-translate-y-2 hover:scale-[1.01] hover:shadow-xl duration-300'
     >
@@ -33,7 +33,7 @@ export const CarCard = () => {
         <div className='flex justify-between items-center gap-4 mt-5 w-full'>
           <button
             className='flex items-center justify-center gap-3 bg-[linear-gradient(145deg,#3498db,#2980b9)] cursor-pointer font-bold
-          text-base border-none rounded-lg py-2 px-4 text-white shadow-md transition-all ease hover:scale-105 hover:bg-[linear-gradient(145deg,#2980b9,#3498db)] active:scale-95 group-hover:shadow-[0_6px_12px_rgba(52,152,219,0.4)] duration-300'
+          text-base border-none rounded-lg py-2 px-4 text-white shadow-md transition-all ease hover:scale-105 hover:bg-[linear-gradient(145deg,#2980b9,#3498db)] focus:scale-105 focus:bg-[linear-gradient(145deg,#2980b9,#3498db)] active:scale-95 group-hover:shadow-[0_6px_12px_rgba(52,152,219,0.4)] duration-300'
           >
             <AiFillHeart className='w-5 h-5' /> Like
           </button>

@@ -12,19 +12,19 @@ export const Footer = () => {
         <div className='flex items-center content-center gap-4'>
           <a
             href='/terms-of-service'
-            className='transition-colors ease text-white hover:text-main-color no-underline font-medium duration-300'
+            className='outline-none transition-colors ease text-white hover:text-main-color focus:text-main-color no-underline font-medium duration-300'
           >
             Terms of Service
           </a>
           <a
             href='/privacy-policy'
-            className='transition-colors ease text-white hover:text-main-color no-underline font-medium duration-300'
+            className='outline-none transition-colors ease text-white hover:text-main-color focus:text-main-color no-underline font-medium duration-300'
           >
             Privacy Policy
           </a>
           <a
             href='/faq'
-            className='transition-colors ease text-white hover:text-main-color no-underline font-medium duration-300'
+            className='outline-none transition-colors ease text-white hover:text-main-color focus:text-main-color no-underline font-medium duration-300'
           >
             FAQ
           </a>
@@ -32,21 +32,21 @@ export const Footer = () => {
         <div className='flex items-center content-center gap-4'>
           <a
             href='https://facebook.com'
-            className='transition-all ease text-white hover:text-main-color hover:-translate-y-1 text-3xl no-underline duration-300'
+            className='outline-none transition-all ease text-white hover:text-main-color focus:text-main-color hover:-translate-y-1 focus:-translate-y-1 text-3xl no-underline duration-300'
             aria-label='Facebook'
           >
             <FaFacebook />
           </a>
           <a
             href='https://twitter.com'
-            className='transition-all ease text-white hover:text-main-color hover:-translate-y-1 text-3xl no-underline duration-300'
+            className='outline-none transition-all ease text-white hover:text-main-color focus:text-main-color hover:-translate-y-1 focus:-translate-y-1 text-3xl no-underline duration-300'
             aria-label='Twitter'
           >
             <FaTwitter />
           </a>
           <a
             href='https://linkedin.com'
-            className='transition-all ease text-white hover:text-main-color hover:-translate-y-1 text-3xl no-underline duration-300'
+            className='outline-none transition-all ease text-white hover:text-main-color focus:text-main-color hover:-translate-y-1 focus:-translate-y-1 text-3xl no-underline duration-300'
             aria-label='LinkedIn'
           >
             <FaLinkedin />
@@ -57,7 +57,7 @@ export const Footer = () => {
             Contact us:{' '}
             <a
               href='mailto:info@yourcompany.com'
-              className='transition-colors ease text-white hover:text-main-color no-underline duration-300'
+              className='outline-none transition-colors ease text-white hover:text-main-color focus:text-main-color no-underline duration-300'
             >
               info@yourcompany.com
             </a>
@@ -66,7 +66,7 @@ export const Footer = () => {
             Phone:{' '}
             <a
               href='tel:+1234567890'
-              className='transition-colors ease text-white hover:text-main-color no-underline duration-300'
+              className='outline-none transition-colors ease text-white hover:text-main-color focus:text-main-color no-underline duration-300'
             >
               +1 (234) 567-890
             </a>

@@ -1,5 +1,3 @@
-import { transform } from 'typescript';
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -10,11 +8,17 @@ export default {
       },
       colors: {
         'background-light': 'rgb(179, 187, 187)',
+        'background-card-light': '#f9f9f9',
         'main-color': '#3498db',
         'secondary-color': '#2980b9',
         'secondary-text': '#2c3e50',
+        'main-red-color': '#ff2e2e',
+        'accent-red-color': '#e64141',
         'footer-dark': '#34495e',
         'footer-light': '#2c3e50',
+      },
+      backgroundImage: {
+        'custom-gradient-light': 'linear-gradient(135deg, #ffffff, #f8f9fa)',
       },
       animation: {
         fadeIn: 'fadeIn 0.5s ease-in-out',

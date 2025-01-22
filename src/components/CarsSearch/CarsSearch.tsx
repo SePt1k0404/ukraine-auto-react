@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from 'react';
-import styles from './CarsSearch.module.css';
 import clsx from 'clsx';
 import { ICarsSearchProps } from './CarsSearch.interface';
 
@@ -13,19 +12,25 @@ export const CarsSearch = ({ className }: ICarsSearchProps) => {
   };
 
   return (
-    <div className={clsx(styles['cars-search__container'], className)}>
-      <div className={styles['cars-search__wrapper']}>
+    <div
+      className={clsx(
+        'flex flex-row gap-5 bg-custom-gradient-light p-5 rounded-2xl shadow-lg mb-5',
+        className,
+      )}
+    >
+      <div className='flex justify-start flex-grow mr-5'>
         <input
-          className={styles['cars-search__input']}
+          className='w-full py-1 px-4 text-lg border-solid border-[1px] border-[#e0e0e0]
+          rounded-lg outline-none bg-background-card-light transition-colors ease hover:border-main-color focus:border-main-color duration-300'
           type='text'
           placeholder='Search car...'
         />
       </div>
-      <div className={styles['cars-filter__options']}>
-        <label className={styles['cars-filter__label']}>
+      <div className='flex justify-start items-center gap-5 flex-nowrap'>
+        <label className='flex flex-col text-sm font-medium gap-2'>
           Year From:
           <select
-            className={styles['cars-filter__select']}
+            className='px-3 py-2 border-solid border-[1px] border-gray-400 outline-none bg-background-card-light transition-colors ease hover:border-main-color active:border-main-color focus:border-main-color duration-300'
             value={yearFrom}
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
               setYearFrom(e.target.value)
@@ -44,10 +49,10 @@ export const CarsSearch = ({ className }: ICarsSearchProps) => {
             ))}
           </select>
         </label>
-        <label className={styles['cars-filter__label']}>
+        <label className='flex flex-col text-sm font-medium gap-2'>
           Min Price:
           <select
-            className={styles['cars-filter__select']}
+            className='px-3 py-2 border-solid border-[1px] border-gray-400 outline-none bg-background-card-light transition-colors ease hover:border-main-color active:border-main-color focus:border-main-color duration-300'
             value={minPrice}
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
               setMinPrice(e.target.value)
@@ -65,16 +70,16 @@ export const CarsSearch = ({ className }: ICarsSearchProps) => {
             )}
           </select>
         </label>
-        <label className={styles['cars-filter__label']}>
+        <label className='flex flex-col text-sm font-medium gap-2'>
           Sort by Price:
-          <select className={styles['cars-filter__select']}>
+          <select className='px-3 py-2 border-solid border-[1px] border-gray-400 outline-none bg-background-card-light transition-colors ease hover:border-main-color active:border-main-color focus:border-main-color duration-300'>
             <option value='asc'>Ascending</option>
             <option value='desc'>Descending</option>
           </select>
         </label>
       </div>
       <button
-        className={styles['reset-filters-btn']}
+        className='bg-main-red-color text-white border-solid border-[1px] border-main-red-color outline-none px-5 py-3 rounded-md cursor-pointer transition-colors ease hover:bg-accent-red-color focus:bg-accent-red-color duration-300'
         onClick={handleResetFilters}
       >
         Reset Filters
