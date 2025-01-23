@@ -3,12 +3,14 @@ import userProfileReducer from '../features/userProfile/userProfileSlice';
 import userAuthReducer, {
   JWT_PERSISTENT,
 } from '../features/userAuth/userAuthSlice';
+import carsListReducer from '../features/carsList/carsListSlice';
 import { saveJwt } from './storege';
 
 export const store = configureStore({
   reducer: {
     userProfileReducer,
     userAuthReducer,
+    carsListReducer,
   },
 });
 
