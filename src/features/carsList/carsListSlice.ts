@@ -80,7 +80,6 @@ export const getCars = createAsyncThunk<
           id: doc.id || '',
         })),
       };
-
       return {
         carsList,
         carsListLength: allCarsLength.data()?.count || 0,
@@ -112,11 +111,7 @@ const rejectedFunction = (
 const carsListSlice = createSlice({
   name: 'carsList',
   initialState,
-  reducers: {
-    resetCarsList: (state) => {
-      state.cars = [];
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getCars.pending, (state) => pendingFunction(state))

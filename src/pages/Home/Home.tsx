@@ -25,7 +25,7 @@ export const Home = () => {
         Ukraine auto home page:
       </h1>
       <CarsSearch className='animate-fadeIn' />
-      <ul className='animate-fadeInUp grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6 list-none p-0 my-0 mx-auto max-w-[1200px]'>
+      <ul className='animate-fadeInUp grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] auto-rows-[500px] gap-6 list-none p-0 my-0 mx-auto max-w-[1200px]'>
         {carsList.map((car) => (
           <CarCard
             key={car.id}

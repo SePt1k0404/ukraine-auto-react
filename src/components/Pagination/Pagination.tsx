@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDDispatch, RootState } from '../../app/store';
 import { IPaginationProps } from './Pagination.interface';
 import { useEffect, useState } from 'react';
-import { carsListAction, getCars } from '../../features/carsList/carsListSlice';
+import { getCars } from '../../features/carsList/carsListSlice';
 
 export const Pagination = ({ limit }: IPaginationProps) => {
   const dispatch = useDispatch<AppDDispatch>();
@@ -18,8 +18,6 @@ export const Pagination = ({ limit }: IPaginationProps) => {
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setPage(newPage);
-      dispatch(carsListAction.resetCarsList());
-
       if (newPage > page) {
         dispatch(
           getCars({
@@ -35,7 +33,15 @@ export const Pagination = ({ limit }: IPaginationProps) => {
           }),
         );
       }
+      scrollToTop();
     }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const getPageNumbers = () => {
