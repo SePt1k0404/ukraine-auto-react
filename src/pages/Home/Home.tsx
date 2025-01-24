@@ -1,7 +1,21 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { CarCard } from '../../components/CarCard/CarCard';
 import { CarsSearch } from '../../components/CarsSearch/CarsSearch';
+import { AppDDispatch, RootState } from '../../app/store';
+import { useEffect } from 'react';
+import { getCars } from '../../features/carsList/carsListSlice';
+import { Pagination } from '../../components/Pagination/Pagination';
 
 export const Home = () => {
+  const dispatch = useDispatch<AppDDispatch>();
+  const carsList = useSelector(
+    (state: RootState) => state.carsListReducer.cars,
+  );
+  useEffect(() => {
+    dispatch(
+      getCars({ lastVisibleCar: undefined, previousVisibleCar: undefined }),
+    );
+  }, [dispatch]);
   return (
     <>
       <h1
@@ -11,12 +25,20 @@ export const Home = () => {
         Ukraine auto home page:
       </h1>
       <CarsSearch className='animate-fadeIn' />
-      <ul className='animate-fadeInUp grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-6 list-none p-0 my-0 mx-auto max-w-[1200px]'>
-        <CarCard />
-        <CarCard />
-        <CarCard />
-        <CarCard />
+      <ul className='animate-fadeInUp grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] auto-rows-[500px] gap-6 list-none p-0 my-0 mx-auto max-w-[1200px]'>
+        {carsList.map((car) => (
+          <CarCard
+            key={car.id}
+            model={car.model}
+            year={car.year}
+            price={car.price}
+            image={car.image}
+            likes={car.likes}
+            brief={car.brief}
+          />
+        ))}
       </ul>
+      <Pagination limit={9} />
     </>
   );
 };

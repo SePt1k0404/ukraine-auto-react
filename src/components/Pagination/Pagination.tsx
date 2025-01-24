@@ -1,0 +1,85 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDDispatch, RootState } from '../../app/store';
+import { IPaginationProps } from './Pagination.interface';
+import { useMemo, useCallback, useState, useEffect } from 'react';
+import { getCars } from '../../features/carsList/carsListSlice';
+import { PaginationButton } from '../PaginationButton/PaginationButton';
+import { scrollToTop } from '../../helpers/scrollToTop/scrollToTop';
+import { usePageNumbers } from '../../helpers/paginationHelpers/getPageNumbers';
+
+export const Pagination = ({ limit }: IPaginationProps) => {
+  const dispatch = useDispatch<AppDDispatch>();
+  const { allCarsLength, lastVisibleCar, previousVisibleCar, isLoading } =
+    useSelector((state: RootState) => state.carsListReducer);
+
+  const totalPages = useMemo(
+    () => Math.ceil(allCarsLength / limit),
+    [allCarsLength, limit],
+  );
+  const [page, setPage] = useState<number>(1);
+
+  const pageNumbers = usePageNumbers(totalPages, page);
+
+  const handlePageChange = useCallback(
+    (newPage: number) => {
+      if (newPage >= 1 && newPage <= totalPages) {
+        setPage(newPage);
+        dispatch(
+          getCars({
+            lastVisibleCar: newPage > page ? lastVisibleCar : undefined,
+            previousVisibleCar: newPage < page ? previousVisibleCar : undefined,
+          }),
+        );
+      }
+    },
+    [page, totalPages, lastVisibleCar, previousVisibleCar, dispatch],
+  );
+
+  useEffect(() => {
+    scrollToTop();
+  }, [page]);
+
+  return (
+    <div className='flex justify-center items-center gap-2 mt-4'>
+      <button
+        onClick={() => {
+          handlePageChange(page - 1);
+        }}
+        disabled={page === 1 || isLoading}
+        className='py-1 px-3 rounded bg-gray-200 disabled:opacity-50'
+      >
+        Previous
+      </button>
+      {isLoading ? (
+        <div className='flex justify-center items-center py-2 px-4'>
+          <div className='animate-spin rounded-full h-8 w-8 border-t-2 border-blue-500'></div>
+        </div>
+      ) : (
+        pageNumbers.map((p, index) =>
+          typeof p === 'string' ? (
+            <span key={index} className='py-1 px-3'>
+              ...
+            </span>
+          ) : (
+            <PaginationButton
+              key={index}
+              pageNumber={p}
+              handlePageChange={handlePageChange}
+              page={page}
+              scrollToTop={scrollToTop}
+            />
+          ),
+        )
+      )}
+      <button
+        onClick={() => {
+          handlePageChange(page + 1);
+        }}
+        disabled={page === totalPages || isLoading}
+        className='py-1 px-3 rounded bg-gray-200 disabled:opacity-50'
+      >
+        Next
+      </button>
+    </div>
+  );
+};
