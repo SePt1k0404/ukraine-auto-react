@@ -6,6 +6,7 @@ export interface ICar {
   desc: string;
   brief: string;
   likes: number;
+  mileage: number;
   image: string;
 }
 
@@ -15,6 +16,7 @@ export interface ICarsList {
 
 export interface ICarsListInitialState {
   cars: ICar[] | [];
+  dedicatedCar: null | ICar;
   allCarsLength: number;
   lastVisibleCar: undefined | string;
   previousVisibleCar: undefined | string;
