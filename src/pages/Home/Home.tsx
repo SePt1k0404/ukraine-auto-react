@@ -3,8 +3,8 @@ import { CarCard } from '../../components/CarCard/CarCard';
 import { CarsSearch } from '../../components/CarsSearch/CarsSearch';
 import { AppDDispatch, RootState } from '../../app/store';
 import { useEffect } from 'react';
-import { getCars } from '../../features/carsList/carsListSlice';
 import { Pagination } from '../../components/Pagination/Pagination';
+import { getCars } from '../../features/carsList/carsListSliceFunctions/getCars';
 
 export const Home = () => {
   const dispatch = useDispatch<AppDDispatch>();
@@ -29,6 +29,7 @@ export const Home = () => {
         {carsList.map((car) => (
           <CarCard
             key={car.id}
+            id={car.id}
             model={car.model}
             year={car.year}
             price={car.price}

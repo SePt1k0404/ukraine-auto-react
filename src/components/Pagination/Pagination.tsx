@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDDispatch, RootState } from '../../app/store';
 import { IPaginationProps } from './Pagination.interface';
 import { useMemo, useCallback, useState, useEffect } from 'react';
-import { getCars } from '../../features/carsList/carsListSlice';
 import { PaginationButton } from '../PaginationButton/PaginationButton';
 import { scrollToTop } from '../../helpers/scrollToTop/scrollToTop';
 import { usePageNumbers } from '../../helpers/paginationHelpers/getPageNumbers';
+import { getCars } from '../../features/carsList/carsListSliceFunctions/getCars';
 
 export const Pagination = ({ limit }: IPaginationProps) => {
   const dispatch = useDispatch<AppDDispatch>();

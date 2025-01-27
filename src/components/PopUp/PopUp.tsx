@@ -35,7 +35,6 @@ const PopUpAuth = () => {
       toast.success('Operation is successful!', { autoClose: 1500 });
     }
   }, [isLoadingProfile, errorProfile, isSuccess]);
-
   return <ToastContainer />;
 };
 

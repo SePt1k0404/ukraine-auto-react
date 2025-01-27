@@ -7,6 +7,8 @@ import { Services } from './pages/Services/Services';
 import { Contact } from './pages/Contact/Contact';
 import { UserProfile } from './pages/UserProfile/UserProfile';
 import PopUp from './components/PopUp/PopUp';
+import { CarCard } from './pages/CarCard/CarCard';
+import { Error } from './pages/Error/Error';
 function App() {
   return (
     <>
@@ -17,6 +19,8 @@ function App() {
           <Route path='services' element={<Services />} />
           <Route path='contact' element={<Contact />} />
           <Route path='profile' element={<UserProfile />} />
+          <Route path='carCard/:carId' element={<CarCard />} />
+          <Route path='*' element={<Error />} />
         </Route>
       </Routes>
       <PopUp />
