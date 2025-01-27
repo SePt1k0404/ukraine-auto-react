@@ -11,7 +11,14 @@ import {
 const carsListSlice = createSlice({
   name: 'carsList',
   initialState,
-  reducers: {},
+  reducers: {
+    addCarsQuery: (state, action) => {
+      state.carsQuery = { ...action.payload };
+    },
+    clearCarsQuery: (state, action) => {
+      state.carsQuery = { ...action.payload };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCars.pending, (state) => pendingFunction(state))

@@ -9,25 +9,36 @@ import { getCars } from '../../features/carsList/carsListSliceFunctions/getCars'
 
 export const Pagination = ({ limit }: IPaginationProps) => {
   const dispatch = useDispatch<AppDDispatch>();
-  const { allCarsLength, lastVisibleCar, previousVisibleCar, isLoading } =
-    useSelector((state: RootState) => state.carsListReducer);
+  const {
+    allCarsLength,
+    lastVisibleCar,
+    previousVisibleCar,
+    isLoading,
+    carsQuery,
+  } = useSelector((state: RootState) => state.carsListReducer);
 
   const totalPages = useMemo(
     () => Math.ceil(allCarsLength / limit),
     [allCarsLength, limit],
   );
+
+  useEffect(() => {
+    setPage(1);
+  }, [carsQuery]);
+
   const [page, setPage] = useState<number>(1);
 
   const pageNumbers = usePageNumbers(totalPages, page);
 
   const handlePageChange = useCallback(
     (newPage: number) => {
-      if (newPage >= 1 && newPage <= totalPages) {
+      if (newPage >= 1 && newPage <= totalPages && carsQuery !== undefined) {
         setPage(newPage);
         dispatch(
           getCars({
             lastVisibleCar: newPage > page ? lastVisibleCar : undefined,
             previousVisibleCar: newPage < page ? previousVisibleCar : undefined,
+            carsQuery,
           }),
         );
       }

@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ICarsList, ICarsResponse } from '../carsList.interface';
-import { db } from '../../../firebase/config';
 import {
   collection,
   doc,
@@ -12,48 +11,77 @@ import {
   orderBy,
   query,
   startAfter,
+  where,
 } from 'firebase/firestore';
+import { db } from '../../../firebase/config';
 
 export const getCars = createAsyncThunk<
   ICarsResponse,
   {
     lastVisibleCar: undefined | string;
     previousVisibleCar: undefined | string;
+    carsQuery:
+      | undefined
+      | {
+          model: string;
+          year: string;
+          price: string;
+        };
   },
   { rejectValue: string }
 >(
   'carsList/getCars',
-  async ({ lastVisibleCar, previousVisibleCar }, { rejectWithValue }) => {
+  async (
+    { lastVisibleCar, previousVisibleCar, carsQuery },
+    { rejectWithValue },
+  ) => {
     try {
       const carsCollectionRef = collection(db, 'cars');
-      const allCarsLength = await getCountFromServer(carsCollectionRef);
-      let carsQuery = query(
-        carsCollectionRef,
-        orderBy('model', 'desc'),
-        limit(9),
-      );
+      let carsQueryBase = query(carsCollectionRef);
+      if (carsQuery?.model) {
+        const startValue = carsQuery.model;
+        const endValue = carsQuery.model + '\uf8ff';
+        carsQueryBase = query(
+          carsQueryBase,
+          orderBy('model'),
+          where('model', '>=', startValue),
+          where('model', '<=', endValue),
+        );
+      }
+      if (carsQuery?.year) {
+        carsQueryBase = query(
+          carsQueryBase,
+          where('year', '==', Number(carsQuery.year)),
+        );
+      }
+      if (carsQuery?.price) {
+        carsQueryBase = query(
+          carsQueryBase,
+          where('price', '>=', Number(carsQuery.price)),
+        );
+      }
 
+      const countQuery = carsQueryBase;
+      const countSnapshot = await getCountFromServer(countQuery);
+      const allCarsLength = countSnapshot.data().count;
       if (lastVisibleCar) {
         const lastDocRef = doc(db, 'cars', lastVisibleCar);
         const lastDocData = await getDoc(lastDocRef);
-        carsQuery = query(carsQuery, startAfter(lastDocData));
+        carsQueryBase = query(carsQueryBase, startAfter(lastDocData));
       }
-
       if (previousVisibleCar) {
         const prevDocRef = doc(db, 'cars', previousVisibleCar);
         const prevDocData = await getDoc(prevDocRef);
-        carsQuery = query(carsQuery, endBefore(prevDocData));
+        carsQueryBase = query(carsQueryBase, endBefore(prevDocData));
       }
-
-      const carsSnapshot = await getDocs(carsQuery);
-
+      carsQueryBase = query(carsQueryBase, limit(9));
+      const carsSnapshot = await getDocs(carsQueryBase);
       if (carsSnapshot.empty) {
         throw new Error('Cars not found');
       }
 
       const lastCar = carsSnapshot.docs[carsSnapshot.docs.length - 1];
       const prevCar = carsSnapshot.docs[0];
-
       const carsList: ICarsList = {
         cars: carsSnapshot.docs.map((doc) => ({
           model: doc.data()?.model || '',
@@ -67,9 +95,10 @@ export const getCars = createAsyncThunk<
           id: doc.id || '',
         })),
       };
+
       return {
         carsList,
-        carsListLength: allCarsLength.data()?.count || 0,
+        carsListLength: allCarsLength || 0,
         lastVisibleCar: lastCar.id,
         previousVisibleCar: prevCar.id,
       };

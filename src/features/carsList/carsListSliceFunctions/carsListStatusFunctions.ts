@@ -12,6 +12,8 @@ export const rejectedFunction = (
   action: PayloadAction<string | null | undefined>,
 ): void => {
   state.error = action.payload || 'Unknown error';
+  state.cars = [];
+  state.allCarsLength = 0;
   state.isLoading = false;
   state.isSuccess = false;
 };

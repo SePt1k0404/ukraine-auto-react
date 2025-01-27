@@ -13,7 +13,11 @@ export const Home = () => {
   );
   useEffect(() => {
     dispatch(
-      getCars({ lastVisibleCar: undefined, previousVisibleCar: undefined }),
+      getCars({
+        lastVisibleCar: undefined,
+        previousVisibleCar: undefined,
+        carsQuery: undefined,
+      }),
     );
   }, [dispatch]);
   return (
