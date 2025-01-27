@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { AppDDispatch } from '../../app/store';
 import { getCars } from '../../features/carsList/carsListSliceFunctions/getCars';
 import { carsListAction } from '../../features/carsList/carsListSlice';
+import { CarSearchSchema } from './CarsSearch.schema';
 
 export const CarsSearch = ({ className }: ICarsSearchProps) => {
   const dispatch = useDispatch<AppDDispatch>();
@@ -14,6 +15,7 @@ export const CarsSearch = ({ className }: ICarsSearchProps) => {
       year: '',
       price: '',
     },
+    validationSchema: CarSearchSchema,
     onSubmit: (values) => {
       dispatch(carsListAction.addCarsQuery(values));
       dispatch(
