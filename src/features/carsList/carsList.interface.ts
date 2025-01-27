@@ -20,6 +20,11 @@ export interface ICarsListInitialState {
   allCarsLength: number;
   lastVisibleCar: undefined | string;
   previousVisibleCar: undefined | string;
+  carsQuery: {
+    model: string;
+    year: string;
+    price: string;
+  };
   isLoading: boolean;
   error: null | string;
   isSuccess: boolean;

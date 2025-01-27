@@ -7,6 +7,11 @@ export const initialState: ICarsListInitialState = {
   isLoading: false,
   lastVisibleCar: undefined,
   previousVisibleCar: undefined,
+  carsQuery: {
+    model: '',
+    year: '',
+    price: '',
+  },
   error: null,
   isSuccess: false,
 };
