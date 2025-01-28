@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { CarsSearch } from '../../components/CarsSearch/CarsSearch';
-import { getCars } from '../../features/carsList/carsListSliceFunctions/getCars';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDDispatch, RootState } from '../../app/store';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { CarCard } from '../../components/CarCard/CarCard';
+import { getFavoriteCars } from '../../features/carsList/carsListSliceFunctions/getFavoriteCars';
 
 export const FavoriteCars = () => {
   const dispatch = useDispatch<AppDDispatch>();
@@ -18,11 +18,9 @@ export const FavoriteCars = () => {
   useEffect(() => {
     if (favoriteCarsId.length) {
       dispatch(
-        getCars({
+        getFavoriteCars({
           lastVisibleCar: undefined,
-          previousVisibleCar: undefined,
           carsQuery: undefined,
-          carsListType: 'favorite',
           favoriteList: favoriteCarsId,
         }),
       );

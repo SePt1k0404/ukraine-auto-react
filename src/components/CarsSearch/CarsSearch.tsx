@@ -6,6 +6,7 @@ import { AppDDispatch, RootState } from '../../app/store';
 import { getCars } from '../../features/carsList/carsListSliceFunctions/getCars';
 import { carsListAction } from '../../features/carsList/carsListSlice';
 import { CarSearchSchema } from './CarsSearch.schema';
+import { getFavoriteCars } from '../../features/carsList/carsListSliceFunctions/getFavoriteCars';
 
 export const CarsSearch = ({ className, carsListType }: ICarsSearchProps) => {
   const dispatch = useDispatch<AppDDispatch>();
@@ -21,15 +22,23 @@ export const CarsSearch = ({ className, carsListType }: ICarsSearchProps) => {
     validationSchema: CarSearchSchema,
     onSubmit: (values) => {
       dispatch(carsListAction.addCarsQuery(values));
-      dispatch(
-        getCars({
-          lastVisibleCar: undefined,
-          previousVisibleCar: undefined,
-          carsQuery: values,
-          carsListType,
-          favoriteList: favoriteCarsId,
-        }),
-      );
+      if (carsListType == 'home') {
+        dispatch(
+          getCars({
+            lastVisibleCar: undefined,
+            previousVisibleCar: undefined,
+            carsQuery: values,
+          }),
+        );
+      } else if (carsListType == 'favorite') {
+        dispatch(
+          getFavoriteCars({
+            lastVisibleCar: undefined,
+            carsQuery: values,
+            favoriteList: favoriteCarsId,
+          }),
+        );
+      }
     },
   });
 

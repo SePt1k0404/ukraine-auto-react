@@ -6,6 +6,7 @@ import { PaginationButton } from '../PaginationButton/PaginationButton';
 import { scrollToTop } from '../../helpers/scrollToTop/scrollToTop';
 import { usePageNumbers } from '../../helpers/paginationHelpers/getPageNumbers';
 import { getCars } from '../../features/carsList/carsListSliceFunctions/getCars';
+import { getFavoriteCars } from '../../features/carsList/carsListSliceFunctions/getFavoriteCars';
 
 export const Pagination = ({ limit, carsListType }: IPaginationProps) => {
   const dispatch = useDispatch<AppDDispatch>();
@@ -38,15 +39,24 @@ export const Pagination = ({ limit, carsListType }: IPaginationProps) => {
     (newPage: number) => {
       if (newPage >= 1 && newPage <= totalPages && carsQuery !== undefined) {
         setPage(newPage);
-        dispatch(
-          getCars({
-            lastVisibleCar: newPage > page ? lastVisibleCar : undefined,
-            previousVisibleCar: newPage < page ? previousVisibleCar : undefined,
-            carsQuery,
-            carsListType,
-            favoriteList: favoriteCarsId,
-          }),
-        );
+        if (carsListType == 'home') {
+          dispatch(
+            getCars({
+              lastVisibleCar: newPage > page ? lastVisibleCar : undefined,
+              previousVisibleCar:
+                newPage < page ? previousVisibleCar : undefined,
+              carsQuery,
+            }),
+          );
+        } else if (carsListType == 'favorite') {
+          dispatch(
+            getFavoriteCars({
+              lastVisibleCar: newPage > page ? lastVisibleCar : undefined,
+              carsQuery,
+              favoriteList: favoriteCarsId,
+            }),
+          );
+        }
       }
     },
     [page, totalPages, lastVisibleCar, previousVisibleCar, carsQuery, dispatch],

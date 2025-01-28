@@ -17,8 +17,6 @@ export const Home = () => {
         lastVisibleCar: undefined,
         previousVisibleCar: undefined,
         carsQuery: undefined,
-        carsListType: 'home',
-        favoriteList: undefined,
       }),
     );
   }, [dispatch]);

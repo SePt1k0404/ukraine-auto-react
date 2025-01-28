@@ -7,6 +7,7 @@ import {
   pendingFunction,
   rejectedFunction,
 } from './carsListSliceFunctions/carsListStatusFunctions';
+import { getFavoriteCars } from './carsListSliceFunctions/getFavoriteCars';
 
 const carsListSlice = createSlice({
   name: 'carsList',
@@ -39,6 +40,26 @@ const carsListSlice = createSlice({
         },
       )
       .addCase(getCars.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      )
+      .addCase(getFavoriteCars.pending, (state) => {
+        pendingFunction(state);
+        state.lastVisibleCar = undefined;
+        state.previousVisibleCar = undefined;
+      })
+      .addCase(
+        getFavoriteCars.fulfilled,
+        (state, action: PayloadAction<ICarsResponse>) => {
+          state.cars = [...action.payload.carsList.cars];
+          state.allCarsLength = action.payload.carsListLength;
+          state.lastVisibleCar = action.payload.lastVisibleCar;
+          state.previousVisibleCar = action.payload.previousVisibleCar;
+          state.isLoading = false;
+          state.error = null;
+          state.isSuccess = true;
+        },
+      )
+      .addCase(getFavoriteCars.rejected, (state, action) =>
         rejectedFunction(state, action),
       )
       .addCase(getDedicatedCar.pending, (state) => pendingFunction(state))
