@@ -9,6 +9,7 @@ import { UserProfile } from './pages/UserProfile/UserProfile';
 import PopUp from './components/PopUp/PopUp';
 import { CarCard } from './pages/CarCard/CarCard';
 import { Error } from './pages/Error/Error';
+import { FavoriteCars } from './pages/FavoriteCars/FavoriteCars';
 function App() {
   return (
     <>
@@ -20,6 +21,7 @@ function App() {
           <Route path='contact' element={<Contact />} />
           <Route path='profile' element={<UserProfile />} />
           <Route path='carCard/:carId' element={<CarCard />} />
+          <Route path='favoriteCars' element={<FavoriteCars />} />
           <Route path='*' element={<Error />} />
         </Route>
       </Routes>

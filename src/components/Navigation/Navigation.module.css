@@ -29,6 +29,12 @@
   }
 }
 
+@media (max-width: 764px) {
+  .navigation a {
+    font-size: 14px;
+  }
+}
+
 @media (max-width: 534px) {
   .navigation {
     display: none;

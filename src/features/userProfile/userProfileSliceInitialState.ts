@@ -10,6 +10,7 @@ export const initialState: IUserProfile = {
     promotions: false,
     notifications: false,
   },
+  favoritesCars: [],
   privacy: false,
   avatar: null,
   isLoading: false,

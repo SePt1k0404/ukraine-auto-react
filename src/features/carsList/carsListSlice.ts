@@ -21,7 +21,11 @@ const carsListSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getCars.pending, (state) => pendingFunction(state))
+      .addCase(getCars.pending, (state) => {
+        pendingFunction(state);
+        state.lastVisibleCar = undefined;
+        state.previousVisibleCar = undefined;
+      })
       .addCase(
         getCars.fulfilled,
         (state, action: PayloadAction<ICarsResponse>) => {

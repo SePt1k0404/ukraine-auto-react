@@ -7,7 +7,7 @@ import { scrollToTop } from '../../helpers/scrollToTop/scrollToTop';
 import { usePageNumbers } from '../../helpers/paginationHelpers/getPageNumbers';
 import { getCars } from '../../features/carsList/carsListSliceFunctions/getCars';
 
-export const Pagination = ({ limit }: IPaginationProps) => {
+export const Pagination = ({ limit, carsListType }: IPaginationProps) => {
   const dispatch = useDispatch<AppDDispatch>();
   const {
     allCarsLength,
@@ -16,6 +16,10 @@ export const Pagination = ({ limit }: IPaginationProps) => {
     isLoading,
     carsQuery,
   } = useSelector((state: RootState) => state.carsListReducer);
+
+  const favoriteCarsId = useSelector(
+    (state: RootState) => state.userProfileReducer.favoritesCars,
+  );
 
   const totalPages = useMemo(
     () => Math.ceil(allCarsLength / limit),
@@ -39,11 +43,13 @@ export const Pagination = ({ limit }: IPaginationProps) => {
             lastVisibleCar: newPage > page ? lastVisibleCar : undefined,
             previousVisibleCar: newPage < page ? previousVisibleCar : undefined,
             carsQuery,
+            carsListType,
+            favoriteList: favoriteCarsId,
           }),
         );
       }
     },
-    [page, totalPages, lastVisibleCar, previousVisibleCar, dispatch],
+    [page, totalPages, lastVisibleCar, previousVisibleCar, carsQuery, dispatch],
   );
 
   useEffect(() => {
