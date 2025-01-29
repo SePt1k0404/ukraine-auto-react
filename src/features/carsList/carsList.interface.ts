@@ -7,6 +7,12 @@ export interface ICar {
   brief: string;
   likes: number;
   mileage: number;
+  seller?: {
+    name: string;
+    phoneNumber: string;
+    address: string;
+    email: string;
+  };
   image: string;
 }
 

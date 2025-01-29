@@ -27,6 +27,12 @@ export const getDedicatedCar = createAsyncThunk<
       likes: dedicatedDocData.data()?.likes || 0,
       mileage: dedicatedDocData.data()?.mileage || 0,
       image: dedicatedDocData.data()?.image || '',
+      seller: dedicatedDocData.data()?.seller || {
+        name: '',
+        phoneNumber: null,
+        email: '',
+        address: '',
+      },
       id: dedicatedDocData.id || '',
     };
     return dedicatedCarInfo;
