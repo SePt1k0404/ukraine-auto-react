@@ -4,7 +4,7 @@ import { AppDDispatch, RootState } from '../../app/store';
 import { useEffect, useState } from 'react';
 import { getDedicatedCar } from '../../features/carsList/carsListSliceFunctions/getDedicatedCar';
 import { toggleFavoriteCar } from '../../features/userProfile/userProfileSliceFunctions/toggleFavoriteCar';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ContactSellerForm } from '../../components/ContactSellerForm/ContactSellerForm';
@@ -167,6 +167,12 @@ export const CarCard = () => {
         >
           Contact with Seller
         </button>
+        <Link
+          to={location.pathname + '/checkout'}
+          className='px-6 py-2 bg-gray-100 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition-all duration-300'
+        >
+          Checkout
+        </Link>
       </div>
       {showContactSellerModal &&
         createPortal(
