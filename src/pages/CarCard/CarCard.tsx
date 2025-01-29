@@ -1,16 +1,19 @@
 import { AiFillHeart } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDDispatch, RootState } from '../../app/store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getDedicatedCar } from '../../features/carsList/carsListSliceFunctions/getDedicatedCar';
 import { toggleFavoriteCar } from '../../features/userProfile/userProfileSliceFunctions/toggleFavoriteCar';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ContactSellerForm } from '../../components/ContactSellerForm/ContactSellerForm';
+import { createPortal } from 'react-dom';
 
 export const CarCard = () => {
   const dispatch = useDispatch<AppDDispatch>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { carId } = useParams<{ carId: string }>();
   const { dedicatedCar, isLoading, error, isSuccess } = useSelector(
     (state: RootState) => state.carsListReducer,
@@ -19,9 +22,29 @@ export const CarCard = () => {
   const { favoritesCars } = useSelector(
     (state: RootState) => state.userProfileReducer,
   );
+
+  const [showContactSellerModal, setShowContactSellerModal] =
+    useState<boolean>(false);
+
   const { jwt } = useSelector((state: RootState) => state.userAuthReducer);
 
+  useEffect(() => {
+    if (carId) {
+      dispatch(getDedicatedCar({ carId }));
+    }
+  }, [dispatch, carId]);
+
+  useEffect(() => {
+    if (location.pathname.includes('favoriteCars') && !jwt) {
+      navigate('/');
+    }
+  }, [jwt]);
+
   const isFavorite = carId && favoritesCars.includes(carId);
+
+  const handleToggleModal = () => {
+    setShowContactSellerModal((state) => !state);
+  };
 
   const handleAddToFavorites = () => {
     if (!jwt) {
@@ -38,12 +61,6 @@ export const CarCard = () => {
       dispatch(toggleFavoriteCar({ carId }));
     }
   };
-
-  useEffect(() => {
-    if (carId) {
-      dispatch(getDedicatedCar({ carId }));
-    }
-  }, [dispatch, carId]);
 
   if (isLoading) {
     return (
@@ -67,6 +84,16 @@ export const CarCard = () => {
 
   return (
     <div className='max-w-4xl mx-auto mt-10 p-6 bg-white border border-gray-200 rounded-lg shadow-lg'>
+      <button
+        onClick={() => {
+          location.pathname.includes('favoriteCars')
+            ? navigate('/favoriteCars')
+            : navigate('/');
+        }}
+        className='px-4 py-2 mb-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition-all duration-300'
+      >
+        Back to Listings
+      </button>
       <div className='relative overflow-hidden rounded-lg group'>
         <img
           src={dedicatedCar.image || '/public/car-img-placeholder.webp'}
@@ -134,10 +161,18 @@ export const CarCard = () => {
           />
           {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
         </button>
-        <button className='px-6 py-2 bg-gray-100 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition-all duration-300'>
-          Share
+        <button
+          onClick={handleToggleModal}
+          className='px-6 py-2 bg-gray-100 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition-all duration-300'
+        >
+          Contact with Seller
         </button>
       </div>
+      {showContactSellerModal &&
+        createPortal(
+          <ContactSellerForm onCloseModal={handleToggleModal} />,
+          document.body,
+        )}
     </div>
   );
 };
