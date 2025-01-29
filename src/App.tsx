@@ -10,6 +10,8 @@ import PopUp from './components/PopUp/PopUp';
 import { CarCard } from './pages/CarCard/CarCard';
 import { Error } from './pages/Error/Error';
 import { FavoriteCars } from './pages/FavoriteCars/FavoriteCars';
+import { PrivateRouts } from './components/PrivateRouts/PrivateRouts';
+import { Checkout } from './pages/Checkout/Checkout';
 function App() {
   return (
     <>
@@ -19,10 +21,27 @@ function App() {
           <Route path='about' element={<About />} />
           <Route path='services' element={<Services />} />
           <Route path='contact' element={<Contact />} />
-          <Route path='profile' element={<UserProfile />} />
+          <Route
+            path='profile'
+            element={<PrivateRouts element={<UserProfile />} />}
+          />
           <Route path='carCard/:carId' element={<CarCard />} />
-          <Route path='favoriteCars' element={<FavoriteCars />} />
-          <Route path='favoriteCars/carCard/:carId' element={<CarCard />} />
+          <Route
+            path='/favoriteCars'
+            element={<PrivateRouts element={<FavoriteCars />} />}
+          />
+          <Route
+            path='favoriteCars/carCard/:carId'
+            element={<PrivateRouts element={<CarCard />} />}
+          />
+          <Route
+            path='favoriteCars/carCard/:carId/checkout'
+            element={<PrivateRouts element={<Checkout />} />}
+          />
+          <Route
+            path='carCard/:carId/checkout'
+            element={<PrivateRouts element={<Checkout />} />}
+          />
           <Route path='*' element={<Error />} />
         </Route>
       </Routes>
