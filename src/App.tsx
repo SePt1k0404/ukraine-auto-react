@@ -22,6 +22,7 @@ function App() {
           <Route path='profile' element={<UserProfile />} />
           <Route path='carCard/:carId' element={<CarCard />} />
           <Route path='favoriteCars' element={<FavoriteCars />} />
+          <Route path='favoriteCars/carCard/:carId' element={<CarCard />} />
           <Route path='*' element={<Error />} />
         </Route>
       </Routes>
