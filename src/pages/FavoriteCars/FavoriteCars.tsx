@@ -5,15 +5,24 @@ import { AppDDispatch, RootState } from '../../app/store';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { CarCard } from '../../components/CarCard/CarCard';
 import { getFavoriteCars } from '../../features/carsList/carsListSliceFunctions/getFavoriteCars';
+import { useNavigate } from 'react-router-dom';
 
 export const FavoriteCars = () => {
   const dispatch = useDispatch<AppDDispatch>();
+  const { jwt } = useSelector((state: RootState) => state.userAuthReducer);
+  const navigate = useNavigate();
   const carsList = useSelector(
     (state: RootState) => state.carsListReducer.cars,
   );
   const favoriteCarsId = useSelector(
     (state: RootState) => state.userProfileReducer.favoritesCars,
   );
+
+  useEffect(() => {
+    if (!jwt) {
+      navigate('/');
+    }
+  }, [jwt]);
 
   useEffect(() => {
     if (favoriteCarsId.length) {

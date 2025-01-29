@@ -34,6 +34,12 @@ export const CarCard = () => {
     }
   }, [dispatch, carId]);
 
+  useEffect(() => {
+    if (location.pathname.includes('favoriteCars') && !jwt) {
+      navigate('/');
+    }
+  }, [jwt]);
+
   const isFavorite = carId && favoritesCars.includes(carId);
 
   const handleToggleModal = () => {
