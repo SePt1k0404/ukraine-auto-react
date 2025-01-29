@@ -15,6 +15,7 @@ import {
   rejectedFunction,
 } from './userProfileSliceFunctions/userProfileStatusFunction';
 import { deleteUserProfile } from './userProfileSliceFunctions/deleterUserProfile';
+import { toggleFavoriteCar } from './userProfileSliceFunctions/toggleFavoriteCar';
 
 const userProfileSlice = createSlice({
   name: 'userProfile',
@@ -35,6 +36,7 @@ const userProfileSlice = createSlice({
           state.phoneNumber = action.payload.phoneNumber;
           state.city = action.payload.city;
           state.emailPreferences = { ...action.payload.emailPreferences };
+          state.favoritesCars = action.payload.favoritesCars;
           state.privacy = action.payload.privacy;
           state.avatar = action.payload.avatar;
           state.isLoading = false;
@@ -108,6 +110,19 @@ const userProfileSlice = createSlice({
         state.isSuccess = true;
       })
       .addCase(deleteUserProfile.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      )
+      .addCase(toggleFavoriteCar.pending, (state) => pendingFunction(state))
+      .addCase(
+        toggleFavoriteCar.fulfilled,
+        (state, action: PayloadAction<Array<string>>) => {
+          state.favoritesCars = [...action.payload];
+          state.isLoading = false;
+          state.error = null;
+          state.isSuccess = true;
+        },
+      )
+      .addCase(toggleFavoriteCar.rejected, (state, action) =>
         rejectedFunction(state, action),
       );
   },

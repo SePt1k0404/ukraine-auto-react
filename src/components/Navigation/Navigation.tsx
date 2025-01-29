@@ -10,6 +10,12 @@ export const Navigation = () => {
       <Link to='/' className={styles[getActiveClass(location, '/')]}>
         Home
       </Link>
+      <Link
+        to='/favoriteCars'
+        className={styles[getActiveClass(location, '/favoriteCars')]}
+      >
+        Favorites
+      </Link>
       <Link to='/about' className={styles[getActiveClass(location, '/about')]}>
         About
       </Link>

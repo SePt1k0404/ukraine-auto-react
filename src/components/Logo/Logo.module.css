@@ -42,7 +42,7 @@
   text-shadow: 0 2px 4px rgba(52, 152, 219, 0.7);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 868px) {
   .logo {
     flex-direction: column;
     gap: 3px;

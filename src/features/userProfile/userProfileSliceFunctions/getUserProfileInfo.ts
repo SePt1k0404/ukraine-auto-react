@@ -36,6 +36,7 @@ export const getUserProfileInfo = createAsyncThunk<
         promotions: false,
         notifications: false,
       },
+      favoritesCars: data?.favoritesCars || [],
       privacy: data?.privacy || false,
       avatar: null,
     };

@@ -8,6 +8,7 @@ export interface IUserProfile {
     promotions: boolean;
     notifications: boolean;
   };
+  favoritesCars: string[];
   privacy: boolean;
   avatar: string | null;
   isLoading?: boolean;

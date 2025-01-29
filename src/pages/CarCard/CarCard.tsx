@@ -1,8 +1,12 @@
+import { AiFillHeart } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDDispatch, RootState } from '../../app/store';
 import { useEffect } from 'react';
 import { getDedicatedCar } from '../../features/carsList/carsListSliceFunctions/getDedicatedCar';
+import { toggleFavoriteCar } from '../../features/userProfile/userProfileSliceFunctions/toggleFavoriteCar';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const CarCard = () => {
   const dispatch = useDispatch<AppDDispatch>();
@@ -11,6 +15,29 @@ export const CarCard = () => {
   const { dedicatedCar, isLoading, error, isSuccess } = useSelector(
     (state: RootState) => state.carsListReducer,
   );
+
+  const { favoritesCars } = useSelector(
+    (state: RootState) => state.userProfileReducer,
+  );
+  const { jwt } = useSelector((state: RootState) => state.userAuthReducer);
+
+  const isFavorite = carId && favoritesCars.includes(carId);
+
+  const handleAddToFavorites = () => {
+    if (!jwt) {
+      toast.info('Firstly login/register to add car to favorites', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else if (carId) {
+      dispatch(toggleFavoriteCar({ carId }));
+    }
+  };
 
   useEffect(() => {
     if (carId) {
@@ -94,8 +121,18 @@ export const CarCard = () => {
         </p>
       </div>
       <div className='flex justify-center mt-8 gap-4'>
-        <button className='px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition-all duration-300'>
-          Add to Favorites
+        <button
+          className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300 flex items-center gap-2 ${
+            isFavorite
+              ? 'bg-red-500 text-white hover:bg-red-600'
+              : 'bg-blue-500 text-white hover:bg-blue-600'
+          }`}
+          onClick={handleAddToFavorites}
+        >
+          <AiFillHeart
+            className={`w-5 h-5 ${isFavorite ? 'text-white' : 'text-white'}`}
+          />
+          {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
         </button>
         <button className='px-6 py-2 bg-gray-100 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition-all duration-300'>
           Share

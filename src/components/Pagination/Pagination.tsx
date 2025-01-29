@@ -6,8 +6,9 @@ import { PaginationButton } from '../PaginationButton/PaginationButton';
 import { scrollToTop } from '../../helpers/scrollToTop/scrollToTop';
 import { usePageNumbers } from '../../helpers/paginationHelpers/getPageNumbers';
 import { getCars } from '../../features/carsList/carsListSliceFunctions/getCars';
+import { getFavoriteCars } from '../../features/carsList/carsListSliceFunctions/getFavoriteCars';
 
-export const Pagination = ({ limit }: IPaginationProps) => {
+export const Pagination = ({ limit, carsListType }: IPaginationProps) => {
   const dispatch = useDispatch<AppDDispatch>();
   const {
     allCarsLength,
@@ -16,6 +17,10 @@ export const Pagination = ({ limit }: IPaginationProps) => {
     isLoading,
     carsQuery,
   } = useSelector((state: RootState) => state.carsListReducer);
+
+  const favoriteCarsId = useSelector(
+    (state: RootState) => state.userProfileReducer.favoritesCars,
+  );
 
   const totalPages = useMemo(
     () => Math.ceil(allCarsLength / limit),
@@ -34,16 +39,27 @@ export const Pagination = ({ limit }: IPaginationProps) => {
     (newPage: number) => {
       if (newPage >= 1 && newPage <= totalPages && carsQuery !== undefined) {
         setPage(newPage);
-        dispatch(
-          getCars({
-            lastVisibleCar: newPage > page ? lastVisibleCar : undefined,
-            previousVisibleCar: newPage < page ? previousVisibleCar : undefined,
-            carsQuery,
-          }),
-        );
+        if (carsListType == 'home') {
+          dispatch(
+            getCars({
+              lastVisibleCar: newPage > page ? lastVisibleCar : undefined,
+              previousVisibleCar:
+                newPage < page ? previousVisibleCar : undefined,
+              carsQuery,
+            }),
+          );
+        } else if (carsListType == 'favorite') {
+          dispatch(
+            getFavoriteCars({
+              lastVisibleCar: newPage > page ? lastVisibleCar : undefined,
+              carsQuery,
+              favoriteList: favoriteCarsId,
+            }),
+          );
+        }
       }
     },
-    [page, totalPages, lastVisibleCar, previousVisibleCar, dispatch],
+    [page, totalPages, lastVisibleCar, previousVisibleCar, carsQuery, dispatch],
   );
 
   useEffect(() => {
