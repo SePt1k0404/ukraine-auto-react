@@ -1,11 +1,14 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
+import { useState } from 'react';
+import { StripeContainer } from '../../components/StripeContainer/StripeContainer';
 
 export const Checkout = () => {
   const carInfo = useSelector(
     (state: RootState) => state.carsListReducer.dedicatedCar,
   );
   const userInfo = useSelector((state: RootState) => state.userProfileReducer);
+  const [showCar, setShowCar] = useState(false);
   return (
     <div className='min-h-screen bg-gray-100 py-8 rounded-xl'>
       <div className='max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6'>
@@ -87,42 +90,24 @@ export const Checkout = () => {
             </div>
           </form>
         </div>
-        <div className='mb-8'>
-          <h2 className='text-xl font-semibold text-gray-700 mb-4'>
-            Payment Method
-          </h2>
-          <div className='space-y-4'>
-            <div className='flex items-center space-x-3'>
-              <input
-                type='radio'
-                id='stripe'
-                name='payment'
-                value='stripe'
-                className='h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500'
-              />
-              <label htmlFor='stripe' className='text-gray-700'>
-                Pay with Stripe
-              </label>
-            </div>
-          </div>
-        </div>
-
-        {/* Error markup */}
-        {/* <div className='mb-8'>
-          <div className='bg-red-50 border-l-4 border-red-400 p-4'>
-            <p className='text-sm text-red-700'>
-              Payment failed. Please try again.
-            </p>
-          </div>
-        </div> */}
-        {/* Error markup */}
-
         <div className='flex justify-end'>
-          <button className='bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500'>
+          <button
+            onClick={() => {
+              setShowCar((state) => !state);
+            }}
+            className='bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500'
+          >
             Complete Purchase
           </button>
         </div>
       </div>
+      {showCar && (
+        <StripeContainer
+          onClose={() => {
+            setShowCar((state) => !state);
+          }}
+        />
+      )}
     </div>
   );
 };
