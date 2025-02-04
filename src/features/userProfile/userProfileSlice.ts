@@ -39,6 +39,7 @@ const userProfileSlice = createSlice({
           state.favoritesCars = action.payload.favoritesCars;
           state.privacy = action.payload.privacy;
           state.avatar = action.payload.avatar;
+          state.stripeCustomerId = action.payload.stripeCustomerId;
           state.isLoading = false;
           state.error = null;
           state.isSuccess = true;

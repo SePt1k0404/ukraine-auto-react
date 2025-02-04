@@ -87,6 +87,7 @@ export const getCars = createAsyncThunk<
           likes: doc.data()?.likes || 0,
           mileage: doc.data()?.mileage || 0,
           image: doc.data()?.image || '',
+          sold: doc.data()?.sold || false,
           id: doc.id,
         })),
       };

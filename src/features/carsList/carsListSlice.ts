@@ -8,6 +8,7 @@ import {
   rejectedFunction,
 } from './carsListSliceFunctions/carsListStatusFunctions';
 import { getFavoriteCars } from './carsListSliceFunctions/getFavoriteCars';
+import { soldCar } from './carsListSliceFunctions/soldCar';
 
 const carsListSlice = createSlice({
   name: 'carsList',
@@ -73,6 +74,15 @@ const carsListSlice = createSlice({
         },
       )
       .addCase(getDedicatedCar.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      )
+      .addCase(soldCar.pending, (state) => pendingFunction(state))
+      .addCase(soldCar.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+        state.isSuccess = true;
+      })
+      .addCase(soldCar.rejected, (state, action) =>
         rejectedFunction(state, action),
       );
   },

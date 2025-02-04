@@ -19,6 +19,7 @@ export const CarCard = ({
   price,
   image,
   likes,
+  sold,
   brief,
 }: ICarCardProps) => {
   const dispatch = useDispatch<AppDDispatch>();
@@ -49,10 +50,15 @@ export const CarCard = ({
 
   return (
     <li
-      className='animate-fadeInUp group bg-custom-gradient-light
-     border-solid border-[1px] border-[#ddd] flex flex-col items-start
-      overflow-hidden rounded-xl shadow-lg transition ease hover:-translate-y-2 hover:scale-[1.01] hover:shadow-xl duration-300'
+      className={`animate-fadeInUp group bg-custom-gradient-light border-solid border-[1px] border-[#ddd] flex flex-col items-start overflow-hidden rounded-xl shadow-lg transition ease hover:-translate-y-2 hover:scale-[1.01] hover:shadow-xl duration-300 relative ${
+        sold ? 'opacity-50 pointer-events-none' : ''
+      }`}
     >
+      {sold && (
+        <div className='absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center text-yellow-500 text-5xl font-bold'>
+          SOLD
+        </div>
+      )}
       <Link className='h-full flex flex-col items-start' to={`carCard/${id}`}>
         <img
           src={image}
@@ -84,6 +90,7 @@ export const CarCard = ({
               : 'bg-[linear-gradient(145deg,#3498db,#2980b9)] text-white hover:scale-105 hover:bg-[linear-gradient(145deg,#2980b9,#3498db)]'
           }`}
           onClick={handleLikeClick}
+          disabled={sold}
         >
           <AiFillHeart
             className={`w-5 h-5 ${isFavorite ? 'text-white' : 'text-white'}`}

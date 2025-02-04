@@ -4,7 +4,7 @@ import { AppDDispatch, RootState } from '../../app/store';
 import { useEffect, useState } from 'react';
 import { getDedicatedCar } from '../../features/carsList/carsListSliceFunctions/getDedicatedCar';
 import { toggleFavoriteCar } from '../../features/userProfile/userProfileSliceFunctions/toggleFavoriteCar';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ContactSellerForm } from '../../components/ContactSellerForm/ContactSellerForm';
@@ -59,6 +59,25 @@ export const CarCard = () => {
       });
     } else if (carId) {
       dispatch(toggleFavoriteCar({ carId }));
+    }
+  };
+
+  const handleCheckout = () => {
+    if (!jwt) {
+      toast.info('Firstly login/register to proceed with checkout', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    if (carId) {
+      navigate(`${location.pathname}/checkout`);
     }
   };
 
@@ -167,12 +186,12 @@ export const CarCard = () => {
         >
           Contact with Seller
         </button>
-        <Link
-          to={location.pathname + '/checkout'}
-          className='px-6 py-2 bg-gray-100 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition-all duration-300'
+        <button
+          onClick={handleCheckout}
+          className='px-6 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition-all duration-300'
         >
           Checkout
-        </Link>
+        </button>
       </div>
       {showContactSellerModal &&
         createPortal(

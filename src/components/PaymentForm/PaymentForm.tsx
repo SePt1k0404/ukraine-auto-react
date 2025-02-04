@@ -1,9 +1,11 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import axios from 'axios';
 import { FormEvent, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDDispatch, RootState } from '../../app/store';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
+import { useNavigate } from 'react-router-dom';
+import { soldCar } from '../../features/carsList/carsListSliceFunctions/soldCar';
 
 const CARD_OPTIONS: StripeCardElementOptions = {
   iconStyle: 'solid',
@@ -28,13 +30,18 @@ export default function PaymentForm({ onClose }: { onClose: () => void }) {
   const car = useSelector(
     (state: RootState) => state.carsListReducer.dedicatedCar,
   );
+  const { name, email, stripeCustomerId } = useSelector(
+    (state: RootState) => state.userProfileReducer,
+  );
   const [success, setSuccess] = useState<boolean>(false);
   const stripe = useStripe();
+  const dispatch = useDispatch<AppDDispatch>();
   const elements = useElements();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!stripe || !elements) return;
+    if (!stripe || !elements || !car) return;
 
     const cardElement = elements.getElement(CardElement);
     if (!cardElement) return;
@@ -50,11 +57,19 @@ export default function PaymentForm({ onClose }: { onClose: () => void }) {
         const response = await axios.post('http://localhost:4000/payment', {
           amount: car?.price && car.price * 100,
           id,
+          email,
+          name,
+          model: car.model,
+          stripeCustomerId,
         });
 
         if (response.data.success) {
           console.log('Successful payment');
           setSuccess(true);
+          dispatch(soldCar({ carId: car?.id }));
+          setTimeout(() => {
+            navigate('/');
+          }, 1000);
         }
       } catch (error) {
         console.log('Error', error);

@@ -10,7 +10,7 @@ import {
   IUserPersistentAuth,
 } from './userAuth.interface';
 import { auth, db } from '../../firebase/config.ts';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { loadJwt } from '../../app/storege.ts';
 
 export const JWT_PERSISTENT = 'userData';
@@ -19,11 +19,12 @@ const initialState: IUserAuth = {
   jwt: loadJwt<IUserPersistentAuth>(JWT_PERSISTENT)?.jwt ?? null,
   isLoading: false,
   error: null,
+  stripeCustomerId: undefined,
   uid: null,
 };
 
 export const login = createAsyncThunk<
-  { token: string; uid: string },
+  { token: string; uid: string; stripeCustomerId: string },
   IUserAuthLogin,
   { rejectValue: string }
 >('userAuth/login', async (params: IUserAuthLogin, { rejectWithValue }) => {
@@ -34,7 +35,28 @@ export const login = createAsyncThunk<
       params.password,
     );
     const token = await data.user.getIdToken();
-    return { token, uid: data.user.uid };
+
+    const userDocRef = doc(db, 'users', data.user.uid);
+    const userDocData = await getDoc(userDocRef);
+    const userData = userDocData.data();
+    const stripeResponse = await fetch('http://localhost:4000/stripe-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: params.email, name: userData?.name || '' }),
+    });
+
+    const stripeData = await stripeResponse.json();
+    if (!stripeData.success) {
+      return rejectWithValue('Stripe login failed');
+    }
+    await updateDoc(userDocRef, {
+      stripeCustomerId: stripeData.customerId,
+    });
+    return {
+      token,
+      uid: data.user.uid,
+      stripeCustomerId: stripeData.customerId,
+    };
   } catch (error) {
     if (error instanceof Error) {
       return rejectWithValue(error.message);
@@ -58,10 +80,23 @@ export const registration = createAsyncThunk<
       );
 
       const userDocRef = doc(db, 'users', data.user.uid);
+
+      const stripeResponse = await fetch('http://localhost:4000/stripe-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: params.email, name: params.name }),
+      });
+
+      const stripeData = await stripeResponse.json();
+      if (!stripeData.success) {
+        return rejectWithValue('Stripe login failed');
+      }
+
       await setDoc(userDocRef, {
         name: params.name,
         phoneNumber: params.phoneNumber,
         city: params.city,
+        stripeCustomerId: stripeData.customerId,
         uid: data.user.uid,
       });
 
@@ -107,10 +142,13 @@ const userAuthSlice = createSlice({
         login.fulfilled,
         (
           state,
-          action: PayloadAction<{ token: string; uid: string } | undefined>,
+          action: PayloadAction<
+            { token: string; uid: string; stripeCustomerId: string } | undefined
+          >,
         ) => {
           if (action.payload !== undefined) {
             state.jwt = action.payload.token;
+            state.stripeCustomerId = action.payload.stripeCustomerId;
             state.uid = action.payload.uid;
             state.isLoading = false;
           }

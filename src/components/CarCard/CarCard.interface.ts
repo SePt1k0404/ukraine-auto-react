@@ -5,5 +5,6 @@ export interface ICarCardProps {
   image: string;
   likes: number;
   brief: string;
+  sold: boolean;
   id: string;
 }
