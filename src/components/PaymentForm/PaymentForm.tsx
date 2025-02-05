@@ -6,6 +6,7 @@ import { AppDDispatch, RootState } from '../../app/store';
 import { StripeCardElementOptions } from '@stripe/stripe-js';
 import { useNavigate } from 'react-router-dom';
 import { soldCar } from '../../features/carsList/carsListSliceFunctions/soldCar';
+import { toast } from 'react-toastify';
 
 const CARD_OPTIONS: StripeCardElementOptions = {
   iconStyle: 'solid',
@@ -33,7 +34,7 @@ export default function PaymentForm({ onClose }: { onClose: () => void }) {
   const { name, email, stripeCustomerId } = useSelector(
     (state: RootState) => state.userProfileReducer,
   );
-  const [success, setSuccess] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean | null>(null);
   const stripe = useStripe();
   const dispatch = useDispatch<AppDDispatch>();
   const elements = useElements();
@@ -54,7 +55,9 @@ export default function PaymentForm({ onClose }: { onClose: () => void }) {
     if (!error && paymentMethod) {
       try {
         const { id } = paymentMethod;
-        const response = await axios.post('http://localhost:4000/payment', {
+        const API_URL =
+          import.meta.env.VITE_APP_API_URL || 'http://localhost:4000';
+        const response = await axios.post(`${API_URL}/payment`, {
           amount: car?.price && car.price * 100,
           id,
           email,
@@ -68,14 +71,37 @@ export default function PaymentForm({ onClose }: { onClose: () => void }) {
           setSuccess(true);
           dispatch(soldCar({ carId: car?.id }));
           setTimeout(() => {
-            navigate('/');
+            navigate('/', { replace: true });
           }, 1000);
+        } else {
+          setTimeout(() => {
+            navigate('/', { replace: true });
+          }, 1000);
+          throw new Error(response.data.message);
         }
       } catch (error) {
-        console.log('Error', error);
+        if (error instanceof Error) {
+          toast.error(error.message, {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }
       }
     } else {
-      console.log(error?.message);
+      toast.error(error.message, {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
