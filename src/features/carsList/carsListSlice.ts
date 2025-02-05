@@ -20,6 +20,21 @@ const carsListSlice = createSlice({
     clearCarsQuery: (state, action) => {
       state.carsQuery = { ...action.payload };
     },
+    addToComparisonCars: (state, action: PayloadAction<ICar>) => {
+      const isChecked = state.carsComparison.find(
+        (car) => car.id === action.payload.id,
+      );
+      if (isChecked) {
+        return;
+      } else {
+        state.carsComparison = [...state.carsComparison, action.payload];
+      }
+    },
+    clearFromComparisonCars: (state, action: PayloadAction<string>) => {
+      state.carsComparison = [
+        ...state.carsComparison.filter((car) => car.id !== action.payload),
+      ];
+    },
   },
   extraReducers: (builder) => {
     builder

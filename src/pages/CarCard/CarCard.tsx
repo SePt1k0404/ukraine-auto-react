@@ -9,15 +9,15 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ContactSellerForm } from '../../components/ContactSellerForm/ContactSellerForm';
 import { createPortal } from 'react-dom';
+import { carsListAction } from '../../features/carsList/carsListSlice';
 
 export const CarCard = () => {
   const dispatch = useDispatch<AppDDispatch>();
   const navigate = useNavigate();
   const location = useLocation();
   const { carId } = useParams<{ carId: string }>();
-  const { dedicatedCar, isLoading, error, isSuccess } = useSelector(
-    (state: RootState) => state.carsListReducer,
-  );
+  const { dedicatedCar, isLoading, error, isSuccess, carsComparison } =
+    useSelector((state: RootState) => state.carsListReducer);
 
   const { favoritesCars } = useSelector(
     (state: RootState) => state.userProfileReducer,
@@ -41,6 +41,7 @@ export const CarCard = () => {
   }, [jwt]);
 
   const isFavorite = carId && favoritesCars.includes(carId);
+  const isChecked = carsComparison.find((car) => car.id === dedicatedCar?.id);
 
   const handleToggleModal = () => {
     setShowContactSellerModal((state) => !state);
@@ -59,6 +60,15 @@ export const CarCard = () => {
       });
     } else if (carId) {
       dispatch(toggleFavoriteCar({ carId }));
+    }
+  };
+
+  const handleComparisonCar = () => {
+    if (!dedicatedCar) return;
+    if (!isChecked) {
+      dispatch(carsListAction.addToComparisonCars(dedicatedCar));
+    } else {
+      dispatch(carsListAction.clearFromComparisonCars(dedicatedCar.id));
     }
   };
 
@@ -166,7 +176,32 @@ export const CarCard = () => {
           {dedicatedCar.desc || 'No detailed description available.'}
         </p>
       </div>
-      <div className='flex justify-center mt-8 gap-4'>
+      <div className='mt-8 flex flex-col gap-3'>
+        <button
+          onClick={handleToggleModal}
+          className='px-6 py-2 bg-gray-100 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition-all duration-300'
+        >
+          Contact with Seller
+        </button>
+        <div className='flex flex-col'>
+          <button
+            disabled={carsComparison.length >= 3 && !isChecked}
+            onClick={handleComparisonCar}
+            className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300
+      ${carsComparison.length >= 3 && !isChecked ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}
+    `}
+          >
+            {isChecked ? 'Remove from Comparison' : 'Add to Comparison'}
+          </button>
+
+          {carsComparison.length >= 3 && !isChecked && (
+            <p className='mt-2 text-sm text-red-500 text-center'>
+              Maximum of 3 cars can be added to the comparison list
+            </p>
+          )}
+        </div>
+      </div>
+      <div className='flex justify-between mt-8 gap-4'>
         <button
           className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300 flex items-center gap-2 ${
             isFavorite
@@ -179,12 +214,6 @@ export const CarCard = () => {
             className={`w-5 h-5 ${isFavorite ? 'text-white' : 'text-white'}`}
           />
           {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-        </button>
-        <button
-          onClick={handleToggleModal}
-          className='px-6 py-2 bg-gray-100 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition-all duration-300'
-        >
-          Contact with Seller
         </button>
         <button
           onClick={handleCheckout}
