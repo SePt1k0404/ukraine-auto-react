@@ -33,6 +33,7 @@ export const getDedicatedCar = createAsyncThunk<
         email: '',
         address: '',
       },
+      sold: dedicatedDocData.data()?.sold || false,
       id: dedicatedDocData.id || '',
     };
     return dedicatedCarInfo;

@@ -20,10 +20,19 @@ export const Login = ({ closeModal }: Props) => {
       password: '',
     },
     validationSchema: loginSchema,
-    onSubmit: (values, { resetForm }) => {
-      dispatch(login(values));
-      resetForm();
-      startClosing();
+    onSubmit: async (values, { resetForm }) => {
+      const resultAction = await dispatch(login(values));
+
+      if (login.fulfilled.match(resultAction)) {
+        console.log(
+          'Stripe Customer ID:',
+          resultAction.payload.stripeCustomerId,
+        );
+        resetForm();
+        startClosing();
+      } else {
+        console.error('Login failed:', resultAction.payload);
+      }
     },
   });
   return (

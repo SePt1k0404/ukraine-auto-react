@@ -39,6 +39,7 @@ export const Home = () => {
             price={car.price}
             image={car.image}
             likes={car.likes}
+            sold={car.sold}
             brief={car.brief}
           />
         ))}

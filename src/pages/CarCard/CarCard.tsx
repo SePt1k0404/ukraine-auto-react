@@ -62,6 +62,25 @@ export const CarCard = () => {
     }
   };
 
+  const handleCheckout = () => {
+    if (!jwt) {
+      toast.info('Firstly login/register to proceed with checkout', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    if (carId) {
+      navigate(`${location.pathname}/checkout`);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className='flex justify-center items-center h-screen'>
@@ -166,6 +185,12 @@ export const CarCard = () => {
           className='px-6 py-2 bg-gray-100 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition-all duration-300'
         >
           Contact with Seller
+        </button>
+        <button
+          onClick={handleCheckout}
+          className='px-6 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition-all duration-300'
+        >
+          Checkout
         </button>
       </div>
       {showContactSellerModal &&

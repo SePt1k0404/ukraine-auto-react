@@ -11,6 +11,7 @@ export interface IUserProfile {
   favoritesCars: string[];
   privacy: boolean;
   avatar: string | null;
+  stripeCustomerId?: string;
   isLoading?: boolean;
   error?: string | null;
   isSuccess?: boolean;
