@@ -25,6 +25,7 @@ export interface ICarsListInitialState {
   cars: ICar[] | [];
   dedicatedCar: null | ICar;
   allCarsLength: number;
+  carsComparison: ICar[] | [];
   lastVisibleCar: undefined | string;
   previousVisibleCar: undefined | string;
   carsQuery: {

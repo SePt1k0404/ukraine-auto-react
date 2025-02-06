@@ -12,6 +12,7 @@ import { Error } from './pages/Error/Error';
 import { FavoriteCars } from './pages/FavoriteCars/FavoriteCars';
 import { PrivateRouts } from './components/PrivateRouts/PrivateRouts';
 import { Checkout } from './pages/Checkout/Checkout';
+import { Comparison } from './pages/Comparison/Comparison';
 function App() {
   return (
     <>
@@ -21,6 +22,7 @@ function App() {
           <Route path='about' element={<About />} />
           <Route path='services' element={<Services />} />
           <Route path='contact' element={<Contact />} />
+          <Route path='compare' element={<Comparison />} />
           <Route
             path='profile'
             element={<PrivateRouts element={<UserProfile />} />}

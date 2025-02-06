@@ -5,12 +5,11 @@ import { AppDDispatch, RootState } from '../../app/store';
 import { useEffect } from 'react';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { getCars } from '../../features/carsList/carsListSliceFunctions/getCars';
+import { ComparisonButton } from '../../components/ComparisonButton/ComparisonButton';
 
 export const Home = () => {
   const dispatch = useDispatch<AppDDispatch>();
-  const carsList = useSelector(
-    (state: RootState) => state.carsListReducer.cars,
-  );
+  const carsList = useSelector((state: RootState) => state.carsListReducer);
   useEffect(() => {
     dispatch(
       getCars({
@@ -29,8 +28,9 @@ export const Home = () => {
         Ukraine auto home page:
       </h1>
       <CarsSearch className='animate-fadeIn' carsListType='home' />
+      {carsList.carsComparison.length > 0 && <ComparisonButton />}
       <ul className='animate-fadeInUp grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] auto-rows-[500px] gap-6 list-none p-0 my-0 mx-auto max-w-[1200px]'>
-        {carsList.map((car) => (
+        {carsList.cars.map((car) => (
           <CarCard
             key={car.id}
             id={car.id}
