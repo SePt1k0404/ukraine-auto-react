@@ -4,7 +4,7 @@ import { SharedLayout } from './components/SharedLayout/SharedLayout';
 import { Home } from './pages/Home/Home';
 import { About } from './pages/About/About';
 import { Services } from './pages/Services/Services';
-import { Contact } from './pages/Contact/Contact';
+import { ContactPage } from './pages/Contact/Contact';
 import { UserProfile } from './pages/UserProfile/UserProfile';
 import PopUp from './components/PopUp/PopUp';
 import { CarCard } from './pages/CarCard/CarCard';
@@ -13,6 +13,9 @@ import { FavoriteCars } from './pages/FavoriteCars/FavoriteCars';
 import { PrivateRouts } from './components/PrivateRouts/PrivateRouts';
 import { Checkout } from './pages/Checkout/Checkout';
 import { Comparison } from './pages/Comparison/Comparison';
+import { FAQ } from './pages/FAQ/FAQ';
+import { PrivacyPolicy } from './pages/PrivacyPolicy/PrivacyPolicy';
+import { TermsOfService } from './pages/TermsOfService/TermsOfService';
 function App() {
   return (
     <>
@@ -21,8 +24,12 @@ function App() {
           <Route index element={<Home />} />
           <Route path='about' element={<About />} />
           <Route path='services' element={<Services />} />
-          <Route path='contact' element={<Contact />} />
+          <Route path='contact' element={<ContactPage />} />
           <Route path='compare' element={<Comparison />} />
+          <Route path='faq' element={<FAQ />} />
+          <Route path='privacy-policy' element={<PrivacyPolicy />} />
+          <Route path='terms-of-service' element={<TermsOfService />} />
+
           <Route
             path='profile'
             element={<PrivateRouts element={<UserProfile />} />}
