@@ -15,6 +15,7 @@ import { Checkout } from './pages/Checkout/Checkout';
 import { Comparison } from './pages/Comparison/Comparison';
 import { FAQ } from './pages/FAQ/FAQ';
 import { PrivacyPolicy } from './pages/PrivacyPolicy/PrivacyPolicy';
+import { TermsOfService } from './pages/TermsOfService/TermsOfService';
 function App() {
   return (
     <>
@@ -27,6 +28,7 @@ function App() {
           <Route path='compare' element={<Comparison />} />
           <Route path='faq' element={<FAQ />} />
           <Route path='privacy-policy' element={<PrivacyPolicy />} />
+          <Route path='terms-of-service' element={<TermsOfService />} />
 
           <Route
             path='profile'
