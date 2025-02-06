@@ -1,66 +1,49 @@
-import { useFormik } from 'formik';
 import { useModal } from '../../app/hooks';
 import {
-  IContactSellerInitialValues,
-  IContactSellerModalProps,
-} from './ContactSellerForm.interface';
-import { contactSellerSchema } from './ContactSellerForm.schema';
-import styles from './ContactSellerForm.module.css';
+  IDriveModalInitialValues,
+  IDriveModalProps,
+} from './DriveModal.interface';
+import { useFormik } from 'formik';
+import { driveFormSchema } from './DriveModal.schema';
+import styles from './DriveModal.module.css';
 import { FormField } from '../FormField/FormField';
 import clsx from 'clsx';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
 
-export const ContactSellerForm = ({
-  onCloseModal,
-}: IContactSellerModalProps) => {
+export const DriveModal = ({ onCloseModal }: IDriveModalProps) => {
   const { isClosing, startClosing, handleBackdropClick, handleFormClick } =
     useModal(onCloseModal);
-  const seller = useSelector(
-    (state: RootState) => state.carsListReducer.dedicatedCar?.seller,
-  );
-  const formik = useFormik<IContactSellerInitialValues>({
+
+  const formik = useFormik<IDriveModalInitialValues>({
     initialValues: {
       name: '',
       phoneNumber: '',
       email: '',
+      preferredDate: '',
+      preferredTime: '',
     },
-    validationSchema: contactSellerSchema,
+    validationSchema: driveFormSchema,
     onSubmit: (_, { resetForm }) => {
       resetForm();
       startClosing();
     },
   });
+
   return (
     <div
       className={clsx(styles.backdrop, {
         [styles.fadeOut]: isClosing,
       })}
       onClick={handleBackdropClick}
-      data-name='seller'
     >
       <form
-        className={clsx(styles['contact-seller-form'], {
+        className={clsx(styles['change-info-form'], {
           [styles.formOut]: isClosing,
         })}
         onSubmit={formik.handleSubmit}
         onClick={handleFormClick}
       >
-        <h2 className={styles['form-title']}>Contact with seller</h2>
-        <div className={styles['seller-info']}>
-          <p>
-            <strong>Seller:</strong> {seller?.name || 'Unknown'}
-          </p>
-          <p>
-            <strong>Phone:</strong> {seller?.phoneNumber || 'Not provided'}
-          </p>
-          <p>
-            <strong>Email:</strong> {seller?.email || 'Not provided'}
-          </p>
-          <p>
-            <strong>Address:</strong> {seller?.address || 'Not provided'}
-          </p>
-        </div>
+        <h2 className={styles['form-title']}>Test Drive Form</h2>
+
         <FormField
           id='name'
           label='Name:'
@@ -71,6 +54,7 @@ export const ContactSellerForm = ({
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
+
         <FormField
           id='phoneNumber'
           label='Phone number:'
@@ -81,6 +65,7 @@ export const ContactSellerForm = ({
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
+
         <FormField
           id='email'
           label='Email:'
@@ -91,12 +76,31 @@ export const ContactSellerForm = ({
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        <button
-          type='submit'
-          data-name='seller'
-          className={styles['form-submit']}
-        >
-          Save Changes
+
+        <FormField
+          id='preferredDate'
+          label='Preferred Date:'
+          type='date'
+          value={formik.values.preferredDate}
+          error={formik.errors.preferredDate}
+          touched={formik.touched.preferredDate}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+
+        <FormField
+          id='preferredTime'
+          label='Preferred Time:'
+          type='time'
+          value={formik.values.preferredTime}
+          error={formik.errors.preferredTime}
+          touched={formik.touched.preferredTime}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+
+        <button type='submit' className={styles['form-submit']}>
+          Submit
         </button>
       </form>
     </div>

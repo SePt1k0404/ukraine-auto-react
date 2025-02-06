@@ -32,7 +32,6 @@ app.post('/stripe-login', async (req, res) => {
       customerId: customer.id,
     });
   } catch (error) {
-    console.error('Stripe login error:', error);
     res.status(500).json({ success: false, message: 'Stripe login failed' });
   }
 });
