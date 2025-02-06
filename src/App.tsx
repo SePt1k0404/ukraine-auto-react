@@ -14,6 +14,7 @@ import { PrivateRouts } from './components/PrivateRouts/PrivateRouts';
 import { Checkout } from './pages/Checkout/Checkout';
 import { Comparison } from './pages/Comparison/Comparison';
 import { FAQ } from './pages/FAQ/FAQ';
+import { PrivacyPolicy } from './pages/PrivacyPolicy/PrivacyPolicy';
 function App() {
   return (
     <>
@@ -25,6 +26,7 @@ function App() {
           <Route path='contact' element={<Contact />} />
           <Route path='compare' element={<Comparison />} />
           <Route path='faq' element={<FAQ />} />
+          <Route path='privacy-policy' element={<PrivacyPolicy />} />
 
           <Route
             path='profile'
