@@ -28,6 +28,12 @@ export const Footer = () => {
           >
             FAQ
           </a>
+          <a
+            href='/partnerships '
+            className='outline-none transition-colors ease text-white hover:text-main-color focus:text-main-color no-underline font-medium duration-300'
+          >
+            Partnerships
+          </a>
         </div>
         <div className='flex items-center content-center gap-4'>
           <a

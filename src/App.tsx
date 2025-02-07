@@ -16,6 +16,7 @@ import { Comparison } from './pages/Comparison/Comparison';
 import { FAQ } from './pages/FAQ/FAQ';
 import { PrivacyPolicy } from './pages/PrivacyPolicy/PrivacyPolicy';
 import { TermsOfService } from './pages/TermsOfService/TermsOfService';
+import { Partnerships } from './pages/Partnerships/Partnerships';
 function App() {
   return (
     <>
@@ -27,6 +28,7 @@ function App() {
           <Route path='contact' element={<ContactPage />} />
           <Route path='compare' element={<Comparison />} />
           <Route path='faq' element={<FAQ />} />
+          <Route path='partnerships' element={<Partnerships />} />
           <Route path='privacy-policy' element={<PrivacyPolicy />} />
           <Route path='terms-of-service' element={<TermsOfService />} />
 
