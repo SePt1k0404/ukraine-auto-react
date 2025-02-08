@@ -34,6 +34,12 @@ export const Footer = () => {
           >
             Partnerships
           </a>
+          <a
+            href='/investor-relations '
+            className='outline-none transition-colors ease text-white hover:text-main-color focus:text-main-color no-underline font-medium duration-300'
+          >
+            Investor Relations
+          </a>
         </div>
         <div className='flex items-center content-center gap-4'>
           <a

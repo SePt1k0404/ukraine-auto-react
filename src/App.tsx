@@ -17,6 +17,7 @@ import { FAQ } from './pages/FAQ/FAQ';
 import { PrivacyPolicy } from './pages/PrivacyPolicy/PrivacyPolicy';
 import { TermsOfService } from './pages/TermsOfService/TermsOfService';
 import { Partnerships } from './pages/Partnerships/Partnerships';
+import { InvestorRelations } from './pages/InvestorRelations/InvestorRelations';
 function App() {
   return (
     <>
@@ -30,6 +31,7 @@ function App() {
           <Route path='faq' element={<FAQ />} />
           <Route path='partnerships' element={<Partnerships />} />
           <Route path='privacy-policy' element={<PrivacyPolicy />} />
+          <Route path='investor-relations' element={<InvestorRelations />} />
           <Route path='terms-of-service' element={<TermsOfService />} />
 
           <Route
