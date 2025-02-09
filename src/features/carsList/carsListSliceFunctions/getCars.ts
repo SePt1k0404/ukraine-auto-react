@@ -4,6 +4,7 @@ import {
   collection,
   doc,
   endBefore,
+  GeoPoint,
   getCountFromServer,
   getDoc,
   getDocs,
@@ -21,12 +22,22 @@ export const getCars = createAsyncThunk<
     lastVisibleCar: string | undefined;
     previousVisibleCar: string | undefined;
     carsQuery: { model: string; year: string; price: string } | undefined;
+    geoLocationCars: boolean;
+    latitude: null | number;
+    longitude: null | number;
   },
   { rejectValue: string }
 >(
   'carsList/getCars',
   async (
-    { lastVisibleCar, previousVisibleCar, carsQuery },
+    {
+      lastVisibleCar,
+      previousVisibleCar,
+      carsQuery,
+      geoLocationCars,
+      latitude,
+      longitude,
+    },
     { rejectWithValue },
   ) => {
     try {
@@ -55,6 +66,22 @@ export const getCars = createAsyncThunk<
         );
       }
 
+      if (geoLocationCars && latitude && longitude) {
+        const geoQuery = query(
+          carsQueryBase,
+          where(
+            'location',
+            '>=',
+            new GeoPoint(latitude - 0.1, longitude - 0.1),
+          ),
+          where(
+            'location',
+            '<=',
+            new GeoPoint(latitude + 0.1, longitude + 0.1),
+          ),
+        );
+        carsQueryBase = geoQuery;
+      }
       const countSnapshot = await getCountFromServer(carsQueryBase);
       const allCarsLength = countSnapshot.data().count;
 
