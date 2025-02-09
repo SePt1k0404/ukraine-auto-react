@@ -24,7 +24,9 @@
   flex-direction: column;
   transform: scale(0.98);
   animation: formIn 0.5s ease-in-out forwards;
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  transition:
+    transform 0.5s ease,
+    opacity 0.5s ease;
 }
 
 .formTitle {
@@ -141,7 +143,9 @@
 .formOut {
   transform: scale(0.9);
   opacity: 0;
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  transition:
+    transform 0.5s ease,
+    opacity 0.5s ease;
 }
 
 @media (max-width: 600px) {
@@ -161,6 +165,97 @@
   }
   .formButton,
   .cancelButton {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+.dark .backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.dark .registerForm {
+  background: #333;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.dark .formTitle {
+  color: #f1f1f1;
+}
+
+.dark .warning {
+  color: #e74c3c;
+}
+
+.dark .formLabel {
+  color: #ccc;
+}
+
+.dark .formInput {
+  background-color: #444;
+  border: 1px solid #666;
+  color: #f1f1f1;
+}
+
+.dark .formInput:focus {
+  border-color: #3498db;
+  background-color: #555;
+}
+
+.dark .formButton {
+  background: linear-gradient(90deg, #e64141, #ff2e2e);
+  color: white;
+}
+
+.dark .formButton:hover {
+  background: linear-gradient(90deg, #ff2e2e, #e64141);
+}
+
+.dark .cancelButton {
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  color: white;
+}
+
+.dark .cancelButton:hover {
+  background: linear-gradient(90deg, #2980b9, #3498db);
+}
+
+.dark .errorText {
+  color: #e74c3c;
+}
+
+.dark .fadeOut {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.dark .formOut {
+  background: #444;
+}
+
+@media (max-width: 600px) {
+  .dark .registerForm {
+    background: #333;
+  }
+
+  .dark .formTitle {
+    font-size: 22px;
+    color: #f1f1f1;
+  }
+
+  .dark .formLabel {
+    font-size: 14px;
+    color: #ccc;
+  }
+
+  .dark .formInput {
+    font-size: 14px;
+    padding: 10px;
+    background-color: #444;
+    color: #f1f1f1;
+  }
+
+  .dark .formButton,
+  .dark .cancelButton {
     font-size: 14px;
     padding: 10px;
   }

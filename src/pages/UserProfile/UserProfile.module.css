@@ -144,7 +144,9 @@
   font-size: 14px;
   font-weight: 500;
   border: none;
-  transition: background-color 0.3s, box-shadow 0.3s;
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
   text-align: center;
   gap: 10px;
   margin-bottom: 10px;
@@ -208,7 +210,9 @@
   border-radius: 4px;
   border: 1px solid #ddd;
   outline: none;
-  transition: background-color 0.3s, border-color 0.3s;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
 }
 
 .privacy-settings {
@@ -245,5 +249,116 @@
   border-radius: 4px;
   border: 1px solid #ddd;
   outline: none;
-  transition: background-color 0.3s, border-color 0.3s;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 30px;
+  transition: color 0.3s ease;
+}
+
+.dark .user-profile-card {
+  background: linear-gradient(145deg, #121212, #1a1a1a);
+  color: #ffffff;
+}
+
+.dark .user-profile__title {
+  color: #ffffff;
+}
+
+.dark .user-profile__details {
+  color: #ccc;
+}
+
+.dark .user-profile__details p {
+  color: #ccc;
+}
+
+.dark .user-profile__details span {
+  color: #fff;
+}
+
+.dark .icon {
+  color: #3498db;
+}
+
+.dark .user-profile-card:hover .icon {
+  color: #2980b9;
+}
+
+.dark .change {
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark .change:hover {
+  background: linear-gradient(90deg, #2980b9, #3498db);
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 14px rgba(0, 0, 0, 0.3);
+}
+
+.dark .change:active {
+  background: linear-gradient(90deg, #2c81cb, #1c639b);
+}
+
+.dark .change:focus {
+  box-shadow: 0px 0px 12px rgba(52, 152, 219, 0.8);
+}
+
+.dark .logout-button {
+  color: #ff5e5e;
+}
+
+.dark .logout-button:hover {
+  color: #ff2e2e;
+}
+
+.dark .delete {
+  background: linear-gradient(90deg, #e64141, #ff2e2e);
+}
+
+.dark .delete:hover {
+  background: linear-gradient(90deg, #ff2e2e, #e64141);
+}
+
+.dark .upload-avatar {
+  background-color: #2980b9;
+}
+
+.dark .upload-avatar:hover {
+  background-color: #3498db;
+}
+
+.dark .email-preferences__title,
+.dark .privacy-settings__title {
+  color: #fff;
+}
+
+.dark .email-preferences__option,
+.dark .privacy-settings__option {
+  color: #bbb;
+}
+
+.dark .email-preferences__option input,
+.dark .privacy-settings__option input {
+  border-color: #444;
+}
+
+.dark .theme-toggle {
+  color: #fff;
+}
+
+.dark .theme-toggle:hover {
+  color: #ccc;
 }

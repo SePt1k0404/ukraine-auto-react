@@ -25,6 +25,9 @@ const userProfileSlice = createSlice({
     setAvatarPath: (state, action: PayloadAction<string>) => {
       state.avatar = action.payload;
     },
+    toggleTheme: (state) => {
+      state.theme = !state.theme;
+    },
   },
   extraReducers: (builder) => {
     builder

@@ -28,7 +28,9 @@
   flex-direction: column;
   transform: scale(1);
   animation: formIn 0.5s ease-in-out forwards;
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  transition:
+    transform 0.5s ease,
+    opacity 0.5s ease;
 }
 
 .change-info-form.formOut {
@@ -60,7 +62,9 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   width: 100%;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .form-input:focus {
@@ -193,4 +197,56 @@
 .privacy-checkbox-label input {
   cursor: pointer;
   accent-color: #3498db;
+}
+
+.dark .backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.dark .change-info-form {
+  background: #2c3e50;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.dark .form-title {
+  color: #ecf0f1;
+}
+
+.dark .section-title,
+.dark .privacy-settings-title {
+  color: #ecf0f1;
+}
+
+.dark .form-label {
+  color: #bdc3c7;
+}
+
+.dark .form-input {
+  border: 1px solid #7f8c8d;
+  background-color: #34495e;
+  color: #ecf0f1;
+}
+
+.dark .form-input:focus {
+  border-color: #3498db;
+}
+
+.dark .form-submit {
+  background-color: #3498db;
+}
+
+.dark .form-submit:hover {
+  background-color: #2980b9;
+}
+
+.dark .error-text {
+  color: #e74c3c;
+}
+
+.dark .checkbox-label {
+  color: #bdc3c7;
+}
+
+.dark .privacy-checkbox-label {
+  color: #bdc3c7;
 }

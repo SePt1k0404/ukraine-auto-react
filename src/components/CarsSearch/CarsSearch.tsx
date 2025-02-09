@@ -19,6 +19,7 @@ export const CarsSearch = ({ className, carsListType }: ICarsSearchProps) => {
   const favoriteCarsId = useSelector(
     (state: RootState) => state.userProfileReducer.favoritesCars,
   );
+  const { theme } = useSelector((state: RootState) => state.userProfileReducer);
 
   const location = useLocation();
 
@@ -116,15 +117,22 @@ export const CarsSearch = ({ className, carsListType }: ICarsSearchProps) => {
   return (
     <form
       className={clsx(
-        'flex flex-col xl:flex-row gap-5 bg-custom-gradient-light p-5 rounded-2xl shadow-lg mb-5',
+        'flex flex-col xl:flex-row gap-5 p-5 rounded-2xl shadow-lg mb-5',
+        theme
+          ? 'bg-custom-gradient-light text-dark'
+          : 'bg-custom-gradient-dark text-light',
         className,
       )}
       onSubmit={formik.handleSubmit}
     >
       <div className='flex justify-start flex-grow mr-5'>
         <input
-          className='w-full py-1 px-4 text-lg border-solid border-[1px] border-[#e0e0e0]
-        rounded-lg outline-none bg-background-card-light transition-colors ease hover:border-main-color focus:border-main-color duration-300'
+          className={clsx(
+            'w-full py-1 px-4 text-lg border-solid border-[1px] rounded-lg outline-none transition-colors ease duration-300',
+            theme
+              ? 'bg-background-card-light border-[#e0e0e0] hover:border-main-color focus:border-main-color'
+              : 'bg-background-card-dark border-[#34495e] hover:border-main-color-dark focus:border-main-color-dark',
+          )}
           type='text'
           id='model'
           placeholder='Search car...'
@@ -134,10 +142,20 @@ export const CarsSearch = ({ className, carsListType }: ICarsSearchProps) => {
         />
       </div>
       <div className='flex justify-start items-center gap-5 flex-wrap sm:flex-nowrap'>
-        <label className='flex flex-col text-sm font-medium gap-2 w-full sm:w-auto'>
+        <label
+          className={clsx(
+            'flex flex-col text-sm font-medium gap-2 w-full sm:w-auto',
+            theme ? 'text-black' : 'text-white',
+          )}
+        >
           Year From:
           <select
-            className='px-3 py-2 border-solid border-[1px] border-gray-400 outline-none bg-background-card-light transition-colors ease hover:border-main-color active:border-main-color focus:border-main-color duration-300'
+            className={clsx(
+              'px-3 py-2 border-solid border-[1px] outline-none transition-colors ease duration-300',
+              theme
+                ? 'bg-background-card-light border-gray-400 hover:border-main-color focus:border-main-color'
+                : 'bg-background-card-dark border-gray-600 hover:border-main-color-dark focus:border-main-color-dark',
+            )}
             id='year'
             value={formik.values.year}
             onChange={formik.handleChange}
@@ -156,10 +174,20 @@ export const CarsSearch = ({ className, carsListType }: ICarsSearchProps) => {
             ))}
           </select>
         </label>
-        <label className='flex flex-col text-sm font-medium gap-2 w-full sm:w-auto'>
+        <label
+          className={clsx(
+            'flex flex-col text-sm font-medium gap-2 w-full sm:w-auto',
+            theme ? 'text-black' : 'text-white',
+          )}
+        >
           Min Price:
           <select
-            className='px-3 py-2 border-solid border-[1px] border-gray-400 outline-none bg-background-card-light transition-colors ease hover:border-main-color active:border-main-color focus:border-main-color duration-300'
+            className={clsx(
+              'px-3 py-2 border-solid border-[1px] outline-none transition-colors ease duration-300',
+              theme
+                ? 'bg-background-card-light border-gray-400 hover:border-main-color focus:border-main-color'
+                : 'bg-background-card-dark border-gray-600 hover:border-main-color-dark focus:border-main-color-dark',
+            )}
             id='price'
             value={formik.values.price}
             onChange={formik.handleChange}
@@ -181,16 +209,28 @@ export const CarsSearch = ({ className, carsListType }: ICarsSearchProps) => {
       <div className='flex gap-4 sm:gap-5 flex-wrap mt-4 sm:mt-0'>
         <button
           type='submit'
-          className='bg-main-color text-white border-solid border-[1px] border-main-color outline-none px-5 py-3 rounded-md cursor-pointer transition-colors ease hover:bg-secondary-color focus:bg-secondary-color duration-300 w-full sm:w-auto'
+          className={clsx(
+            'px-5 py-3 rounded-md cursor-pointer transition-colors ease duration-300 w-full sm:w-auto',
+            theme
+              ? 'bg-main-color text-white hover:bg-secondary-color focus:bg-secondary-color'
+              : 'bg-main-color-dark text-white hover:bg-secondary-color-dark focus:bg-secondary-color-dark',
+          )}
         >
           Search Cars
         </button>
         {!location.pathname.includes('favoriteCars') && (
           <button
             type='button'
-            className={`px-6 py-3 bg-main-color rounded-lg shadow-md transition-all duration-300 w-full sm:w-auto
-      ${isFinding ? 'bg-red-500 hover:bg-red-600' : 'bg-primary hover:bg-primary-dark'}
-      text-white focus:ring-4 focus:ring-primary-light active:scale-95`}
+            className={clsx(
+              'px-6 py-3 rounded-lg shadow-md transition-all duration-300 w-full sm:w-auto text-white',
+              theme
+                ? isFinding
+                  ? 'bg-main-red-color hover:bg-accent-red-color focus:ring-2 focus:bg-accent-red-color '
+                  : 'bg-main-color hover:bg-primary-dark focus:ring-2 focus:ring-primary-dark '
+                : isFinding
+                  ? 'bg-main-red-color-dark hover:bg-accent-red-color-dark focus:ring-2 focus:bg-accent-red-color-dark '
+                  : 'bg-main-color-dark hover:bg-secondary-color-dark focus:ring-2 focus:bg-secondary-color-dark ',
+            )}
             onClick={handleToggleFindNearbyCars}
           >
             {isFinding ? 'Stop Finding' : 'Find Nearby Cars'}
@@ -198,7 +238,12 @@ export const CarsSearch = ({ className, carsListType }: ICarsSearchProps) => {
         )}
         <button
           type='button'
-          className='bg-main-red-color text-white border-solid border-[1px] border-main-red-color outline-none px-5 py-3 rounded-md cursor-pointer transition-colors ease hover:bg-accent-red-color focus:bg-accent-red-color duration-300 w-full sm:w-auto'
+          className={clsx(
+            'px-5 py-3 rounded-md cursor-pointer transition-colors ease duration-300 w-full sm:w-auto',
+            theme
+              ? 'bg-main-red-color text-white hover:bg-accent-red-color focus:bg-accent-red-color'
+              : 'bg-main-red-color-dark text-white hover:bg-accent-red-color-dark focus:bg-accent-red-color-dark',
+          )}
           onClick={() => {
             formik.resetForm();
             formik.handleSubmit();

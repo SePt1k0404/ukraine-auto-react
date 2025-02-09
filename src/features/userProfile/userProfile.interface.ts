@@ -15,6 +15,7 @@ export interface IUserProfile {
   isLoading?: boolean;
   error?: string | null;
   isSuccess?: boolean;
+  theme?: boolean;
 }
 
 export interface IChangeUserProfile {

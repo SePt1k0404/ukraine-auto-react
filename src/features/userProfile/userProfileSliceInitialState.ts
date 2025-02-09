@@ -16,4 +16,5 @@ export const initialState: IUserProfile = {
   isLoading: false,
   isSuccess: false,
   error: null,
+  theme: true,
 };
