@@ -18,6 +18,7 @@ import { PrivacyPolicy } from './pages/PrivacyPolicy/PrivacyPolicy';
 import { TermsOfService } from './pages/TermsOfService/TermsOfService';
 import { Partnerships } from './pages/Partnerships/Partnerships';
 import { InvestorRelations } from './pages/InvestorRelations/InvestorRelations';
+import { Status } from './pages/Status/Status';
 function App() {
   return (
     <>
@@ -33,7 +34,7 @@ function App() {
           <Route path='privacy-policy' element={<PrivacyPolicy />} />
           <Route path='investor-relations' element={<InvestorRelations />} />
           <Route path='terms-of-service' element={<TermsOfService />} />
-
+          <Route path='status' element={<Status />} />
           <Route
             path='profile'
             element={<PrivateRouts element={<UserProfile />} />}

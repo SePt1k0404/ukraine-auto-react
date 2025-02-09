@@ -25,10 +25,10 @@ export const Navigation = () => {
         About
       </Link>
       <Link
-        to='/services'
-        className={styles[getActiveClass(location, '/services')]}
+        to='/status'
+        className={styles[getActiveClass(location, '/status')]}
       >
-        Services
+        Status
       </Link>
       <Link
         to='/contact'

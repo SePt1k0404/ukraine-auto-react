@@ -5,12 +5,12 @@ import { Footer } from '../Footer/Footer';
 
 export const SharedLayout = () => {
   return (
-    <>
+    <div>
       <Header />
       <div className={styles.wrapper}>
         <Outlet />
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
