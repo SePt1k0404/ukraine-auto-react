@@ -9,6 +9,8 @@ import { AppDDispatch } from '../../app/store';
 import { login } from '../../features/userAuth/userAuthSlice';
 import { useModal } from '../../app/hooks';
 import { FormField } from '../FormField/FormField';
+import { toast } from 'react-toastify';
+import { forgotPasswordHandler } from '../../helpers/authHelpers/forgotPassword';
 
 export const Login = ({ closeModal }: Props) => {
   const { isClosing, startClosing, handleBackdropClick, handleFormClick } =
@@ -24,14 +26,18 @@ export const Login = ({ closeModal }: Props) => {
       const resultAction = await dispatch(login(values));
 
       if (login.fulfilled.match(resultAction)) {
-        console.log(
-          'Stripe Customer ID:',
-          resultAction.payload.stripeCustomerId,
-        );
         resetForm();
         startClosing();
       } else {
-        console.error('Login failed:', resultAction.payload);
+        toast.error(resultAction.payload, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
     },
   });
@@ -72,6 +78,16 @@ export const Login = ({ closeModal }: Props) => {
         />
         <button type='submit' className={styles.formButton}>
           Login
+        </button>
+        <button
+          type='button'
+          onClick={() => {
+            handleBackdropClick();
+            forgotPasswordHandler(formik.values.email, dispatch);
+          }}
+          className={styles.forgotPassword}
+        >
+          Forgot password? Enter your email and click me!
         </button>
       </form>
     </div>

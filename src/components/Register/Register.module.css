@@ -23,7 +23,9 @@
   flex-direction: column;
   transform: scale(0.98);
   animation: formIn 0.5s ease-in-out forwards;
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  transition:
+    transform 0.5s ease,
+    opacity 0.5s ease;
 }
 
 .fadeOut {
@@ -33,7 +35,9 @@
 .formOut {
   transform: scale(0.9);
   opacity: 0;
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  transition:
+    transform 0.5s ease,
+    opacity 0.5s ease;
 }
 
 .formTitle {
@@ -112,4 +116,17 @@
   to {
     transform: scale(1);
   }
+}
+
+.forgotPassword {
+  display: block;
+  margin: 10px 0 0;
+  text-align: center;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgotPassword:hover {
+  text-decoration: underline;
 }

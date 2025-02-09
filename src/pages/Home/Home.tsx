@@ -16,6 +16,9 @@ export const Home = () => {
         lastVisibleCar: undefined,
         previousVisibleCar: undefined,
         carsQuery: undefined,
+        geoLocationCars: false,
+        longitude: null,
+        latitude: null,
       }),
     );
   }, [dispatch]);
