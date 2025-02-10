@@ -50,3 +50,7 @@ export interface IDeleteUserProfile {
   email: string;
   password: string;
 }
+
+export interface IPersistentTheme {
+  theme: boolean | undefined;
+}

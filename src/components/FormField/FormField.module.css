@@ -40,6 +40,7 @@
 
 .dark .formGroup .formInput {
   border: 1px solid #555;
+  color: black;
 }
 
 .dark .formGroup .formInput:focus {

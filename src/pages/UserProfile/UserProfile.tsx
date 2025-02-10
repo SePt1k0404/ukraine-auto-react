@@ -30,6 +30,8 @@ import { handleLogout } from '../../helpers/userProfileHelpers/userProfileLogout
 import { handleFileChange } from '../../helpers/userProfileHelpers/userProfileAvatarChanger';
 import { DeleteUserProfileModal } from '../../components/DeleteUserProfileModal/DeleteUserProfileModal';
 import { userProfileAction } from '../../features/userProfile/userProfileSlice';
+import { saveTheme } from '../../app/storege';
+import { THEME_PERSISTENT } from '../../features/userProfile/userProfileSliceInitialState';
 
 export const UserProfile = () => {
   const {
@@ -70,7 +72,10 @@ export const UserProfile = () => {
       <div className={clsx(styles['user-profile-card'])}>
         <button
           className={styles['theme-toggle']}
-          onClick={() => dispatch(userProfileAction.toggleTheme())}
+          onClick={() => {
+            dispatch(userProfileAction.toggleTheme());
+            saveTheme(theme, THEME_PERSISTENT);
+          }}
         >
           {theme ? (
             <FaSun className='text-yellow-300' />

@@ -19,7 +19,14 @@ import { TermsOfService } from './pages/TermsOfService/TermsOfService';
 import { Partnerships } from './pages/Partnerships/Partnerships';
 import { InvestorRelations } from './pages/InvestorRelations/InvestorRelations';
 import { Status } from './pages/Status/Status';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from './app/store';
 function App() {
+  const { theme } = useSelector((state: RootState) => state.userProfileReducer);
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme ? 'light' : 'dark');
+  }, [theme]);
   return (
     <>
       <Routes>

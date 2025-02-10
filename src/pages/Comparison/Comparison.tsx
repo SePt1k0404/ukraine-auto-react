@@ -2,28 +2,60 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDDispatch, RootState } from '../../app/store';
 import { ICar } from '../../features/carsList/carsList.interface';
 import { carsListAction } from '../../features/carsList/carsListSlice';
+import clsx from 'clsx';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export const Comparison = () => {
   const { carsComparison } = useSelector(
     (state: RootState) => state.carsListReducer,
   );
+  const navigate = useNavigate();
+  const { theme } = useSelector((state: RootState) => state.userProfileReducer);
   const limitedCars = carsComparison.slice(0, 3);
 
   const dispatch = useDispatch<AppDDispatch>();
 
+  useEffect(() => {
+    if (limitedCars.length === 0) {
+      navigate('/', { replace: true });
+    }
+  }, [limitedCars]);
+
   return (
-    <div className='p-6 space-y-6 bg-gray-50 rounded-lg'>
-      <h2 className='text-3xl font-bold text-center text-gray-800 mb-8'>
+    <div
+      className={clsx(
+        'p-6 space-y-6 rounded-lg',
+        theme ? 'bg-background-light' : 'bg-background-dark',
+        !limitedCars.length && 'min-h-screen',
+      )}
+    >
+      <h2
+        className={clsx(
+          'text-3xl font-bold text-center mb-8',
+          theme ? 'text-secondary-text' : 'text-text-light',
+        )}
+      >
         Car Comparison
       </h2>
       {limitedCars.length === 0 ? (
-        <p className='text-center text-gray-600'>No cars to compare.</p>
+        <p
+          className={clsx(
+            'text-center',
+            theme ? 'text-text-dark' : 'text-text-light',
+          )}
+        >
+          No cars to compare.
+        </p>
       ) : (
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
           {limitedCars.map((car: ICar) => (
             <div
               key={car.id}
-              className='border flex flex-col border-gray-200 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105 overflow-hidden'
+              className={clsx(
+                'border flex flex-col border-gray-200 rounded-xl shadow-xl hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105 overflow-hidden',
+                theme ? 'bg-background-card-light' : 'bg-background-card-dark',
+              )}
             >
               <div className='relative w-full h-64'>
                 <img
@@ -37,30 +69,65 @@ export const Comparison = () => {
                   </div>
                 )}
               </div>
-              <div className='p-6 space-y-4 bg-white flex flex-col flex-grow justify-between'>
-                <h3 className='text-xl font-semibold text-gray-900'>
+              <div
+                className={clsx(
+                  'p-6 space-y-4 flex flex-col flex-grow justify-between',
+                  theme ? 'bg-white' : 'bg-background-card-dark',
+                )}
+              >
+                <h3
+                  className={clsx(
+                    'text-xl font-semibold',
+                    theme ? 'text-text-dark' : 'text-text-light',
+                  )}
+                >
                   {car.model}
                 </h3>
-                <p className='text-sm text-gray-500'>
+                <p
+                  className={clsx(
+                    'text-sm',
+                    theme ? 'text-text-dark' : 'text-text-light',
+                  )}
+                >
                   {car.year} | ${car.price}
                 </p>
-                <p className='text-gray-700'>{car.brief}</p>
+                <p
+                  className={clsx(theme ? 'text-text-dark' : 'text-text-light')}
+                >
+                  {car.brief}
+                </p>
 
                 <div className='mt-4 space-y-2 text-gray-600 flex flex-col'>
-                  <div className='flex justify-between'>
+                  <div
+                    className={clsx(
+                      'flex justify-between',
+                      theme ? 'text-text-dark' : 'text-text-light',
+                    )}
+                  >
                     <span>Mileage:</span>
                     <span className='font-medium'>{car.mileage} km</span>
                   </div>
-                  <div className='flex justify-between'>
+                  <div
+                    className={clsx(
+                      'flex justify-between',
+                      theme ? 'text-text-dark' : 'text-text-light',
+                    )}
+                  >
                     <span>Likes:</span>
                     <span className='font-medium'>{car.likes}</span>
                   </div>
-                  <div className='flex justify-between'>
+                  <div
+                    className={clsx(
+                      'flex justify-between',
+                      theme ? 'text-text-dark' : 'text-text-light',
+                    )}
+                  >
                     <span>Status:</span>
                     <span
-                      className={`font-medium ${
-                        car.sold ? 'text-red-500' : 'text-green-500'
-                      }`}
+                      className={clsx(
+                        'font-medium',
+                        car.sold ? 'text-red-500' : 'text-green-500',
+                      )}
                     >
                       {car.sold ? 'Sold' : 'Available'}
                     </span>

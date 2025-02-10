@@ -1,13 +1,38 @@
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import clsx from 'clsx';
+
 export const TermsOfService = () => {
+  const { theme } = useSelector((state: RootState) => state.userProfileReducer);
   return (
-    <div className='bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
-      <div className='max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-6'>
+    <div
+      className={clsx(
+        'py-12 px-4 sm:px-6 lg:px-8',
+        theme ? 'bg-background-light' : 'bg-background-dark',
+      )}
+    >
+      <div
+        className={clsx(
+          'max-w-5xl mx-auto shadow-lg rounded-lg p-8 space-y-6',
+          theme ? 'bg-white' : 'bg-background-card-dark',
+        )}
+      >
         <div className='max-w-4xl mx-auto px-4 py-8'>
-          <h1 className='text-4xl text-center font-semibold text-gray-800 mb-6'>
+          <h1
+            className={clsx(
+              'text-4xl text-center font-semibold mb-6',
+              theme ? 'text-text-dark' : 'text-text-light',
+            )}
+          >
             Terms of Service
           </h1>
 
-          <div className='text-gray-700'>
+          <div
+            className={clsx(
+              'text-gray-700',
+              theme ? 'text-text-dark' : 'text-text-light',
+            )}
+          >
             <p className='text-lg mb-4'>
               Welcome to Ukraine Auto. By accessing and using our website, you
               agree to comply with and be bound by the following terms and
@@ -16,27 +41,44 @@ export const TermsOfService = () => {
             </p>
 
             <nav className='mb-6'>
-              <h2 className='text-xl font-semibold text-gray-800'>
+              <h2
+                className={clsx(
+                  'text-xl font-semibold mb-4',
+                  theme ? 'text-text-dark' : 'text-text-light',
+                )}
+              >
                 Table of Contents
               </h2>
               <ul className='list-disc pl-6'>
                 <li>
                   <a
                     href='#acceptance'
-                    className='text-blue-500 hover:underline'
+                    className={clsx(
+                      'text-blue-500 hover:underline',
+                      theme ? 'hover:text-blue-700' : 'hover:text-blue-400',
+                    )}
                   >
                     Acceptance of Terms
                   </a>
                 </li>
                 <li>
-                  <a href='#usage' className='text-blue-500 hover:underline'>
+                  <a
+                    href='#usage'
+                    className={clsx(
+                      'text-blue-500 hover:underline',
+                      theme ? 'hover:text-blue-700' : 'hover:text-blue-400',
+                    )}
+                  >
                     User Responsibilities
                   </a>
                 </li>
                 <li>
                   <a
                     href='#intellectual-property'
-                    className='text-blue-500 hover:underline'
+                    className={clsx(
+                      'text-blue-500 hover:underline',
+                      theme ? 'hover:text-blue-700' : 'hover:text-blue-400',
+                    )}
                   >
                     Intellectual Property Rights
                   </a>
@@ -44,7 +86,10 @@ export const TermsOfService = () => {
                 <li>
                   <a
                     href='#account-termination'
-                    className='text-blue-500 hover:underline'
+                    className={clsx(
+                      'text-blue-500 hover:underline',
+                      theme ? 'hover:text-blue-700' : 'hover:text-blue-400',
+                    )}
                   >
                     Account Termination
                   </a>
@@ -52,7 +97,10 @@ export const TermsOfService = () => {
                 <li>
                   <a
                     href='#disclaimers'
-                    className='text-blue-500 hover:underline'
+                    className={clsx(
+                      'text-blue-500 hover:underline',
+                      theme ? 'hover:text-blue-700' : 'hover:text-blue-400',
+                    )}
                   >
                     Disclaimers and Limitation of Liability
                   </a>
@@ -60,7 +108,10 @@ export const TermsOfService = () => {
                 <li>
                   <a
                     href='#governing-law'
-                    className='text-blue-500 hover:underline'
+                    className={clsx(
+                      'text-blue-500 hover:underline',
+                      theme ? 'hover:text-blue-700' : 'hover:text-blue-400',
+                    )}
                   >
                     Governing Law
                   </a>
@@ -69,7 +120,12 @@ export const TermsOfService = () => {
             </nav>
 
             <section id='acceptance' className='mb-6'>
-              <h2 className='text-2xl font-semibold text-gray-800'>
+              <h2
+                className={clsx(
+                  'text-2xl font-semibold',
+                  theme ? 'text-text-dark' : 'text-text-light',
+                )}
+              >
                 1. Acceptance of Terms
               </h2>
               <p className='text-lg'>
@@ -81,7 +137,12 @@ export const TermsOfService = () => {
             </section>
 
             <section id='usage' className='mb-6'>
-              <h2 className='text-2xl font-semibold text-gray-800'>
+              <h2
+                className={clsx(
+                  'text-2xl font-semibold',
+                  theme ? 'text-text-dark' : 'text-text-light',
+                )}
+              >
                 2. User Responsibilities
               </h2>
               <p className='text-lg'>
@@ -106,7 +167,12 @@ export const TermsOfService = () => {
             </section>
 
             <section id='intellectual-property' className='mb-6'>
-              <h2 className='text-2xl font-semibold text-gray-800'>
+              <h2
+                className={clsx(
+                  'text-2xl font-semibold',
+                  theme ? 'text-text-dark' : 'text-text-light',
+                )}
+              >
                 3. Intellectual Property Rights
               </h2>
               <p className='text-lg'>
@@ -119,7 +185,12 @@ export const TermsOfService = () => {
             </section>
 
             <section id='account-termination' className='mb-6'>
-              <h2 className='text-2xl font-semibold text-gray-800'>
+              <h2
+                className={clsx(
+                  'text-2xl font-semibold',
+                  theme ? 'text-text-dark' : 'text-text-light',
+                )}
+              >
                 4. Account Termination
               </h2>
               <p className='text-lg'>
@@ -131,7 +202,12 @@ export const TermsOfService = () => {
             </section>
 
             <section id='disclaimers' className='mb-6'>
-              <h2 className='text-2xl font-semibold text-gray-800'>
+              <h2
+                className={clsx(
+                  'text-2xl font-semibold',
+                  theme ? 'text-text-dark' : 'text-text-light',
+                )}
+              >
                 5. Disclaimers and Limitation of Liability
               </h2>
               <p className='text-lg'>
@@ -144,7 +220,12 @@ export const TermsOfService = () => {
             </section>
 
             <section id='governing-law' className='mb-6'>
-              <h2 className='text-2xl font-semibold text-gray-800'>
+              <h2
+                className={clsx(
+                  'text-2xl font-semibold',
+                  theme ? 'text-text-dark' : 'text-text-light',
+                )}
+              >
                 6. Governing Law
               </h2>
               <p className='text-lg'>

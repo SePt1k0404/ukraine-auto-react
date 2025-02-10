@@ -23,6 +23,19 @@
   border-bottom: 2px solid #3498db;
 }
 
+.dark .navigation a {
+  color: #ecf0f1;
+}
+
+.dark .navigation a:hover {
+  color: #f39c12;
+}
+
+.dark .navigation a.active {
+  color: #f39c12;
+  border-bottom: 2px solid #f39c12;
+}
+
 @media (max-width: 938px) {
   .navigation a {
     font-size: 16px;

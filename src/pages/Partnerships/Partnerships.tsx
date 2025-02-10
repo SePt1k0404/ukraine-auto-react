@@ -1,4 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import clsx from 'clsx';
 
 export const Partnerships = () => {
   const [formData, setFormData] = useState({
@@ -6,6 +9,7 @@ export const Partnerships = () => {
     email: '',
     message: '',
   });
+  const { theme } = useSelector((state: RootState) => state.userProfileReducer);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -26,24 +30,58 @@ export const Partnerships = () => {
   };
 
   return (
-    <div className='bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
-      <div className='max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-6'>
-        <h1 className='text-4xl font-extrabold text-gray-800 mb-8 text-center'>
+    <div
+      className={clsx(
+        theme ? 'bg-gray-50' : 'bg-background-dark',
+        'py-12 px-4 sm:px-6 lg:px-8',
+      )}
+    >
+      <div
+        className={clsx(
+          theme ? 'bg-white' : 'bg-background-card-dark',
+          'max-w-5xl mx-auto shadow-lg rounded-lg p-8 space-y-6',
+        )}
+      >
+        <h1
+          className={clsx(
+            theme
+              ? 'text-4xl font-extrabold text-gray-800'
+              : 'text-4xl font-extrabold text-text-light',
+            'mb-8 text-center',
+          )}
+        >
           Partnership Opportunities
         </h1>
 
         <div className='text-gray-700 space-y-6'>
           <section className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                theme
+                  ? 'text-3xl font-semibold text-gray-800'
+                  : 'text-3xl font-semibold text-text-light',
+              )}
+            >
               1. Types of Partnerships We Seek
             </h2>
-            <p className='text-lg leading-relaxed'>
+            <p
+              className={clsx(
+                theme
+                  ? 'text-lg leading-relaxed'
+                  : 'text-lg leading-relaxed text-text-light',
+              )}
+            >
               We’re looking for partnerships that align with our goals and
               vision. Whether you’re in the tech, automotive, or service
               industries, we’re eager to collaborate with businesses that share
               our commitment to innovation and customer satisfaction.
             </p>
-            <ul className='list-disc pl-6 space-y-2'>
+            <ul
+              className={clsx(
+                'list-disc pl-6 space-y-2',
+                theme ? ' text-gray-800' : ' text-text-light',
+              )}
+            >
               <li>Strategic Business Partnerships</li>
               <li>Technology Integration Partnerships</li>
               <li>Marketing & Co-Branding Opportunities</li>
@@ -52,38 +90,86 @@ export const Partnerships = () => {
           </section>
 
           <section className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                theme
+                  ? 'text-3xl font-semibold text-gray-800'
+                  : 'text-3xl font-semibold text-text-light',
+              )}
+            >
               2. Benefits of Partnering with Us
             </h2>
-            <p className='text-lg leading-relaxed'>
+            <p
+              className={clsx(
+                theme
+                  ? 'text-lg leading-relaxed'
+                  : 'text-lg leading-relaxed text-text-light',
+              )}
+            >
               Partnering with us comes with numerous benefits, including:
             </p>
-            <ul className='list-disc pl-6 space-y-2'>
+            <ul
+              className={clsx(
+                'list-disc pl-6 space-y-2',
+                theme ? ' text-gray-800' : ' text-text-light',
+              )}
+            >
               <li>Access to a large, engaged customer base</li>
               <li>Co-marketing opportunities to increase brand awareness</li>
               <li>Collaborative product development for mutual growth</li>
               <li>Dedicated support for successful partnership integration</li>
             </ul>
           </section>
+
           <section className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                theme
+                  ? 'text-3xl font-semibold text-gray-800'
+                  : 'text-3xl font-semibold text-text-light',
+              )}
+            >
               3. Special Offers for Collaborative Projects
             </h2>
-            <p className='text-lg leading-relaxed'>
+            <p
+              className={clsx(
+                theme
+                  ? 'text-lg leading-relaxed'
+                  : 'text-lg leading-relaxed text-text-light',
+              )}
+            >
               We’re offering exclusive deals for new partners in the first
               quarter:
             </p>
-            <ul className='list-disc pl-6 space-y-2'>
+            <ul
+              className={clsx(
+                'list-disc pl-6 space-y-2',
+                theme ? ' text-gray-800' : ' text-text-light',
+              )}
+            >
               <li>Discounts on joint marketing campaigns</li>
               <li>Special pricing for early product integration</li>
               <li>Dedicated resources for custom solutions</li>
             </ul>
           </section>
+
           <section id='join-us' className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                theme
+                  ? 'text-3xl font-semibold text-gray-800'
+                  : 'text-3xl font-semibold text-text-light',
+              )}
+            >
               4. Join Our Partnership Program
             </h2>
-            <p className='text-lg leading-relaxed'>
+            <p
+              className={clsx(
+                theme
+                  ? 'text-lg leading-relaxed'
+                  : 'text-lg leading-relaxed text-text-light',
+              )}
+            >
               Interested in becoming a partner? Fill out the form below and our
               team will get back to you as soon as possible!
             </p>
@@ -92,7 +178,11 @@ export const Partnerships = () => {
               <div>
                 <label
                   htmlFor='name'
-                  className='block text-lg font-semibold text-gray-700'
+                  className={clsx(
+                    theme
+                      ? 'block text-lg font-semibold text-gray-700'
+                      : 'block text-lg font-semibold text-text-light',
+                  )}
                 >
                   Name
                 </label>
@@ -111,7 +201,11 @@ export const Partnerships = () => {
               <div>
                 <label
                   htmlFor='email'
-                  className='block text-lg font-semibold text-gray-700'
+                  className={clsx(
+                    theme
+                      ? 'block text-lg font-semibold text-gray-700'
+                      : 'block text-lg font-semibold text-text-light',
+                  )}
                 >
                   Email Address
                 </label>
@@ -130,7 +224,11 @@ export const Partnerships = () => {
               <div>
                 <label
                   htmlFor='message'
-                  className='block text-lg font-semibold text-gray-700'
+                  className={clsx(
+                    theme
+                      ? 'block text-lg font-semibold text-gray-700'
+                      : 'block text-lg font-semibold text-text-light',
+                  )}
                 >
                   Message
                 </label>

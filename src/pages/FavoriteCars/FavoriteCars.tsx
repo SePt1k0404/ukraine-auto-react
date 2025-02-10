@@ -6,6 +6,7 @@ import { Pagination } from '../../components/Pagination/Pagination';
 import { CarCard } from '../../components/CarCard/CarCard';
 import { getFavoriteCars } from '../../features/carsList/carsListSliceFunctions/getFavoriteCars';
 import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
 
 export const FavoriteCars = () => {
   const dispatch = useDispatch<AppDDispatch>();
@@ -14,8 +15,8 @@ export const FavoriteCars = () => {
   const carsList = useSelector(
     (state: RootState) => state.carsListReducer.cars,
   );
-  const favoriteCarsId = useSelector(
-    (state: RootState) => state.userProfileReducer.favoritesCars,
+  const { favoritesCars, theme } = useSelector(
+    (state: RootState) => state.userProfileReducer,
   );
 
   useEffect(() => {
@@ -25,21 +26,23 @@ export const FavoriteCars = () => {
   }, [jwt]);
 
   useEffect(() => {
-    if (favoriteCarsId.length) {
+    if (favoritesCars.length) {
       dispatch(
         getFavoriteCars({
           lastVisibleCar: undefined,
           carsQuery: undefined,
-          favoriteList: favoriteCarsId,
+          favoriteList: favoritesCars,
         }),
       );
     }
-  }, [dispatch, favoriteCarsId]);
+  }, [dispatch, favoritesCars]);
   return (
     <>
       <h1
-        className='animate-fadeIn text-secondary-text text-center font-bold text-4xl uppercase tracking-widest relative mb-7
-      after:content-[""] after:block after:w-20 after:h-1 after:mt-2 after:mx-auto after:rounded-sm after:bg-gradient-to-r from-main-color to-pink-500'
+        className={clsx(
+          'animate-fadeIn text-secondary-text text-center font-bold text-4xl uppercase tracking-widest relative mb-7 after:content-[""] after:block after:w-20 after:h-1 after:mt-2 after:mx-auto after:rounded-sm after:bg-gradient-to-r from-main-color to-pink-500',
+          theme ? '' : 'text-white',
+        )}
       >
         Favorite cars page:
       </h1>
@@ -55,6 +58,7 @@ export const FavoriteCars = () => {
             image={car.image}
             likes={car.likes}
             brief={car.brief}
+            sold={car.sold}
           />
         ))}
       </ul>

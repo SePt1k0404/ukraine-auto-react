@@ -16,6 +16,7 @@ export const ContactSellerForm = ({
 }: IContactSellerModalProps) => {
   const { isClosing, startClosing, handleBackdropClick, handleFormClick } =
     useModal(onCloseModal);
+  const { theme } = useSelector((state: RootState) => state.userProfileReducer);
   const seller = useSelector(
     (state: RootState) => state.carsListReducer.dedicatedCar?.seller,
   );
@@ -32,73 +33,75 @@ export const ContactSellerForm = ({
     },
   });
   return (
-    <div
-      className={clsx(styles.backdrop, {
-        [styles.fadeOut]: isClosing,
-      })}
-      onClick={handleBackdropClick}
-      data-name='seller'
-    >
-      <form
-        className={clsx(styles['contact-seller-form'], {
-          [styles.formOut]: isClosing,
+    <div className={!theme ? styles.dark : ''}>
+      <div
+        className={clsx(styles.backdrop, {
+          [styles.fadeOut]: isClosing,
         })}
-        onSubmit={formik.handleSubmit}
-        onClick={handleFormClick}
+        onClick={handleBackdropClick}
+        data-name='seller'
       >
-        <h2 className={styles['form-title']}>Contact with seller</h2>
-        <div className={styles['seller-info']}>
-          <p>
-            <strong>Seller:</strong> {seller?.name || 'Unknown'}
-          </p>
-          <p>
-            <strong>Phone:</strong> {seller?.phoneNumber || 'Not provided'}
-          </p>
-          <p>
-            <strong>Email:</strong> {seller?.email || 'Not provided'}
-          </p>
-          <p>
-            <strong>Address:</strong> {seller?.address || 'Not provided'}
-          </p>
-        </div>
-        <FormField
-          id='name'
-          label='Name:'
-          type='text'
-          value={formik.values.name}
-          error={formik.errors.name}
-          touched={formik.touched.name}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-        <FormField
-          id='phoneNumber'
-          label='Phone number:'
-          type='tel'
-          value={formik.values.phoneNumber}
-          error={formik.errors.phoneNumber}
-          touched={formik.touched.phoneNumber}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-        <FormField
-          id='email'
-          label='Email:'
-          type='email'
-          value={formik.values.email}
-          error={formik.errors.email}
-          touched={formik.touched.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-        <button
-          type='submit'
-          data-name='seller'
-          className={styles['form-submit']}
+        <form
+          className={clsx(styles['contact-seller-form'], {
+            [styles.formOut]: isClosing,
+          })}
+          onSubmit={formik.handleSubmit}
+          onClick={handleFormClick}
         >
-          Save Changes
-        </button>
-      </form>
+          <h2 className={styles['form-title']}>Contact with seller</h2>
+          <div className={styles['seller-info']}>
+            <p>
+              <strong>Seller:</strong> {seller?.name || 'Unknown'}
+            </p>
+            <p>
+              <strong>Phone:</strong> {seller?.phoneNumber || 'Not provided'}
+            </p>
+            <p>
+              <strong>Email:</strong> {seller?.email || 'Not provided'}
+            </p>
+            <p>
+              <strong>Address:</strong> {seller?.address || 'Not provided'}
+            </p>
+          </div>
+          <FormField
+            id='name'
+            label='Name:'
+            type='text'
+            value={formik.values.name}
+            error={formik.errors.name}
+            touched={formik.touched.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          <FormField
+            id='phoneNumber'
+            label='Phone number:'
+            type='tel'
+            value={formik.values.phoneNumber}
+            error={formik.errors.phoneNumber}
+            touched={formik.touched.phoneNumber}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          <FormField
+            id='email'
+            label='Email:'
+            type='email'
+            value={formik.values.email}
+            error={formik.errors.email}
+            touched={formik.touched.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          <button
+            type='submit'
+            data-name='seller'
+            className={styles['form-submit']}
+          >
+            Save Changes
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

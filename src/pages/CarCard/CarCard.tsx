@@ -22,7 +22,7 @@ export const CarCard = () => {
 
   const { dedicatedCar, isLoading, error, isSuccess, carsComparison } =
     useSelector((state: RootState) => state.carsListReducer);
-  const { favoritesCars } = useSelector(
+  const { favoritesCars, theme } = useSelector(
     (state: RootState) => state.userProfileReducer,
   );
   const { jwt } = useSelector((state: RootState) => state.userAuthReducer);
@@ -64,14 +64,22 @@ export const CarCard = () => {
   }
 
   return (
-    <div className='max-w-4xl mx-auto mt-10 p-6 bg-white border border-gray-200 rounded-lg shadow-lg'>
+    <div
+      className={`max-w-4xl mx-auto mt-10 p-6 border border-gray-200 rounded-lg shadow-lg ${
+        theme ? 'bg-white text-gray-800' : 'bg-background-dark text-text-light'
+      }`}
+    >
       <button
         onClick={() => {
           location.pathname.includes('favoriteCars')
             ? navigate('/favoriteCars')
             : navigate('/');
         }}
-        className='px-4 py-2 mb-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition-all duration-300'
+        className={`px-4 py-2 mb-4 ${
+          theme
+            ? 'bg-blue-500 text-white hover:bg-blue-600'
+            : 'bg-main-color-dark text-white hover:bg-secondary-color-dark'
+        } font-semibold rounded-lg shadow-md transition-all duration-300`}
       >
         Back to Listings
       </button>
@@ -81,38 +89,72 @@ export const CarCard = () => {
           alt={dedicatedCar.model}
           className='w-full h-auto object-cover transition-transform duration-300 ease-in-out group-hover:scale-110'
         />
-        <div className='absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent group-hover:from-black/70 transition-all duration-300'></div>
-        <div className='absolute bottom-4 left-4 text-green-500 text-lg font-semibold bg-green-900 px-3 py-1 rounded-lg group-hover:opacity-100 opacity-80 transition-opacity'>
+        <div
+          className={`absolute inset-0 ${
+            theme
+              ? 'bg-gradient-to-t from-black/20 via-transparent to-transparent'
+              : 'bg-gradient-to-t from-background-dark via-transparent to-transparent'
+          } group-hover:from-black/70 transition-all duration-300`}
+        ></div>
+        <div
+          className={`absolute bottom-4 left-4 text-green-500 text-lg font-semibold bg-green-900 px-3 py-1 rounded-lg group-hover:opacity-100 opacity-80 transition-opacity ${
+            theme ? '' : 'text-text-light'
+          }`}
+        >
           ${dedicatedCar.price.toLocaleString('en-US').replace(/,/g, '.')}
         </div>
       </div>
 
       <div className='text-center mt-6'>
-        <h1 className='text-3xl font-bold text-gray-800 hover:text-blue-500 transition-colors duration-300'>
+        <h1
+          className={`text-3xl font-bold ${
+            theme ? 'text-gray-800' : 'text-text-light'
+          } hover:text-blue-500 transition-colors duration-300`}
+        >
           {dedicatedCar.model} ({dedicatedCar.year})
         </h1>
-        <p className='text-gray-600 text-base mt-2 italic'>
+        <p
+          className={`text-base mt-2 italic ${
+            theme ? 'text-gray-600' : 'text-text-light'
+          }`}
+        >
           {dedicatedCar.brief || 'No brief description available.'}
         </p>
       </div>
 
       <div className='grid grid-cols-2 gap-6 mt-6'>
         <div className='text-left'>
-          <p className='text-lg font-medium text-gray-700'>
+          <p
+            className={`text-lg font-medium ${
+              theme ? 'text-gray-700' : 'text-text-light'
+            }`}
+          >
             Mileage:{' '}
-            <span className='font-bold text-gray-900'>
+            <span
+              className={`${theme ? 'text-gray-900' : 'text-text-light'} font-bold`}
+            >
               {dedicatedCar.mileage.toLocaleString('en-US')} km
             </span>
           </p>
-          <p className='text-lg font-medium text-gray-700'>
+          <p
+            className={`text-lg font-medium ${
+              theme ? 'text-gray-700' : 'text-text-light'
+            }`}
+          >
             Likes:{' '}
-            <span className='font-bold text-gray-900'>
+            <span
+              className={`${theme ? 'text-gray-900' : 'text-text-light'} font-bold`}
+            >
               {dedicatedCar.likes}
             </span>
           </p>
         </div>
         <div className='text-left'>
-          <p className='text-lg font-medium text-gray-700'>
+          <p
+            className={`text-lg font-medium ${
+              theme ? 'text-gray-700' : 'text-text-light'
+            }`}
+          >
             Price:{' '}
             <span className='font-bold text-green-500'>
               ${dedicatedCar.price.toLocaleString('en-US').replace(/,/g, '.')}
@@ -120,14 +162,20 @@ export const CarCard = () => {
           </p>
         </div>
       </div>
+
       <div className='mt-8'>
-        <h2 className='text-xl font-semibold text-gray-800 border-b pb-2'>
+        <h2
+          className={`text-xl font-semibold ${theme ? 'text-gray-800' : 'text-text-light'} border-b pb-2`}
+        >
           Description
         </h2>
-        <p className='text-gray-700 mt-4 leading-relaxed'>
+        <p
+          className={`text-gray-700 mt-4 leading-relaxed ${theme ? '' : 'text-text-light'}`}
+        >
           {dedicatedCar.desc || 'No detailed description available.'}
         </p>
       </div>
+
       <div className='mt-8 flex flex-col gap-3'>
         <button
           onClick={(e: MouseEvent<HTMLButtonElement>) =>
@@ -138,7 +186,11 @@ export const CarCard = () => {
             )
           }
           data-name='seller'
-          className='px-6 py-2 bg-gray-100 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition-all duration-300'
+          className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300 ${
+            theme
+              ? 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+              : 'bg-main-color-dark text-text-light hover:bg-secondary-color-dark'
+          }`}
         >
           Contact with Seller
         </button>
@@ -151,7 +203,11 @@ export const CarCard = () => {
             )
           }
           data-name='drive'
-          className='px-6 py-2 bg-gray-100 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition-all duration-300'
+          className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300 ${
+            theme
+              ? 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+              : 'bg-main-color-dark text-text-light hover:bg-secondary-color-dark'
+          }`}
         >
           Test Drive
         </button>
@@ -161,9 +217,11 @@ export const CarCard = () => {
             onClick={() =>
               handleComparisonCar(dedicatedCar, isChecked, dispatch)
             }
-            className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300
-      ${carsComparison.length >= 3 && !isChecked ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}
-    `}
+            className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300 ${
+              carsComparison.length >= 3 && !isChecked
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+            }`}
           >
             {isChecked ? 'Remove from Comparison' : 'Add to Comparison'}
           </button>
@@ -175,6 +233,7 @@ export const CarCard = () => {
           )}
         </div>
       </div>
+
       <div className='flex justify-between mt-8 gap-4'>
         <button
           className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300 flex items-center gap-2 ${
@@ -200,6 +259,7 @@ export const CarCard = () => {
           Checkout
         </button>
       </div>
+
       {showContactSellerModal &&
         createPortal(
           <ContactSellerForm

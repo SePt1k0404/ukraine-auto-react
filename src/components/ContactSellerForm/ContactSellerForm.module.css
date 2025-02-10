@@ -127,6 +127,65 @@
   color: #777;
 }
 
+.dark .backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.dark .contact-seller-form {
+  background: #333;
+  color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+}
+
+.dark .form-title {
+  color: #fff;
+}
+
+.dark .input-label {
+  color: #bbb;
+}
+
+.dark .input-field {
+  background-color: #444;
+  border: 1px solid #666;
+  color: #fff;
+}
+
+.dark .input-field:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.dark .form-submit {
+  background-color: #2980b9;
+  color: white;
+}
+
+.dark .form-submit:hover {
+  background-color: #3498db;
+}
+
+.dark .error-message {
+  color: #e74c3c;
+}
+
+.dark .seller-info {
+  background-color: #444;
+  color: #fff;
+}
+
+.dark .seller-info p {
+  color: #bbb;
+}
+
+.dark .seller-info strong {
+  color: #fff;
+}
+
+.dark .seller-info .info-label {
+  color: #888;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

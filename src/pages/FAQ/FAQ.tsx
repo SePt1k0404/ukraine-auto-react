@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import clsx from 'clsx';
 
 const faqs = [
   {
@@ -49,6 +52,7 @@ const faqs = [
 
 export const FAQ = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const { theme } = useSelector((state: RootState) => state.userProfileReducer);
 
   const filteredFAQs = faqs
     .map((category) => ({
@@ -58,13 +62,28 @@ export const FAQ = () => {
       ),
     }))
     .filter((category) => category.questions.length > 0);
-
   return (
-    <div className='bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
-      <div className='max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-6'>
+    <div
+      className={clsx(
+        theme ? 'bg-gray-50' : 'bg-background-dark',
+        'py-12 px-4 sm:px-6 lg:px-8',
+      )}
+    >
+      <div
+        className={clsx(
+          theme ? 'bg-white' : 'bg-background-card-dark',
+          'max-w-5xl mx-auto shadow-lg rounded-lg p-8 space-y-6',
+        )}
+      >
         <div className='max-w-4xl mx-auto px-4 py-8'>
           <div className='text-center mb-8'>
-            <h1 className='text-3xl font-semibold text-gray-800'>
+            <h1
+              className={clsx(
+                theme
+                  ? 'text-3xl font-semibold text-gray-800'
+                  : 'text-3xl font-semibold text-text-light',
+              )}
+            >
               Frequently Asked Questions
             </h1>
             <input
@@ -72,24 +91,42 @@ export const FAQ = () => {
               placeholder='Search FAQs...'
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className='mt-4 px-4 py-2 border border-gray-300 rounded-lg w-full max-w-xl mx-auto'
+              className={clsx(
+                theme
+                  ? 'mt-4 px-4 py-2 border border-gray-300 rounded-lg w-full max-w-xl mx-auto'
+                  : 'mt-4 px-4 py-2 border border-text-light rounded-lg w-full max-w-xl mx-auto',
+              )}
             />
           </div>
 
           <div>
             {filteredFAQs.map((category) => (
               <div key={category.category} className='mb-6'>
-                <h2 className='text-2xl font-semibold text-gray-700 mb-4'>
+                <h2
+                  className={clsx(
+                    theme
+                      ? 'text-2xl font-semibold text-gray-700 mb-4'
+                      : 'text-2xl font-semibold text-text-light mb-4',
+                  )}
+                >
                   {category.category}
                 </h2>
                 <ul>
                   {category.questions.map((q, index) => (
-                    <li key={index} className='mb-4'>
+                    <li key={index} className={clsx('mb-4 text-gray-800')}>
                       <details className='bg-gray-100 rounded-lg shadow-sm'>
-                        <summary className='px-4 py-2 cursor-pointer text-lg font-medium text-gray-800'>
+                        <summary
+                          className={clsx(
+                            theme
+                              ? 'px-4 py-2 cursor-pointer text-lg font-medium '
+                              : 'px-4 py-2 cursor-pointer text-lg font-medium ',
+                          )}
+                        >
                           {q.question}
                         </summary>
-                        <p className='px-4 py-2 text-gray-600'>{q.answer}</p>
+                        <p className={clsx(theme ? 'px-4 py-2' : 'px-4 py-2')}>
+                          {q.answer}
+                        </p>
                       </details>
                     </li>
                   ))}

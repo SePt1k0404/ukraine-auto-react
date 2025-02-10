@@ -1,27 +1,74 @@
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import clsx from 'clsx';
+
 export const PrivacyPolicy = () => {
+  const { theme } = useSelector((state: RootState) => state.userProfileReducer);
+
   return (
-    <div className='bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
-      <div className='max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-6'>
-        <h1 className='text-4xl font-extrabold text-gray-800 mb-8 text-center'>
+    <div
+      className={clsx(
+        theme ? 'bg-white' : 'bg-background-dark',
+        'py-12 px-4 sm:px-6 lg:px-8',
+      )}
+    >
+      <div
+        className={clsx(
+          theme ? 'bg-background-card-light' : 'bg-background-card-dark',
+          'max-w-5xl mx-auto shadow-xl rounded-lg p-8 space-y-6',
+        )}
+      >
+        <h1
+          className={clsx(
+            theme
+              ? 'text-4xl font-extrabold text-gray-900'
+              : 'text-4xl font-extrabold text-text-light',
+            'mb-8 text-center',
+          )}
+        >
           Privacy Policy
         </h1>
 
-        <div className='text-gray-700 space-y-6'>
-          <p className='text-lg leading-relaxed'>
+        <div
+          className={clsx(
+            theme ? 'text-gray-700' : 'text-text-light',
+            'space-y-6',
+          )}
+        >
+          <p
+            className={clsx(
+              theme
+                ? 'text-lg leading-relaxed'
+                : 'text-lg leading-relaxed text-text-light',
+            )}
+          >
             At Ukraine Auto, we value your privacy. This Privacy Policy outlines
             how we collect, use, and share your personal information. By using
             our service, you agree to the terms outlined in this policy.
           </p>
 
-          <nav className='space-y-4'>
-            <h2 className='text-2xl font-semibold text-gray-800'>
+          <nav
+            className={clsx(theme ? 'space-y-4' : 'space-y-4 text-text-light')}
+          >
+            <h2
+              className={clsx(
+                theme
+                  ? 'text-2xl font-semibold text-gray-800'
+                  : 'text-2xl font-semibold text-text-light',
+              )}
+            >
               Table of Contents
             </h2>
             <ul className='list-inside space-y-2'>
               <li>
                 <a
                   href='#information-collection'
-                  className='text-blue-600 hover:text-blue-800 transition duration-300'
+                  className={clsx(
+                    theme
+                      ? 'text-blue-600 hover:text-blue-800'
+                      : 'text-blue-300 hover:text-blue-400',
+                    'transition duration-300',
+                  )}
                 >
                   Information Collection
                 </a>
@@ -29,7 +76,12 @@ export const PrivacyPolicy = () => {
               <li>
                 <a
                   href='#data-usage'
-                  className='text-blue-600 hover:text-blue-800 transition duration-300'
+                  className={clsx(
+                    theme
+                      ? 'text-blue-600 hover:text-blue-800'
+                      : 'text-blue-300 hover:text-blue-400',
+                    'transition duration-300',
+                  )}
                 >
                   Data Usage
                 </a>
@@ -37,7 +89,12 @@ export const PrivacyPolicy = () => {
               <li>
                 <a
                   href='#third-party-sharing'
-                  className='text-blue-600 hover:text-blue-800 transition duration-300'
+                  className={clsx(
+                    theme
+                      ? 'text-blue-600 hover:text-blue-800'
+                      : 'text-blue-300 hover:text-blue-400',
+                    'transition duration-300',
+                  )}
                 >
                   Third-Party Sharing
                 </a>
@@ -45,7 +102,12 @@ export const PrivacyPolicy = () => {
               <li>
                 <a
                   href='#data-security'
-                  className='text-blue-600 hover:text-blue-800 transition duration-300'
+                  className={clsx(
+                    theme
+                      ? 'text-blue-600 hover:text-blue-800'
+                      : 'text-blue-300 hover:text-blue-400',
+                    'transition duration-300',
+                  )}
                 >
                   Data Security
                 </a>
@@ -53,7 +115,12 @@ export const PrivacyPolicy = () => {
               <li>
                 <a
                   href='#your-rights'
-                  className='text-blue-600 hover:text-blue-800 transition duration-300'
+                  className={clsx(
+                    theme
+                      ? 'text-blue-600 hover:text-blue-800'
+                      : 'text-blue-300 hover:text-blue-400',
+                    'transition duration-300',
+                  )}
                 >
                   Your Rights
                 </a>
@@ -61,7 +128,12 @@ export const PrivacyPolicy = () => {
               <li>
                 <a
                   href='#compliance'
-                  className='text-blue-600 hover:text-blue-800 transition duration-300'
+                  className={clsx(
+                    theme
+                      ? 'text-blue-600 hover:text-blue-800'
+                      : 'text-blue-300 hover:text-blue-400',
+                    'transition duration-300',
+                  )}
                 >
                   Compliance
                 </a>
@@ -70,10 +142,22 @@ export const PrivacyPolicy = () => {
           </nav>
 
           <section id='information-collection' className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                theme
+                  ? 'text-3xl font-semibold text-gray-800'
+                  : 'text-3xl font-semibold text-text-light',
+              )}
+            >
               1. Information Collection
             </h2>
-            <p className='text-lg leading-relaxed'>
+            <p
+              className={clsx(
+                theme
+                  ? 'text-lg leading-relaxed'
+                  : 'text-lg leading-relaxed text-text-light',
+              )}
+            >
               We collect the following types of information:
               <ul className='list-disc pl-6 space-y-2'>
                 <li>
@@ -94,10 +178,22 @@ export const PrivacyPolicy = () => {
           </section>
 
           <section id='data-usage' className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                theme
+                  ? 'text-3xl font-semibold text-gray-800'
+                  : 'text-3xl font-semibold text-text-light',
+              )}
+            >
               2. Data Usage
             </h2>
-            <p className='text-lg leading-relaxed'>
+            <p
+              className={clsx(
+                theme
+                  ? 'text-lg leading-relaxed'
+                  : 'text-lg leading-relaxed text-text-light',
+              )}
+            >
               We use your data for the following purposes:
               <ul className='list-disc pl-6 space-y-2'>
                 <li>Providing and maintaining our service.</li>
@@ -115,10 +211,22 @@ export const PrivacyPolicy = () => {
           </section>
 
           <section id='third-party-sharing' className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                theme
+                  ? 'text-3xl font-semibold text-gray-800'
+                  : 'text-3xl font-semibold text-text-light',
+              )}
+            >
               3. Third-Party Sharing
             </h2>
-            <p className='text-lg leading-relaxed'>
+            <p
+              className={clsx(
+                theme
+                  ? 'text-lg leading-relaxed'
+                  : 'text-lg leading-relaxed text-text-light',
+              )}
+            >
               We may share your data with third parties under the following
               circumstances:
               <ul className='list-disc pl-6 space-y-2'>
@@ -140,10 +248,22 @@ export const PrivacyPolicy = () => {
           </section>
 
           <section id='data-security' className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                theme
+                  ? 'text-3xl font-semibold text-gray-800'
+                  : 'text-3xl font-semibold text-text-light',
+              )}
+            >
               4. Data Security
             </h2>
-            <p className='text-lg leading-relaxed'>
+            <p
+              className={clsx(
+                theme
+                  ? 'text-lg leading-relaxed'
+                  : 'text-lg leading-relaxed text-text-light',
+              )}
+            >
               We take appropriate security measures to protect your data from
               unauthorized access, alteration, disclosure, or destruction.
               However, no method of transmission over the internet is 100%
@@ -152,10 +272,22 @@ export const PrivacyPolicy = () => {
           </section>
 
           <section id='your-rights' className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                theme
+                  ? 'text-3xl font-semibold text-gray-800'
+                  : 'text-3xl font-semibold text-text-light',
+              )}
+            >
               5. Your Rights
             </h2>
-            <p className='text-lg leading-relaxed'>
+            <p
+              className={clsx(
+                theme
+                  ? 'text-lg leading-relaxed'
+                  : 'text-lg leading-relaxed text-text-light',
+              )}
+            >
               Depending on your location, you may have the following rights
               regarding your personal data:
               <ul className='list-disc pl-6 space-y-2'>
@@ -168,10 +300,22 @@ export const PrivacyPolicy = () => {
           </section>
 
           <section id='compliance' className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                theme
+                  ? 'text-3xl font-semibold text-gray-800'
+                  : 'text-3xl font-semibold text-text-light',
+              )}
+            >
               6. Compliance
             </h2>
-            <p className='text-lg leading-relaxed'>
+            <p
+              className={clsx(
+                theme
+                  ? 'text-lg leading-relaxed'
+                  : 'text-lg leading-relaxed text-text-light',
+              )}
+            >
               Our privacy practices comply with data protection laws such as the
               General Data Protection Regulation (GDPR) and California Consumer
               Privacy Act (CCPA). If you are located in the EU or California,
@@ -180,7 +324,13 @@ export const PrivacyPolicy = () => {
           </section>
 
           <section className='mt-8'>
-            <p className='text-lg leading-relaxed'>
+            <p
+              className={clsx(
+                theme
+                  ? 'text-lg leading-relaxed'
+                  : 'text-lg leading-relaxed text-text-light',
+              )}
+            >
               If you have any questions or concerns about this Privacy Policy,
               please contact us at [Contact Information].
             </p>

@@ -1,14 +1,45 @@
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import clsx from 'clsx';
+
 export const InvestorRelations = () => {
+  const { theme } = useSelector((state: RootState) => state.userProfileReducer);
+
   return (
-    <div className='bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
-      <div className='max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-6'>
-        <h1 className='text-4xl font-extrabold text-gray-800 mb-8 text-center'>
+    <div
+      className={clsx(
+        'py-12 px-4 sm:px-6 lg:px-8',
+        theme ? 'bg-background-light' : 'bg-background-dark',
+      )}
+    >
+      <div
+        className={clsx(
+          'max-w-5xl mx-auto shadow-lg rounded-lg p-8 space-y-6',
+          theme ? 'bg-background-card-light' : 'bg-background-card-dark',
+        )}
+      >
+        <h1
+          className={clsx(
+            'text-4xl font-extrabold text-center mb-8',
+            theme ? 'text-secondary-text' : 'text-text-light',
+          )}
+        >
           Investor Relations
         </h1>
 
-        <div className='text-gray-700 space-y-6'>
+        <div
+          className={clsx(
+            'space-y-6',
+            theme ? 'text-secondary-text' : 'text-text-light',
+          )}
+        >
           <section id='financial-reports' className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                'text-3xl font-semibold',
+                theme ? 'text-secondary-text' : 'text-text-light',
+              )}
+            >
               Financial Reports
             </h2>
             <p className='text-lg leading-relaxed'>
@@ -44,7 +75,12 @@ export const InvestorRelations = () => {
           </section>
 
           <section id='stock-info' className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                'text-3xl font-semibold',
+                theme ? 'text-secondary-text' : 'text-text-light',
+              )}
+            >
               Stock Information
             </h2>
             <p className='text-lg leading-relaxed'>
@@ -59,7 +95,12 @@ export const InvestorRelations = () => {
           </section>
 
           <section id='upcoming-events' className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                'text-3xl font-semibold',
+                theme ? 'text-secondary-text' : 'text-text-light',
+              )}
+            >
               Upcoming Events
             </h2>
             <p className='text-lg leading-relaxed'>
@@ -77,7 +118,12 @@ export const InvestorRelations = () => {
           </section>
 
           <section id='presentations' className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                'text-3xl font-semibold',
+                theme ? 'text-secondary-text' : 'text-text-light',
+              )}
+            >
               Investor Presentations
             </h2>
             <p className='text-lg leading-relaxed'>
@@ -105,7 +151,12 @@ export const InvestorRelations = () => {
           </section>
 
           <section id='contact-info' className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                'text-3xl font-semibold',
+                theme ? 'text-secondary-text' : 'text-text-light',
+              )}
+            >
               Contact Investor Relations
             </h2>
             <p className='text-lg leading-relaxed'>
@@ -122,7 +173,12 @@ export const InvestorRelations = () => {
           </section>
 
           <section id='security' className='space-y-4'>
-            <h2 className='text-3xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                'text-3xl font-semibold',
+                theme ? 'text-secondary-text' : 'text-text-light',
+              )}
+            >
               Security Measures
             </h2>
             <p className='text-lg leading-relaxed'>
