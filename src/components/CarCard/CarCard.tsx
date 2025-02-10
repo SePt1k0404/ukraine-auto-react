@@ -72,14 +72,14 @@ export const CarCard = ({
         </div>
       )}
       <Link
-        className={clsx('h-full flex flex-col items-start', {
+        className={clsx('h-full w-full flex flex-col items-start', {
           'bg-white text-gray-800': theme,
           'bg-background-dark text-text-light': !theme,
         })}
         to={`carCard/${id}`}
       >
         <img
-          src={image}
+          src={image || '/public/car-img-placeholder.webp'}
           alt='Car Model'
           className='w-full h-48 object-cover transition ease hover:brightness-90 duration-300'
         />

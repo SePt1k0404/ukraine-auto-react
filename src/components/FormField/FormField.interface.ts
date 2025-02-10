@@ -4,7 +4,7 @@ export interface IFormFieldProps {
   id: string;
   label: string;
   type: string;
-  value: string;
+  value?: string | number | File;
   error?: string;
   touched?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;

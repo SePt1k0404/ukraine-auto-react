@@ -17,6 +17,7 @@ import {
 import { deleteUserProfile } from './userProfileSliceFunctions/deleterUserProfile';
 import { toggleFavoriteCar } from './userProfileSliceFunctions/toggleFavoriteCar';
 import { sendPasswordReset } from './userProfileSliceFunctions/forgotPassword';
+import { addAnnouncement } from './userProfileSliceFunctions/addAnnouncement';
 
 const userProfileSlice = createSlice({
   name: 'userProfile',
@@ -137,6 +138,15 @@ const userProfileSlice = createSlice({
         state.isSuccess = true;
       })
       .addCase(sendPasswordReset.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      )
+      .addCase(addAnnouncement.pending, (state) => pendingFunction(state))
+      .addCase(addAnnouncement.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+        state.isSuccess = true;
+      })
+      .addCase(addAnnouncement.rejected, (state, action) =>
         rejectedFunction(state, action),
       );
   },

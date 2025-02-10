@@ -13,7 +13,7 @@ export interface ICar {
     address: string;
     email: string;
   };
-  sold: boolean;
+  sold?: boolean;
   image: string;
 }
 
