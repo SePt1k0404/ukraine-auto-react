@@ -1,16 +1,46 @@
+import { useSelector } from 'react-redux';
 import { Logo } from '../../components/Logo/Logo';
+import { RootState } from '../../app/store';
+import clsx from 'clsx';
 
 export const About = () => {
+  const { theme } = useSelector((state: RootState) => state.userProfileReducer);
+
   return (
-    <div className='bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
-      <div className='max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-8'>
-        <h1 className='text-4xl font-semibold text-gray-800 text-center mb-8'>
+    <div
+      className={clsx(
+        'py-12 px-4 sm:px-6 lg:px-8',
+        theme ? 'bg-background-light' : 'bg-background-dark',
+      )}
+    >
+      <div
+        className={clsx(
+          'max-w-7xl mx-auto shadow-lg rounded-lg p-8',
+          theme ? 'bg-background-card-light' : 'bg-background-card-dark',
+        )}
+      >
+        <h1
+          className={clsx(
+            'text-4xl font-semibold text-center mb-8',
+            theme ? 'text-secondary-text' : 'text-text-light',
+          )}
+        >
           About Us
         </h1>
 
-        <div className='text-lg text-gray-700'>
+        <div
+          className={clsx(
+            'text-lg',
+            theme ? 'text-secondary-text' : 'text-text-light',
+          )}
+        >
           <section className='mb-8'>
-            <h2 className='text-2xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                'text-2xl font-semibold',
+                theme ? 'text-secondary-text' : 'text-text-light',
+              )}
+            >
               Our Mission
             </h2>
             <p>
@@ -21,7 +51,12 @@ export const About = () => {
           </section>
 
           <section className='mb-8'>
-            <h2 className='text-2xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                'text-2xl font-semibold',
+                theme ? 'text-secondary-text' : 'text-text-light',
+              )}
+            >
               Our History
             </h2>
             <p>
@@ -33,7 +68,14 @@ export const About = () => {
           </section>
 
           <section className='mb-8'>
-            <h2 className='text-2xl font-semibold text-gray-800'>Our Team</h2>
+            <h2
+              className={clsx(
+                'text-2xl font-semibold',
+                theme ? 'text-secondary-text' : 'text-text-light',
+              )}
+            >
+              Our Team
+            </h2>
             <p>
               Our team consists of dedicated professionals who are passionate
               about creating innovative solutions. We believe in collaboration,
@@ -42,7 +84,12 @@ export const About = () => {
           </section>
 
           <section className='mb-8'>
-            <h2 className='text-2xl font-semibold text-gray-800'>
+            <h2
+              className={clsx(
+                'text-2xl font-semibold',
+                theme ? 'text-secondary-text' : 'text-text-light',
+              )}
+            >
               Our Achievements
             </h2>
             <ul className='list-disc pl-6'>
@@ -58,7 +105,14 @@ export const About = () => {
           </section>
 
           <section>
-            <h2 className='text-2xl font-semibold text-gray-800'>Our Values</h2>
+            <h2
+              className={clsx(
+                'text-2xl font-semibold',
+                theme ? 'text-secondary-text' : 'text-text-light',
+              )}
+            >
+              Our Values
+            </h2>
             <p>
               We believe in integrity, transparency, and commitment to
               excellence. We strive to create lasting relationships with our
@@ -68,7 +122,12 @@ export const About = () => {
         </div>
 
         <div className='mt-8'>
-          <h2 className='text-2xl font-semibold text-gray-800 text-center'>
+          <h2
+            className={clsx(
+              'text-2xl font-semibold text-center',
+              theme ? 'text-secondary-text' : 'text-text-light',
+            )}
+          >
             Our Team in Action
           </h2>
           <div className='flex justify-center mt-4'>

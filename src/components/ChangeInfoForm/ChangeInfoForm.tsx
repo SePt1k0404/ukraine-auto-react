@@ -15,9 +15,9 @@ import { changeUserInfo } from '../../features/userProfile/userProfileSliceFunct
 export const ChangeInfoForm = ({ onCloseModal }: IChangeInfoModalProps) => {
   const { isClosing, startClosing, handleBackdropClick, handleFormClick } =
     useModal(onCloseModal);
-  const { name, phoneNumber, city, emailPreferences, privacy } = useSelector(
-    (state: RootState) => state.userProfileReducer,
-  );
+  const { name, phoneNumber, city, emailPreferences, privacy, theme } =
+    useSelector((state: RootState) => state.userProfileReducer);
+
   const dispatch = useDispatch<AppDDispatch>();
 
   const formik = useFormik<IChangeInfoInitialValues>({
@@ -41,97 +41,101 @@ export const ChangeInfoForm = ({ onCloseModal }: IChangeInfoModalProps) => {
   });
 
   return (
-    <div
-      className={clsx(styles.backdrop, {
-        [styles.fadeOut]: isClosing,
-      })}
-      onClick={handleBackdropClick}
-    >
-      <form
-        className={clsx(styles['change-info-form'], {
-          [styles.formOut]: isClosing,
+    <div className={!theme ? styles.dark : ''}>
+      <div
+        className={clsx(styles.backdrop, {
+          [styles.fadeOut]: isClosing,
         })}
-        onSubmit={formik.handleSubmit}
-        onClick={handleFormClick}
+        onClick={handleBackdropClick}
       >
-        <h2 className={styles['form-title']}>Change Your Information</h2>
-        <FormField
-          id='name'
-          label='Name:'
-          type='text'
-          value={formik.values.name}
-          error={formik.errors.name}
-          touched={formik.touched.name}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-        <FormField
-          id='phone'
-          label='Phone number:'
-          type='tel'
-          value={formik.values.phoneNumber}
-          error={formik.errors.phoneNumber}
-          touched={formik.touched.phoneNumber}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-        <FormField
-          id='city'
-          label='City:'
-          type='text'
-          value={formik.values.city}
-          error={formik.errors.city}
-          touched={formik.touched.city}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-        <div className={styles['notifications-section']}>
-          <h3 className={styles['section-title']}>Notification Preferences:</h3>
-          <label className={styles['checkbox-label']}>
-            <input
-              type='checkbox'
-              name='emailPreferences.newsletters'
-              checked={formik.values.emailPreferences.newsletters}
-              onChange={formik.handleChange}
-            />
-            Receive Newsletters
-          </label>
-          <label className={styles['checkbox-label']}>
-            <input
-              type='checkbox'
-              name='emailPreferences.notifications'
-              checked={formik.values.emailPreferences.notifications}
-              onChange={formik.handleChange}
-            />
-            Receive Notifications
-          </label>
-          <label className={styles['checkbox-label']}>
-            <input
-              type='checkbox'
-              name='emailPreferences.promotions'
-              checked={formik.values.emailPreferences.promotions}
-              onChange={formik.handleChange}
-            />
-            Receive Promotional Emails
-          </label>
-        </div>
-        <div className={styles['privacy-settings-section']}>
-          <h3 className={styles['privacy-settings-title']}>Privacy:</h3>
-          <label className={styles['privacy-checkbox-label']}>
-            <input
-              type='checkbox'
-              name='privacy'
-              checked={formik.values.privacy}
-              onChange={formik.handleChange}
-            />
-            Private Profile
-          </label>
-        </div>
+        <form
+          className={clsx(styles['change-info-form'], {
+            [styles.formOut]: isClosing,
+          })}
+          onSubmit={formik.handleSubmit}
+          onClick={handleFormClick}
+        >
+          <h2 className={styles['form-title']}>Change Your Information</h2>
+          <FormField
+            id='name'
+            label='Name:'
+            type='text'
+            value={formik.values.name}
+            error={formik.errors.name}
+            touched={formik.touched.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          <FormField
+            id='phoneNumber'
+            label='Phone number:'
+            type='tel'
+            value={formik.values.phoneNumber}
+            error={formik.errors.phoneNumber}
+            touched={formik.touched.phoneNumber}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          <FormField
+            id='city'
+            label='City:'
+            type='text'
+            value={formik.values.city}
+            error={formik.errors.city}
+            touched={formik.touched.city}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          <div className={styles['notifications-section']}>
+            <h3 className={styles['section-title']}>
+              Notification Preferences:
+            </h3>
+            <label className={styles['checkbox-label']}>
+              <input
+                type='checkbox'
+                name='emailPreferences.newsletters'
+                checked={formik.values.emailPreferences.newsletters}
+                onChange={formik.handleChange}
+              />
+              Receive Newsletters
+            </label>
+            <label className={styles['checkbox-label']}>
+              <input
+                type='checkbox'
+                name='emailPreferences.notifications'
+                checked={formik.values.emailPreferences.notifications}
+                onChange={formik.handleChange}
+              />
+              Receive Notifications
+            </label>
+            <label className={styles['checkbox-label']}>
+              <input
+                type='checkbox'
+                name='emailPreferences.promotions'
+                checked={formik.values.emailPreferences.promotions}
+                onChange={formik.handleChange}
+              />
+              Receive Promotional Emails
+            </label>
+          </div>
+          <div className={styles['privacy-settings-section']}>
+            <h3 className={styles['privacy-settings-title']}>Privacy:</h3>
+            <label className={styles['privacy-checkbox-label']}>
+              <input
+                type='checkbox'
+                name='privacy'
+                checked={formik.values.privacy}
+                onChange={formik.handleChange}
+              />
+              Private Profile
+            </label>
+          </div>
 
-        <button type='submit' className={styles['form-submit']}>
-          Save Changes
-        </button>
-      </form>
+          <button type='submit' className={styles['form-submit']}>
+            Save Changes
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

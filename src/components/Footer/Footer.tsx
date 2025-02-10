@@ -1,4 +1,5 @@
 import { FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export const Footer = () => {
   return (
@@ -10,36 +11,36 @@ export const Footer = () => {
           </p>
         </div>
         <div className='flex items-center content-center gap-4'>
-          <a
-            href='/terms-of-service'
+          <Link
+            to='/terms-of-service'
             className='outline-none transition-colors ease text-white hover:text-main-color focus:text-main-color no-underline font-medium duration-300'
           >
             Terms of Service
-          </a>
-          <a
-            href='/privacy-policy'
+          </Link>
+          <Link
+            to='/privacy-policy'
             className='outline-none transition-colors ease text-white hover:text-main-color focus:text-main-color no-underline font-medium duration-300'
           >
             Privacy Policy
-          </a>
-          <a
-            href='/faq'
+          </Link>
+          <Link
+            to='/faq'
             className='outline-none transition-colors ease text-white hover:text-main-color focus:text-main-color no-underline font-medium duration-300'
           >
             FAQ
-          </a>
-          <a
-            href='/partnerships '
+          </Link>
+          <Link
+            to='/partnerships '
             className='outline-none transition-colors ease text-white hover:text-main-color focus:text-main-color no-underline font-medium duration-300'
           >
             Partnerships
-          </a>
-          <a
-            href='/investor-relations '
+          </Link>
+          <Link
+            to='/investor-relations '
             className='outline-none transition-colors ease text-white hover:text-main-color focus:text-main-color no-underline font-medium duration-300'
           >
             Investor Relations
-          </a>
+          </Link>
         </div>
         <div className='flex items-center content-center gap-4'>
           <a

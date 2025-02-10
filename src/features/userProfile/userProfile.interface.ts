@@ -15,6 +15,7 @@ export interface IUserProfile {
   isLoading?: boolean;
   error?: string | null;
   isSuccess?: boolean;
+  theme?: boolean;
 }
 
 export interface IChangeUserProfile {
@@ -48,4 +49,8 @@ export interface IChangeUserPassword {
 export interface IDeleteUserProfile {
   email: string;
   password: string;
+}
+
+export interface IPersistentTheme {
+  theme: boolean | undefined;
 }

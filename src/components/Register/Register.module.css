@@ -23,7 +23,9 @@
   flex-direction: column;
   transform: scale(0.98);
   animation: formIn 0.5s ease-in-out forwards;
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  transition:
+    transform 0.5s ease,
+    opacity 0.5s ease;
 }
 
 .fadeOut {
@@ -33,7 +35,9 @@
 .formOut {
   transform: scale(0.9);
   opacity: 0;
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  transition:
+    transform 0.5s ease,
+    opacity 0.5s ease;
 }
 
 .formTitle {
@@ -94,6 +98,68 @@
 
 .errorText::before {
   content: '⚠️ ';
+}
+
+.forgotPassword {
+  display: block;
+  margin: 10px 0 0;
+  text-align: center;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgotPassword:hover {
+  text-decoration: underline;
+}
+
+.dark .backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.dark .registerForm {
+  background: #333;
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+.dark .formTitle {
+  color: #f1f1f1;
+}
+
+.dark .formLabel {
+  color: #bbb;
+}
+
+.dark .formInput {
+  border: 1px solid #555;
+}
+
+.dark .formInput:focus {
+  border-color: #3498db;
+}
+
+.dark .formButton {
+  background-color: #2980b9;
+}
+
+.dark .formButton:hover {
+  background-color: #3498db;
+}
+
+.dark .formButton:active {
+  transform: translateY(1px);
+}
+
+.dark .errorText {
+  color: #e74c3c;
+}
+
+.dark .forgotPassword {
+  color: #66afe9;
+}
+
+.dark .forgotPassword:hover {
+  text-decoration: underline;
 }
 
 @keyframes fadeIn {

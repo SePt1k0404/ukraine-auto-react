@@ -7,35 +7,41 @@ import { RootState } from '../../app/store';
 export const Navigation = () => {
   const location = useLocation();
   const { jwt } = useSelector((state: RootState) => state.userAuthReducer);
+  const { theme } = useSelector((state: RootState) => state.userProfileReducer);
 
   return (
-    <nav className={styles.navigation}>
-      <Link to='/' className={styles[getActiveClass(location, '/')]}>
-        Home
-      </Link>
-      {jwt && (
-        <Link
-          to='/favoriteCars'
-          className={styles[getActiveClass(location, '/favoriteCars')]}
-        >
-          Favorites
+    <div className={!theme ? styles.dark : ''}>
+      <nav className={styles.navigation}>
+        <Link to='/' className={styles[getActiveClass(location, '/')]}>
+          Home
         </Link>
-      )}
-      <Link to='/about' className={styles[getActiveClass(location, '/about')]}>
-        About
-      </Link>
-      <Link
-        to='/services'
-        className={styles[getActiveClass(location, '/services')]}
-      >
-        Services
-      </Link>
-      <Link
-        to='/contact'
-        className={styles[getActiveClass(location, '/contact')]}
-      >
-        Contact
-      </Link>
-    </nav>
+        {jwt && (
+          <Link
+            to='/favoriteCars'
+            className={styles[getActiveClass(location, '/favoriteCars')]}
+          >
+            Favorites
+          </Link>
+        )}
+        <Link
+          to='/about'
+          className={styles[getActiveClass(location, '/about')]}
+        >
+          About
+        </Link>
+        <Link
+          to='/status'
+          className={styles[getActiveClass(location, '/status')]}
+        >
+          Status
+        </Link>
+        <Link
+          to='/contact'
+          className={styles[getActiveClass(location, '/contact')]}
+        >
+          Contact
+        </Link>
+      </nav>
+    </div>
   );
 };

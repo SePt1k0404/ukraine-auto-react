@@ -33,3 +33,20 @@
 .formGroup .errorText::before {
   content: '⚠️ ';
 }
+
+.dark .formGroup .formLabel {
+  color: #bbb;
+}
+
+.dark .formGroup .formInput {
+  border: 1px solid #555;
+  color: black;
+}
+
+.dark .formGroup .formInput:focus {
+  border-color: #3498db;
+}
+
+.dark .formGroup .errorText {
+  color: #e74c3c;
+}

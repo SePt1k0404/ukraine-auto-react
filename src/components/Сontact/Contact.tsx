@@ -3,8 +3,13 @@ import { FaFacebook, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { FormField } from '../../components/FormField/FormField';
 import { IContactFormInitialValues } from './Contact.interface';
 import { contactValidateSchema } from './Contact.schema';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import clsx from 'clsx';
 
 export const Contact = () => {
+  const { theme } = useSelector((state: RootState) => state.userProfileReducer);
+
   const formik = useFormik<IContactFormInitialValues>({
     initialValues: {
       name: '',
@@ -19,13 +24,33 @@ export const Contact = () => {
   });
 
   return (
-    <div className='bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
-      <div className='max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-8'>
-        <h1 className='text-4xl font-semibold text-gray-800 text-center mb-8'>
+    <div
+      className={clsx(
+        'py-12 px-4 sm:px-6 lg:px-8',
+        theme ? 'bg-background-light' : 'bg-background-dark',
+      )}
+    >
+      <div
+        className={clsx(
+          'max-w-7xl mx-auto shadow-lg rounded-lg p-8',
+          theme ? 'bg-background-card-light' : 'bg-background-card-dark',
+        )}
+      >
+        <h1
+          className={clsx(
+            'text-4xl font-semibold text-center mb-8',
+            theme ? 'text-secondary-text' : 'text-text-light',
+          )}
+        >
           Contact Us
         </h1>
 
-        <div className='text-lg text-gray-700 mb-8'>
+        <div
+          className={clsx(
+            'text-lg mb-8',
+            theme ? 'text-secondary-text' : 'text-text-light',
+          )}
+        >
           <p>
             If you have any questions or need assistance, please feel free to
             reach out.
@@ -88,10 +113,20 @@ export const Contact = () => {
         </form>
 
         <div className='mt-8'>
-          <h2 className='text-2xl font-semibold text-gray-800'>
+          <h2
+            className={clsx(
+              'text-2xl font-semibold',
+              theme ? 'text-secondary-text' : 'text-text-light',
+            )}
+          >
             Additional Contact Information
           </h2>
-          <ul className='list-none mt-4 space-y-2 text-lg text-gray-700'>
+          <ul
+            className={clsx(
+              'list-none mt-4 space-y-2 text-lg',
+              theme ? 'text-secondary-text' : 'text-text-light',
+            )}
+          >
             <li>
               <strong>Phone:</strong> +380-68-122-2315
             </li>
