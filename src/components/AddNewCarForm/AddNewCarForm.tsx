@@ -5,10 +5,11 @@ import { addNewCar } from '../../features/carsList/carsListSliceFunctions/addNew
 import { FormField } from '../FormField/FormField';
 import { IAddNewCarFormInitialValues } from './AddNewCarForm.interface';
 import { addNewCarFormSchema } from './AddNewCarForm.schema';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { handleAdminCarImgChange } from '../../helpers/adminHelpers/handleAdminCarImgChange';
 import { handleUploadCarImg } from '../../helpers/adminHelpers/handleUploadCarImg';
 import { FaCar } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 export const AddNewCarForm = () => {
   const [carImg, setCarImg] = useState<File | null>(null);
@@ -17,6 +18,42 @@ export const AddNewCarForm = () => {
   const { city, email, name, phoneNumber } = useSelector(
     (state: RootState) => state.userProfileReducer,
   );
+
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      toast.error('Geolocation is not supported by your browser.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        formik.setValues((prev) => ({
+          ...prev,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        }));
+      },
+      (error) => {
+        toast.error(error.message, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+    );
+  });
+
   const formik = useFormik<IAddNewCarFormInitialValues>({
     initialValues: {
       model: '',
@@ -26,6 +63,8 @@ export const AddNewCarForm = () => {
       desc: '',
       brief: '',
       img: undefined,
+      latitude: undefined,
+      longitude: undefined,
     },
     validationSchema: addNewCarFormSchema,
     onSubmit: async (values, { resetForm }) => {
@@ -45,6 +84,8 @@ export const AddNewCarForm = () => {
             desc,
             brief,
             img: imgUrl,
+            latitude: formik.values.latitude,
+            longitude: formik.values.longitude,
           },
           sellerInfo: {
             name,

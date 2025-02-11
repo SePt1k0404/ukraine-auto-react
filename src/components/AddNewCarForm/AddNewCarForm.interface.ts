@@ -6,4 +6,6 @@ export interface IAddNewCarFormInitialValues {
   brief: string;
   desc: string;
   img: File | undefined | string;
+  latitude: number | undefined;
+  longitude: number | undefined;
 }

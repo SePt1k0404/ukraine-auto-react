@@ -2,7 +2,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getUserId } from '../../getUserId';
 import { AppDDispatch } from '../../../app/store';
 import { IAddNewCarFormInitialValues } from '../../../components/AddNewCarForm/AddNewCarForm.interface';
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  GeoPoint,
+  updateDoc,
+} from 'firebase/firestore';
 import { db } from '../../../firebase/config';
 import { addAnnouncement } from '../../userProfile/userProfileSliceFunctions/addAnnouncement';
 
@@ -37,6 +43,12 @@ export const addNewCar = createAsyncThunk<
       if (!uid) {
         return rejectWithValue('User ID not found');
       }
+      const location =
+        params.carInfo.latitude !== undefined &&
+        params.carInfo.longitude !== undefined
+          ? new GeoPoint(params.carInfo.latitude, params.carInfo.longitude)
+          : null;
+
       const carsCollectionRef = collection(db, 'cars');
       const docRef = await addDoc(carsCollectionRef, {
         model: params.carInfo.model,
@@ -45,7 +57,7 @@ export const addNewCar = createAsyncThunk<
         milage: params.carInfo.milage,
         desc: params.carInfo.desc,
         brief: params.carInfo.brief,
-        location: '',
+        ...(location ? { location } : {}),
         seller: {
           name: params.sellerInfo.name,
           address: params.sellerInfo.address,
