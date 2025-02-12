@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getUserId } from '../../getUserId';
-import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase/config';
 import { AppDDispatch } from '../../../app/store';
 
 export const addAnnouncement = createAsyncThunk<
-  void,
+  string[],
   string,
   {
     rejectValue: string;
@@ -18,7 +18,11 @@ export const addAnnouncement = createAsyncThunk<
     await updateDoc(userDocRef, {
       announcement: arrayUnion(id),
     });
-    return;
+    const userDoc = await getDoc(userDocRef);
+    if (!userDoc.exists()) {
+      return rejectWithValue('User document not found');
+    }
+    return userDoc.data().announcement || [];
   } catch (error) {
     if (error instanceof Error) {
       return rejectWithValue(error.message);

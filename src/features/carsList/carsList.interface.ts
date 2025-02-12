@@ -13,6 +13,7 @@ export interface ICar {
     address: string;
     email: string;
   };
+  location?: { lat: number; long: number } | null;
   sold?: boolean;
   image: string;
 }
@@ -33,6 +34,7 @@ export interface ICarsListInitialState {
     year: string;
     price: string;
   };
+  announcementCars: ICar[] | [];
   isLoading: boolean;
   error: null | string;
   isSuccess: boolean;

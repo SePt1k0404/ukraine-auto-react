@@ -58,7 +58,7 @@ export const FavoriteCars = () => {
             image={car.image}
             likes={car.likes}
             brief={car.brief}
-            sold={car.sold}
+            sold={car.sold ?? false}
           />
         ))}
       </ul>

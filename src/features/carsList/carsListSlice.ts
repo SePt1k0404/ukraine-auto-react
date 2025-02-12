@@ -9,6 +9,9 @@ import {
 } from './carsListSliceFunctions/carsListStatusFunctions';
 import { getFavoriteCars } from './carsListSliceFunctions/getFavoriteCars';
 import { soldCar } from './carsListSliceFunctions/soldCar';
+import { getAdminCarListing } from './carsListSliceFunctions/getAdminCarListing';
+import { deleteCarAnnounce } from './carsListSliceFunctions/deleteCarAnnounce';
+import { changeSellerInfo } from './carsListSliceFunctions/changeSellerInfo';
 
 const carsListSlice = createSlice({
   name: 'carsList',
@@ -98,6 +101,37 @@ const carsListSlice = createSlice({
         state.isSuccess = true;
       })
       .addCase(soldCar.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      )
+      .addCase(getAdminCarListing.pending, (state) => pendingFunction(state))
+      .addCase(
+        getAdminCarListing.fulfilled,
+        (state, action: PayloadAction<ICar[] | []>) => {
+          state.announcementCars = action.payload;
+          state.isLoading = false;
+          state.error = null;
+          state.isSuccess = true;
+        },
+      )
+      .addCase(getAdminCarListing.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      )
+      .addCase(deleteCarAnnounce.pending, (state) => pendingFunction(state))
+      .addCase(deleteCarAnnounce.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+        state.isSuccess = true;
+      })
+      .addCase(deleteCarAnnounce.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      )
+      .addCase(changeSellerInfo.pending, (state) => pendingFunction(state))
+      .addCase(changeSellerInfo.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+        state.isSuccess = true;
+      })
+      .addCase(changeSellerInfo.rejected, (state, action) =>
         rejectedFunction(state, action),
       );
   },

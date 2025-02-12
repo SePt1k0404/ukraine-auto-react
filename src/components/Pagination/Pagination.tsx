@@ -46,6 +46,9 @@ export const Pagination = ({ limit, carsListType }: IPaginationProps) => {
               previousVisibleCar:
                 newPage < page ? previousVisibleCar : undefined,
               carsQuery,
+              geoLocationCars: false,
+              latitude: null,
+              longitude: null,
             }),
           );
         } else if (carsListType == 'favorite') {

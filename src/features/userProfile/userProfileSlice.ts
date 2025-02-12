@@ -18,6 +18,7 @@ import { deleteUserProfile } from './userProfileSliceFunctions/deleterUserProfil
 import { toggleFavoriteCar } from './userProfileSliceFunctions/toggleFavoriteCar';
 import { sendPasswordReset } from './userProfileSliceFunctions/forgotPassword';
 import { addAnnouncement } from './userProfileSliceFunctions/addAnnouncement';
+import { deleteUserCarAnnounce } from './userProfileSliceFunctions/deleteUserCarAnnounce';
 
 const userProfileSlice = createSlice({
   name: 'userProfile',
@@ -44,6 +45,7 @@ const userProfileSlice = createSlice({
           state.favoritesCars = action.payload.favoritesCars;
           state.privacy = action.payload.privacy;
           state.avatar = action.payload.avatar;
+          state.announcement = action.payload.announcement;
           state.stripeCustomerId = action.payload.stripeCustomerId;
           state.isLoading = false;
           state.error = null;
@@ -141,12 +143,29 @@ const userProfileSlice = createSlice({
         rejectedFunction(state, action),
       )
       .addCase(addAnnouncement.pending, (state) => pendingFunction(state))
-      .addCase(addAnnouncement.fulfilled, (state) => {
-        state.isLoading = false;
-        state.error = null;
-        state.isSuccess = true;
-      })
+      .addCase(
+        addAnnouncement.fulfilled,
+        (state, action: PayloadAction<string[]>) => {
+          state.announcement = action.payload;
+          state.isLoading = false;
+          state.error = null;
+          state.isSuccess = true;
+        },
+      )
       .addCase(addAnnouncement.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      )
+      .addCase(deleteUserCarAnnounce.pending, (state) => pendingFunction(state))
+      .addCase(
+        deleteUserCarAnnounce.fulfilled,
+        (state, action: PayloadAction<string[]>) => {
+          state.announcement = action.payload;
+          state.isLoading = false;
+          state.error = null;
+          state.isSuccess = true;
+        },
+      )
+      .addCase(deleteUserCarAnnounce.rejected, (state, action) =>
         rejectedFunction(state, action),
       );
   },
