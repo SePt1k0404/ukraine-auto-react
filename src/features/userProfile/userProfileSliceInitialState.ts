@@ -3,7 +3,6 @@ import { IPersistentTheme, IUserProfile } from './userProfile.interface';
 
 export const THEME_PERSISTENT = 'theme';
 const localTheme = loadTheme<IPersistentTheme>(THEME_PERSISTENT)?.theme;
-console.log(localTheme);
 
 export const initialState: IUserProfile = {
   name: '',
@@ -18,6 +17,7 @@ export const initialState: IUserProfile = {
   favoritesCars: [],
   privacy: false,
   avatar: null,
+  announcement: [],
   isLoading: false,
   isSuccess: false,
   error: null,

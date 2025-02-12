@@ -22,6 +22,7 @@ import { Status } from './pages/Status/Status';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from './app/store';
+import { Admin } from './pages/Admin/Admin';
 function App() {
   const { theme } = useSelector((state: RootState) => state.userProfileReducer);
   useEffect(() => {
@@ -63,6 +64,7 @@ function App() {
             path='carCard/:carId/checkout'
             element={<PrivateRouts element={<Checkout />} />}
           />
+          <Route path='/admin' element={<PrivateRouts element={<Admin />} />} />
           <Route path='*' element={<Error />} />
         </Route>
       </Routes>

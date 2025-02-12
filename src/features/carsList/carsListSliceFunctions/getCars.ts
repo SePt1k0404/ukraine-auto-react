@@ -115,6 +115,12 @@ export const getCars = createAsyncThunk<
           mileage: doc.data()?.mileage || 0,
           image: doc.data()?.image || '',
           sold: doc.data()?.sold || false,
+          location: doc.data()?.location
+            ? {
+                lat: doc.data()?.location.latitude,
+                long: doc.data()?.location.longitude,
+              }
+            : { lat: 0, long: 0 },
           id: doc.id,
         })),
       };

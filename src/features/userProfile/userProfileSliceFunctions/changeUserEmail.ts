@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IChangeUserEmail } from '../userProfile.interface';
-import { AppDDispatch } from '../../../app/store';
+import { AppDDispatch, RootState } from '../../../app/store';
 import { getUserId } from '../../getUserId';
 import {
   EmailAuthProvider,
@@ -9,6 +9,7 @@ import {
   updateEmail,
 } from 'firebase/auth';
 import { userAuthAction } from '../../userAuth/userAuthSlice';
+import { changeSellerInfo } from '../../carsList/carsListSliceFunctions/changeSellerInfo';
 
 export const changeUserEmail = createAsyncThunk<
   IChangeUserEmail,
@@ -16,10 +17,11 @@ export const changeUserEmail = createAsyncThunk<
   {
     rejectValue: string;
     dispatch: AppDDispatch;
+    state: RootState;
   }
 >(
   'userProfile/changeUserEmail',
-  async (params: IChangeUserEmail, { rejectWithValue, dispatch }) => {
+  async (params: IChangeUserEmail, { rejectWithValue, dispatch, getState }) => {
     try {
       await getUserId(dispatch);
       const auth = getAuth();
@@ -35,6 +37,16 @@ export const changeUserEmail = createAsyncThunk<
       setTimeout(() => {
         window.location.href = '/';
       }, 500);
+      const state = getState();
+      const userAnnounceCars = state.userProfileReducer.announcement || [];
+      dispatch(
+        changeSellerInfo({
+          userAnnounceCars,
+          newSellerInfo: {
+            email: params.newEmail,
+          },
+        }),
+      );
       localStorage.removeItem('userData');
       dispatch(userAuthAction.clearJwt());
       return params;

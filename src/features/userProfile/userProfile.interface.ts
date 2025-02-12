@@ -9,6 +9,7 @@ export interface IUserProfile {
     notifications: boolean;
   };
   favoritesCars: string[];
+  announcement: string[];
   privacy: boolean;
   avatar: string | null;
   stripeCustomerId?: string;

@@ -33,6 +33,12 @@ export const getDedicatedCar = createAsyncThunk<
         email: '',
         address: '',
       },
+      location: dedicatedDocData.data()?.location
+        ? {
+            lat: dedicatedDocData.data()?.location.latitude,
+            long: dedicatedDocData.data()?.location.longitude,
+          }
+        : { lat: 0, long: 0 },
       sold: dedicatedDocData.data()?.sold || false,
       id: dedicatedDocData.id || '',
     };

@@ -13,6 +13,7 @@ export const initialState: ICarsListInitialState = {
     year: '',
     price: '',
   },
+  announcementCars: [],
   error: null,
   isSuccess: false,
 };

@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IChangeUserProfile } from '../userProfile.interface';
-import { AppDDispatch } from '../../../app/store';
+import { AppDDispatch, RootState } from '../../../app/store';
 import { db } from '../../../firebase/config';
 import { getUserId } from '../../getUserId';
 import { doc, updateDoc } from 'firebase/firestore';
+import { changeSellerInfo } from '../../carsList/carsListSliceFunctions/changeSellerInfo';
 
 export const changeUserInfo = createAsyncThunk<
   IChangeUserProfile,
@@ -11,10 +12,14 @@ export const changeUserInfo = createAsyncThunk<
   {
     rejectValue: string;
     dispatch: AppDDispatch;
+    state: RootState;
   }
 >(
   'userProfile/changeUserInfo',
-  async (params: IChangeUserProfile, { rejectWithValue, dispatch }) => {
+  async (
+    params: IChangeUserProfile,
+    { rejectWithValue, dispatch, getState },
+  ) => {
     try {
       const uid = await getUserId(dispatch);
       const userDocRef = doc(db, 'users', uid);
@@ -25,6 +30,18 @@ export const changeUserInfo = createAsyncThunk<
         emailPreferences: params.emailPreferences,
         privacy: params.privacy,
       });
+      const state = getState();
+      const userAnnounceCars = state.userProfileReducer.announcement || [];
+      dispatch(
+        changeSellerInfo({
+          userAnnounceCars,
+          newSellerInfo: {
+            name: params.name,
+            phoneNumber: params.phoneNumber,
+            address: params.city,
+          },
+        }),
+      );
       return params;
     } catch (error) {
       if (error instanceof Error) {

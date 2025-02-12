@@ -7,6 +7,12 @@ export const mapCarData = (doc: QueryDocumentSnapshot<DocumentData>) => ({
   desc: doc.data().desc || '',
   brief: doc.data().brief || '',
   likes: doc.data().likes || 0,
+  seller: doc.data().seller || {
+    name: '',
+    phoneNumber: '',
+    email: '',
+    address: '',
+  },
   mileage: doc.data().mileage || 0,
   image: doc.data().image || '',
   id: doc.id,

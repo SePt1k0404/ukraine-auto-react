@@ -22,11 +22,38 @@
   color: #3498db;
 }
 
+.link.active {
+  color: #3498db;
+  font-weight: 700;
+  border-bottom: 2px solid #3498db;
+}
+
+.dark {
+  margin-left: auto;
+}
+
+.dark .link {
+  color: #ecf0f1;
+}
+
+.dark .link:hover {
+  color: #f39c12;
+}
+
+.dark .link.active {
+  color: #f39c12;
+  border-bottom: 2px solid #f39c12;
+}
+
 .separator {
   margin: 0;
   font-weight: 600;
   font-size: 24px;
   color: black;
+}
+
+.dark .separator {
+  color: #ecf0f1;
 }
 
 @media (max-width: 938px) {

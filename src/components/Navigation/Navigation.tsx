@@ -23,6 +23,14 @@ export const Navigation = () => {
             Favorites
           </Link>
         )}
+        {jwt && (
+          <Link
+            to='/admin'
+            className={styles[getActiveClass(location, '/admin')]}
+          >
+            Admin
+          </Link>
+        )}
         <Link
           to='/about'
           className={styles[getActiveClass(location, '/about')]}
