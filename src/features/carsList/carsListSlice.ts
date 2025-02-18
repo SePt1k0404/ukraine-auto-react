@@ -9,6 +9,10 @@ import {
 } from './carsListSliceFunctions/carsListStatusFunctions';
 import { getFavoriteCars } from './carsListSliceFunctions/getFavoriteCars';
 import { soldCar } from './carsListSliceFunctions/soldCar';
+import { getAdminCarListing } from './carsListSliceFunctions/getAdminCarListing';
+import { deleteCarAnnounce } from './carsListSliceFunctions/deleteCarAnnounce';
+import { changeSellerInfo } from './carsListSliceFunctions/changeSellerInfo';
+import { changeCarInfo } from './carsListSliceFunctions/changeCarInfo';
 
 const carsListSlice = createSlice({
   name: 'carsList',
@@ -34,6 +38,16 @@ const carsListSlice = createSlice({
       state.carsComparison = [
         ...state.carsComparison.filter((car) => car.id !== action.payload),
       ];
+    },
+    updateCarInList: (state, action) => {
+      const { carId, newCarInfo } = action.payload;
+      const index = state.announcementCars.findIndex((car) => car.id === carId);
+      if (index !== -1) {
+        state.announcementCars[index] = {
+          ...state.announcementCars[index],
+          ...newCarInfo,
+        };
+      }
     },
   },
   extraReducers: (builder) => {
@@ -99,7 +113,59 @@ const carsListSlice = createSlice({
       })
       .addCase(soldCar.rejected, (state, action) =>
         rejectedFunction(state, action),
-      );
+      )
+      .addCase(getAdminCarListing.pending, (state) => pendingFunction(state))
+      .addCase(
+        getAdminCarListing.fulfilled,
+        (state, action: PayloadAction<ICar[] | []>) => {
+          state.announcementCars = action.payload;
+          state.isLoading = false;
+          state.error = null;
+          state.isSuccess = true;
+        },
+      )
+      .addCase(getAdminCarListing.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      )
+      .addCase(deleteCarAnnounce.pending, (state) => {
+        pendingFunction(state);
+        state.operationWithCarsLoading = true;
+        state.operationWithCarsSuccess = false;
+      })
+      .addCase(deleteCarAnnounce.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+        state.isSuccess = true;
+        state.operationWithCarsSuccess = true;
+      })
+      .addCase(deleteCarAnnounce.rejected, (state, action) => {
+        rejectedFunction(state, action);
+        state.operationWithCarsSuccess = false;
+      })
+      .addCase(changeSellerInfo.pending, (state) => pendingFunction(state))
+      .addCase(changeSellerInfo.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+        state.isSuccess = true;
+      })
+      .addCase(changeSellerInfo.rejected, (state, action) =>
+        rejectedFunction(state, action),
+      )
+      .addCase(changeCarInfo.pending, (state) => {
+        pendingFunction(state);
+        state.operationWithCarsLoading = true;
+        state.operationWithCarsSuccess = false;
+      })
+      .addCase(changeCarInfo.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+        state.isSuccess = true;
+        state.operationWithCarsSuccess = true;
+      })
+      .addCase(changeCarInfo.rejected, (state, action) => {
+        rejectedFunction(state, action);
+        state.operationWithCarsSuccess = false;
+      });
   },
 });
 

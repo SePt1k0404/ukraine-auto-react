@@ -4,16 +4,19 @@ import {
   AiOutlineDollar,
   AiOutlineTool,
 } from 'react-icons/ai';
-import { ICarCardProps } from './CarCard.interface';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDDispatch, RootState } from '../../app/store';
-import { toggleFavoriteCar } from '../../features/userProfile/userProfileSliceFunctions/toggleFavoriteCar';
-import { MouseEvent } from 'react';
+import { MouseEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 import clsx from 'clsx';
+import { IAdminCarCardProps } from './AdminCarCard.interface';
+import { FaTrash } from 'react-icons/fa';
+import { deleteCarAnnounce } from '../../features/carsList/carsListSliceFunctions/deleteCarAnnounce';
+import { createPortal } from 'react-dom';
+import { DeleteAnnouncementModal } from '../DeleteAnnouncementModal/DeleteAnnouncementModal';
+import { ChangeCarInfoForm } from '../ChangeCarInfoFrom/ChangeCarInfoFrom';
 
-export const CarCard = ({
+export const AdminCarCard = ({
   id,
   model,
   year,
@@ -22,17 +25,15 @@ export const CarCard = ({
   likes,
   sold,
   brief,
-}: ICarCardProps) => {
+}: IAdminCarCardProps) => {
   const dispatch = useDispatch<AppDDispatch>();
-
-  const { favoritesCars, theme } = useSelector(
-    (state: RootState) => state.userProfileReducer,
-  );
+  const [showPrompt, setShowPrompt] = useState<boolean>(false);
+  const [showChangeCarInfoForm, setShowChangeCarInfoForm] =
+    useState<boolean>(false);
+  const { theme } = useSelector((state: RootState) => state.userProfileReducer);
   const { jwt } = useSelector((state: RootState) => state.userAuthReducer);
 
-  const isFavorite = favoritesCars.includes(id);
-
-  const handleLikeClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleRemoveClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     if (!jwt) {
       toast.info('Firstly login/register to add car to favorites', {
@@ -45,7 +46,7 @@ export const CarCard = ({
         progress: undefined,
       });
     } else {
-      dispatch(toggleFavoriteCar({ carId: id }));
+      dispatch(deleteCarAnnounce(id));
     }
   };
 
@@ -57,6 +58,9 @@ export const CarCard = ({
           'opacity-50 pointer-events-none': sold,
         },
       )}
+      onClick={() => {
+        setShowChangeCarInfoForm(true);
+      }}
     >
       {sold && (
         <div
@@ -71,12 +75,11 @@ export const CarCard = ({
           SOLD
         </div>
       )}
-      <Link
+      <div
         className={clsx('h-full w-full flex flex-col items-start', {
           'bg-white text-gray-800': theme,
           'bg-background-dark text-text-light': !theme,
         })}
-        to={`carCard/${id}`}
       >
         <img
           src={image || '/public/car-img-placeholder.webp'}
@@ -125,7 +128,7 @@ export const CarCard = ({
             {price.toLocaleString('en-US').replace(/,/g, '.')}
           </p>
         </div>
-      </Link>
+      </div>
       <div
         className={clsx('w-full p-5 flex justify-between items-center', {
           'bg-white text-gray-800': theme,
@@ -135,23 +138,18 @@ export const CarCard = ({
         <button
           className={clsx(
             'flex items-center justify-center gap-3 font-bold text-base border-none rounded-lg py-2 px-4 shadow-md transition-all ease duration-300',
+            'bg-red-600 text-white hover:scale-105 hover:bg-red-700',
             {
-              'bg-red-500 text-white hover:bg-red-600': isFavorite,
-              'bg-[linear-gradient(145deg,#3498db,#2980b9)] text-white hover:scale-105 hover:bg-[linear-gradient(145deg,#2980b9,#3498db)]':
-                !isFavorite,
               'opacity-50 cursor-not-allowed': sold,
             },
           )}
-          onClick={handleLikeClick}
-          disabled={sold}
+          onClick={(e: MouseEvent<HTMLButtonElement>) => {
+            e.stopPropagation();
+            setShowPrompt(true);
+          }}
         >
-          <AiFillHeart
-            className={clsx('w-5 h-5', {
-              'text-white': isFavorite,
-              'text-text-light': !isFavorite,
-            })}
-          />
-          {isFavorite ? 'Unlike' : 'Like'}
+          <FaTrash className={clsx('w-5 h-5')} />
+          Remove an announce
         </button>
         <span
           className={clsx('flex items-center gap-2 text-sm', {
@@ -162,6 +160,28 @@ export const CarCard = ({
           <AiFillHeart className='w-5 h-5 text-red-600' /> {likes} likes
         </span>
       </div>
+      {showPrompt &&
+        createPortal(
+          <DeleteAnnouncementModal
+            onClose={() => {
+              setShowPrompt(false);
+            }}
+            handleRemoveClick={(e: MouseEvent<HTMLButtonElement>) =>
+              handleRemoveClick(e)
+            }
+          />,
+          document.body,
+        )}
+      {showChangeCarInfoForm &&
+        createPortal(
+          <ChangeCarInfoForm
+            onClose={() => {
+              setShowChangeCarInfoForm(false);
+            }}
+            carId={id}
+          />,
+          document.body,
+        )}
     </li>
   );
 };
