@@ -56,4 +56,5 @@ export interface IChangeCarInfo {
   mileage?: string | number;
   brief?: string;
   desc?: string;
+  image?: string;
 }

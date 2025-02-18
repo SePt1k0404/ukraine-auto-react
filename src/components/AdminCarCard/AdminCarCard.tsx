@@ -15,6 +15,7 @@ import { deleteCarAnnounce } from '../../features/carsList/carsListSliceFunction
 import { createPortal } from 'react-dom';
 import { DeleteAnnouncementModal } from '../DeleteAnnouncementModal/DeleteAnnouncementModal';
 import { ChangeCarInfoForm } from '../ChangeCarInfoFrom/ChangeCarInfoFrom';
+import { handleDeleteCarImg } from '../../helpers/adminHelpers/handeDeleteCarImg';
 
 export const AdminCarCard = ({
   id,
@@ -47,6 +48,9 @@ export const AdminCarCard = ({
       });
     } else {
       dispatch(deleteCarAnnounce(id));
+      if (image) {
+        handleDeleteCarImg(image);
+      }
     }
   };
 

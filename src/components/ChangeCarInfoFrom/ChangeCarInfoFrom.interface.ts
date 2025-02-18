@@ -5,6 +5,7 @@ export interface IChangeCarInfoFormInitialValues {
   mileage: string | number | undefined;
   brief: string | undefined;
   desc: string | undefined;
+  image: string | undefined;
 }
 
 export interface IChangeCarInfoFormProps {

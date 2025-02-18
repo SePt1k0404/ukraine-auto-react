@@ -3,9 +3,16 @@ import dotenv from 'dotenv';
 import Stripe from 'stripe';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import cloudinary from 'cloudinary';
 
 const app = express();
 dotenv.config();
+
+cloudinary.v2.config({
+  cloud_name: 'dkftturzq',
+  api_key: process.env.CLOUDINARY_API,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -65,6 +72,34 @@ app.post('/payment', cors(), async (req, res) => {
     res.json({
       message: 'Payment failed',
       success: false,
+    });
+  }
+});
+
+app.post('/delete-car-img', async (req, res) => {
+  try {
+    const { publicId } = req.body;
+
+    if (!publicId) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'No public_id provided' });
+    }
+
+    const result = await cloudinary.v2.uploader.destroy(publicId);
+
+    if (result.result === 'ok') {
+      res.json({ success: true, message: 'Image deleted successfully' });
+    } else {
+      res
+        .status(500)
+        .json({ success: false, message: 'Failed to delete image' });
+    }
+  } catch (error) {
+    console.error('Cloudinary delete error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while deleting the image',
     });
   }
 });

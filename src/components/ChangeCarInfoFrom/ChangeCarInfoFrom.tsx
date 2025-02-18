@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDDispatch, RootState } from '../../app/store';
 import { useFormik } from 'formik';
 import { FormField } from '../FormField/FormField';
-import { MouseEvent, useEffect } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import {
   IChangeCarInfoFormInitialValues,
   IChangeCarInfoFormProps,
@@ -11,12 +11,18 @@ import { changeCarFormSchema } from './ChangeCarInfoFrom.schema';
 import { getDedicatedCar } from '../../features/carsList/carsListSliceFunctions/getDedicatedCar';
 import { changeCarInfo } from '../../features/carsList/carsListSliceFunctions/changeCarInfo';
 import { carsListAction } from '../../features/carsList/carsListSlice';
+import { FaCar } from 'react-icons/fa';
+import { handleAdminCarImgChange } from '../../helpers/adminHelpers/handleAdminCarImgChange';
+import { handleDeleteCarImg } from '../../helpers/adminHelpers/handeDeleteCarImg';
+import { handleUploadCarImg } from '../../helpers/adminHelpers/handleUploadCarImg';
 
 export const ChangeCarInfoForm = ({
   onClose,
   carId,
 }: IChangeCarInfoFormProps) => {
   const dispatch = useDispatch<AppDDispatch>();
+  const [carImg, setCarImg] = useState<File | null>(null);
+  const [carImgPreview, setCarImgPreview] = useState<string | null>(null);
   const { dedicatedCar } = useSelector(
     (state: RootState) => state.carsListReducer,
   );
@@ -33,6 +39,7 @@ export const ChangeCarInfoForm = ({
         mileage: dedicatedCar.mileage || '',
         desc: dedicatedCar.desc || '',
         brief: dedicatedCar.brief || '',
+        image: dedicatedCar.image || undefined,
       });
     }
   }, [dedicatedCar]);
@@ -45,11 +52,27 @@ export const ChangeCarInfoForm = ({
       mileage: dedicatedCar?.mileage || '',
       desc: dedicatedCar?.desc || '',
       brief: dedicatedCar?.brief || '',
+      image: dedicatedCar?.image || undefined,
     },
     validationSchema: changeCarFormSchema,
-    onSubmit: (values, { resetForm }) => {
-      dispatch(changeCarInfo({ carId, newCarInfo: values })).then(() => {
-        dispatch(carsListAction.updateCarInList({ carId, newCarInfo: values }));
+    onSubmit: async (values, { resetForm }) => {
+      let imgUrl = values.image;
+      if (imgUrl) {
+        await handleDeleteCarImg(imgUrl);
+        if (carImg instanceof File) {
+          imgUrl = await handleUploadCarImg(carImg);
+        }
+        setCarImgPreview(null);
+      }
+      dispatch(
+        changeCarInfo({ carId, newCarInfo: { ...values, image: imgUrl } }),
+      ).then(() => {
+        dispatch(
+          carsListAction.updateCarInList({
+            carId,
+            newCarInfo: { ...values, image: imgUrl },
+          }),
+        );
       });
       resetForm();
       onClose();
@@ -64,7 +87,7 @@ export const ChangeCarInfoForm = ({
       className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 backdrop-blur-sm animate-fadeIn'
     >
       <div
-        className='bg-white p-6 rounded-lg shadow-lg w-1/2 animate-fadeInUp'
+        className='bg-white p-6 rounded-lg shadow-lg w-1/2 animate-fadeInUp overflow-auto'
         onClick={(e: MouseEvent<HTMLElement>) => e.stopPropagation()}
       >
         <h2 className='text-xl font-semibold mb-4'>Change Car Info</h2>
@@ -133,6 +156,27 @@ export const ChangeCarInfoForm = ({
               onBlur={formik.handleBlur}
             />
           </div>
+          <label className='flex items-center space-x-2 cursor-pointer text-blue-500'>
+            <span>Upload car image</span>
+            <FaCar />
+            <input
+              type='file'
+              accept='image/*'
+              onChange={(e) =>
+                handleAdminCarImgChange(e, setCarImg, setCarImgPreview)
+              }
+              className='hidden'
+            />
+          </label>
+          {carImgPreview && (
+            <div className='col-span-2 mt-2'>
+              <img
+                src={carImgPreview}
+                alt='Selected Car'
+                className='max-w-96 h-auto rounded-md'
+              />
+            </div>
+          )}
           <button
             type='submit'
             className='col-span-2 bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition'
