@@ -49,6 +49,16 @@ const carsListSlice = createSlice({
         };
       }
     },
+    updateCarLikes: (state, action) => {
+      const { carId, newCarLikes } = action.payload;
+      const index = state.cars.findIndex((car) => car.id === carId);
+      if (index !== -1) {
+        state.cars[index].likes = newCarLikes;
+      }
+      if (state.dedicatedCar) {
+        state.dedicatedCar.likes = newCarLikes;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
