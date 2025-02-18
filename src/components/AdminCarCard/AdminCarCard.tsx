@@ -14,6 +14,7 @@ import { FaTrash } from 'react-icons/fa';
 import { deleteCarAnnounce } from '../../features/carsList/carsListSliceFunctions/deleteCarAnnounce';
 import { createPortal } from 'react-dom';
 import { DeleteAnnouncementModal } from '../DeleteAnnouncementModal/DeleteAnnouncementModal';
+import { ChangeCarInfoForm } from '../ChangeCarInfoFrom/ChangeCarInfoFrom';
 
 export const AdminCarCard = ({
   id,
@@ -27,6 +28,8 @@ export const AdminCarCard = ({
 }: IAdminCarCardProps) => {
   const dispatch = useDispatch<AppDDispatch>();
   const [showPrompt, setShowPrompt] = useState<boolean>(false);
+  const [showChangeCarInfoForm, setShowChangeCarInfoForm] =
+    useState<boolean>(false);
   const { theme } = useSelector((state: RootState) => state.userProfileReducer);
   const { jwt } = useSelector((state: RootState) => state.userAuthReducer);
 
@@ -55,6 +58,9 @@ export const AdminCarCard = ({
           'opacity-50 pointer-events-none': sold,
         },
       )}
+      onClick={() => {
+        setShowChangeCarInfoForm(true);
+      }}
     >
       {sold && (
         <div
@@ -137,7 +143,8 @@ export const AdminCarCard = ({
               'opacity-50 cursor-not-allowed': sold,
             },
           )}
-          onClick={() => {
+          onClick={(e: MouseEvent<HTMLButtonElement>) => {
+            e.stopPropagation();
             setShowPrompt(true);
           }}
         >
@@ -162,6 +169,16 @@ export const AdminCarCard = ({
             handleRemoveClick={(e: MouseEvent<HTMLButtonElement>) =>
               handleRemoveClick(e)
             }
+          />,
+          document.body,
+        )}
+      {showChangeCarInfoForm &&
+        createPortal(
+          <ChangeCarInfoForm
+            onClose={() => {
+              setShowChangeCarInfoForm(false);
+            }}
+            carId={id}
           />,
           document.body,
         )}

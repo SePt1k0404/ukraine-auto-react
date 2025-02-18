@@ -38,6 +38,8 @@ export interface ICarsListInitialState {
   isLoading: boolean;
   error: null | string;
   isSuccess: boolean;
+  operationWithCarsLoading: boolean;
+  operationWithCarsSuccess: boolean;
 }
 
 export interface ICarsResponse {
@@ -45,4 +47,13 @@ export interface ICarsResponse {
   carsListLength: number;
   lastVisibleCar: undefined | string;
   previousVisibleCar: undefined | string;
+}
+
+export interface IChangeCarInfo {
+  model?: string;
+  year?: string | number;
+  price?: string | number;
+  mileage?: string | number;
+  brief?: string;
+  desc?: string;
 }

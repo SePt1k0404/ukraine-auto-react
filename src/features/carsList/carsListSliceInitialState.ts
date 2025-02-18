@@ -16,4 +16,6 @@ export const initialState: ICarsListInitialState = {
   announcementCars: [],
   error: null,
   isSuccess: false,
+  operationWithCarsLoading: false,
+  operationWithCarsSuccess: false,
 };

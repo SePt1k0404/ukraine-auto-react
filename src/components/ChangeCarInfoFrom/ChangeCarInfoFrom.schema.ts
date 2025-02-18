@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const addNewCarFormSchema = Yup.object({
+export const changeCarFormSchema = Yup.object({
   model: Yup.string().required('Model is required'),
   year: Yup.number().required('Year is required').min(1886, 'Invalid year'),
   price: Yup.number()

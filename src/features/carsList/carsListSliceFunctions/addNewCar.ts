@@ -54,7 +54,7 @@ export const addNewCar = createAsyncThunk<
         model: params.carInfo.model,
         price: params.carInfo.price,
         year: params.carInfo.year,
-        milage: params.carInfo.milage,
+        mileage: params.carInfo.mileage,
         desc: params.carInfo.desc,
         brief: params.carInfo.brief,
         ...(location ? { location } : {}),

@@ -59,7 +59,7 @@ export const AddNewCarForm = () => {
       model: '',
       year: '',
       price: '',
-      milage: '',
+      mileage: '',
       desc: '',
       brief: '',
       img: undefined,
@@ -68,7 +68,7 @@ export const AddNewCarForm = () => {
     },
     validationSchema: addNewCarFormSchema,
     onSubmit: async (values, { resetForm }) => {
-      const { model, year, price, milage, desc, brief } = values;
+      const { model, year, price, mileage, desc, brief } = values;
       let imgUrl = '';
       if (carImg instanceof File) {
         imgUrl = await handleUploadCarImg(carImg);
@@ -80,7 +80,7 @@ export const AddNewCarForm = () => {
             model,
             year: Number(year),
             price: Number(price),
-            milage: Number(milage),
+            mileage: Number(mileage),
             desc,
             brief,
             img: imgUrl,
@@ -132,12 +132,12 @@ export const AddNewCarForm = () => {
           onBlur={formik.handleBlur}
         />
         <FormField
-          id='milage'
-          label='Milage:'
+          id='mileage'
+          label='Mileage:'
           type='number'
-          value={formik.values.milage}
-          error={formik.errors.milage}
-          touched={formik.touched.milage}
+          value={formik.values.mileage}
+          error={formik.errors.mileage}
+          touched={formik.touched.mileage}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
